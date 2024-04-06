@@ -3,7 +3,8 @@ import user from './Routes/userRoute.js';
 
 const app = express();
 
-app.use(express.json());
+// app.use(express.json());
+app.use(express.urlencoded({extended : false}))
 
 app.use('/api/v1' , user);
 
