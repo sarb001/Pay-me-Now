@@ -1,5 +1,6 @@
 import User from "../Schemas/UserSchemas.js"
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken' ;
 
 export const SignupUser = async(req,res) => {
     try {
@@ -14,13 +15,17 @@ export const SignupUser = async(req,res) => {
 
         const bcryptpass = await bcrypt.hash(password,10);
 
+        
         const  dbuser = await User.create({
             username,
             firstname,
             lastname,
             password : bcryptpass
         });
-
+        
+        const token = await jwt.sign({_id : dbuser._id},process.env.JWT_SECRET);
+        console.log('token gen =',token);
+        
         const user = await dbuser.save();
 
         return res.status(200).json({
@@ -37,6 +42,6 @@ export const LoginUser = async(req,res) => {
     try {
         
     } catch (error) {
-        
+        console.log('error =',error);
     }
 }
