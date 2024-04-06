@@ -1,12 +1,17 @@
 import express from 'express';
 import user from './Routes/userRoute.js';
+import db from './Database/db.js';
+import dotenv from 'dotenv';
 
 const app = express();
 
-// app.use(express.json());
 app.use(express.urlencoded({extended : false}))
 
+dotenv.config();
+db();
+
 app.use('/api/v1' , user);
+
 
 const PORT = 3000;
 

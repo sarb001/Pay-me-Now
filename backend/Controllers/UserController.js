@@ -1,6 +1,5 @@
 import User from "../Schemas/UserSchemas.js"
 
-
 export const SignupUser = async(req,res) => {
     try {
         const { username , firstname ,lastname , password } = req.body;
@@ -12,11 +11,22 @@ export const SignupUser = async(req,res) => {
              })
         }
 
-        return res.status(200).json({message : "USer cc"});
+        const  dbuser = await User.create({
+            username,
+            firstname,
+            lastname,
+            password
+        });
 
-        //  const dbUser = new User
+        const user = await dbuser.save();
+
+        return res.status(201).json({
+            message : "User created Successfully",
+            user
+        });
+
     } catch (error) {
-        console.log('error =',error);
+        return console.log('error =',error);
     }
 }
 
