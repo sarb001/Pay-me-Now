@@ -1,4 +1,5 @@
 import User from "../Schemas/UserSchemas.js"
+import bcrypt from 'bcrypt';
 
 export const SignupUser = async(req,res) => {
     try {
@@ -11,19 +12,21 @@ export const SignupUser = async(req,res) => {
              })
         }
 
+        const bcryptpass = await bcrypt.hash(password,10);
+
         const  dbuser = await User.create({
             username,
             firstname,
             lastname,
-            password
+            password : bcryptpass
         });
 
         const user = await dbuser.save();
 
-        return res.status(201).json({
-            message : "User created Successfully",
-            user
-        });
+        return res.status(200).json({
+               message : "User created Successfully",
+               user
+        })
 
     } catch (error) {
         return console.log('error =',error);
