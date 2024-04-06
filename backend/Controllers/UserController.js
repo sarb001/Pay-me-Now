@@ -36,9 +36,7 @@ export const SignupUser = async(req,res) => {
 
 export const LoginUser = async(req,res) => {
     try {
-        
         const { username , password } = req.body;
-
         if(!username || !password){
             return res.status(404).json({
                 message : "Enter All Details",
@@ -61,12 +59,12 @@ export const LoginUser = async(req,res) => {
                 message : "Password Incorrect"
             })  
         }
-        
-        const token = await jwt.sign({_id : findUser._id},process.env.JWT_SECRET);
+
+        const token =  jwt.sign({userid : findUser._id},process.env.JWT_SECRET);
         console.log('token gen =',token);
         
         return res.status(200).json({
-            message : "User logged in",
+            // message : "User logged in",
             token,
         })
 
@@ -75,10 +73,16 @@ export const LoginUser = async(req,res) => {
     }
 }
 
-export const authMiddleware = async(req,res) => {
+
+export const Profile = async(req,res) => {
     try {
-        
+        console.log('requested user =',req.userid);
+
+        res.status(200).json({
+            message : "Profile Found"
+        })
+
     } catch (error) {
-            console.log('error =',error) ;
-    }
+        console.log('error =',error);
+    }   
 }
