@@ -1,5 +1,6 @@
 import express from 'express';
 import user from './Routes/userRoute.js';
+import  account from './Routes/AccountRoute.js';
 import db from './Database/db.js';
 import dotenv from 'dotenv';
 
@@ -11,6 +12,8 @@ dotenv.config();
 db();
 
 app.use('/api/v1' , user);
+
+app.use('/api/v1/account' , account);
 
 
 const PORT = 3000;

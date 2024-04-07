@@ -1,6 +1,7 @@
 import User from "../Schemas/UserSchemas.js"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken' ;
+import Account from "../Schemas/BankSchema.js";
 
 export const SignupUser = async(req,res) => {
     try {
@@ -21,6 +22,11 @@ export const SignupUser = async(req,res) => {
             lastname,
             password : bcryptpass
         });
+
+         await Account.create({
+            userid : dbuser._id,
+            balance : 1 + Math.random() * 10000 
+        })
 
         const user = await dbuser.save();
 
