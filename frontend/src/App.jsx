@@ -4,6 +4,8 @@ import UserProfile from './components/UserProfile';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import SendMoney from './components/SendMoney';
 
 function App() {
 
@@ -11,10 +13,11 @@ function App() {
     <>
        <Navbar />
         <Routes> 
-          <Route  path='/'  element = {<Home /> } />
+          <Route  path='/dashboard'  element = {<Dashboard /> } />
           <Route  path='/profile'  element = {<UserProfile /> } />
           <Route  path='/signup'  element = {<Signup /> } />
           <Route  path='/login'  element = {<Login /> } />
+          <Route  path='/send'  element = {<SendMoney /> } />
         </Routes>
     </>
   )
