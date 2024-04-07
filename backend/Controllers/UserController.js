@@ -16,17 +16,18 @@ export const SignupUser = async(req,res) => {
 
         const bcryptpass = await bcrypt.hash(password,10);
 
+        
+        await Account.create({
+            userid : dbuser?._id,
+            balance : 1 + Math.random() * 10000 
+        })
+        
         const  dbuser = await User.create({
             username,
             firstname,
             lastname,
             password : bcryptpass
         });
-
-         await Account.create({
-            userid : dbuser._id,
-            balance : 1 + Math.random() * 10000 
-        })
 
         const user = await dbuser.save();
 
@@ -153,18 +154,3 @@ export const  AllUsers = async(req,res) => {
             console.log('error =',error);
     }
 }
-
-// export const QueryFilter = async(req,res) => {
-//     try {
-
-//         const mainquery = req.query;
-//         console.log('query =',mainquery);
-
-//         res.status(200).json({
-//             message : "Querttt"
-//         })
-
-//     } catch (error) {   
-//         console.log('error= ',error);
-//     }
-// }
