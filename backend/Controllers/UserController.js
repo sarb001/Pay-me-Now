@@ -64,7 +64,6 @@ export const LoginUser = async(req,res) => {
         console.log('token gen =',token);
         
         return res.status(200).json({
-            // message : "User logged in",
             token,
         })
 
@@ -87,5 +86,36 @@ export const Profile = async(req,res) => {
 
     } catch (error) {
         console.log('error =',error);
+    }   
+}
+
+export const  UpdateProfile = async(req,res) => {
+    try {
+
+        const getUser = await User.findById(req.userid);
+        console.log('getUser =',getUser);
+
+        const { firstname , lastname ,password } = req.body;
+        console.log('profile body =',{ firstname , lastname ,password });
+
+        if(!firstname || !lastname || !password){
+            return res.status(404).json({
+                message : "Enter All Details"
+            })
+        }
+
+        if(firstname) getUser.firstname = firstname;
+        if(lastname)  getUser.lastname  = lastname;
+        if(password)  getUser.password  = password;
+ 
+        const updatedUser = await getUser.save();
+        console.log('updated user =',updatedUser);
+
+        return res.status(200).json({
+            message : "Profile Updated"
+        })
+
+    } catch (error) {   
+     console.log('error =',error);        
     }   
 }
