@@ -122,12 +122,43 @@ export const  UpdateProfile = async(req,res) => {
 export const  AllUsers = async(req,res) => {
     try {
         const allUsers = await User.find({});
+        console.log('allusers =',allUsers);
+
+        const querydata = req.query.filter;
+        console.log('query =',querydata);
+
+
+        // even 1 string matches in both
+        const FilteredData = await User.find({
+            $or : [
+                {firstname :{ "$regex" : querydata }},
+                // {lastname  :{ "$regex" : querydata }}
+            ]
+        })
+
+        console.log('filterd data =',FilteredData);
+
         res.status(200).json({
             message: " Get All Users",
-            allUsers
+            FilteredData
         })
 
     } catch (error) {   
             console.log('error =',error);
     }
 }
+
+// export const QueryFilter = async(req,res) => {
+//     try {
+
+//         const mainquery = req.query;
+//         console.log('query =',mainquery);
+
+//         res.status(200).json({
+//             message : "Querttt"
+//         })
+
+//     } catch (error) {   
+//         console.log('error= ',error);
+//     }
+// }

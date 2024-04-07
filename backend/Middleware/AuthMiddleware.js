@@ -7,7 +7,9 @@ export const authMiddleware = async(req,res,next) => {
     const authHeaders = req.headers.authorization;
     console.log('headerss =',authHeaders);
     
-    if(!authHeaders) return res.status(403).json({});
+    if(!authHeaders) return res.status(403).json({
+        message : "Headers not provided"
+    });
     
     const token = authHeaders.split(' ')[1];
     console.log('token found =',token);
