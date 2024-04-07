@@ -15,12 +15,7 @@ export const SignupUser = async(req,res) => {
         }
 
         const bcryptpass = await bcrypt.hash(password,10);
-
         
-        await Account.create({
-            userid : dbuser?._id,
-            balance : 1 + Math.random() * 10000 
-        })
         
         const  dbuser = await User.create({
             username,
@@ -28,6 +23,11 @@ export const SignupUser = async(req,res) => {
             lastname,
             password : bcryptpass
         });
+        
+        await Account.create({
+            userid : dbuser?._id,
+            balance : 1 + Math.random() * 10000 
+        })
 
         const user = await dbuser.save();
 
