@@ -24,7 +24,7 @@ export const SignupUser = async(req,res) => {
 
         const user = await dbuser.save();
 
-        return res.status(200).json({
+        return res.status(201).json({
                message : "User created Successfully",
                user
         })
@@ -72,7 +72,6 @@ export const LoginUser = async(req,res) => {
     }
 }
 
-
 export const Profile = async(req,res) => {
     try {
         console.log('requested user =',req.userid);
@@ -81,7 +80,8 @@ export const Profile = async(req,res) => {
         console.log('getUser =',getUser);
 
         res.status(200).json({
-            message : "Profile Found"
+            message : "Profile Found",
+            getUser
         })
 
     } catch (error) {
@@ -96,7 +96,6 @@ export const  UpdateProfile = async(req,res) => {
         console.log('getUser =',getUser);
 
         const { firstname , lastname ,password } = req.body;
-        console.log('profile body =',{ firstname , lastname ,password });
 
         if(!firstname || !lastname || !password){
             return res.status(404).json({
@@ -109,13 +108,26 @@ export const  UpdateProfile = async(req,res) => {
         if(password)  getUser.password  = password;
  
         const updatedUser = await getUser.save();
-        console.log('updated user =',updatedUser);
 
         return res.status(200).json({
-            message : "Profile Updated"
+            message : "Profile Updated",
+            updatedUser
         })
 
     } catch (error) {   
      console.log('error =',error);        
     }   
+}
+
+export const  AllUsers = async(req,res) => {
+    try {
+        const allUsers = await User.find({});
+        res.status(200).json({
+            message: " Get All Users",
+            allUsers
+        })
+
+    } catch (error) {   
+            console.log('error =',error);
+    }
 }
