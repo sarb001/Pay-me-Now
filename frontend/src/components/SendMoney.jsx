@@ -1,25 +1,24 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 const SendMoney = () => {
 
-  const [users,setusers] = useState('');
+   const handlemoney = () => {
+      
+   }
 
   return (
       <>
-       <div style = {{margin:'4%',display:'flex' ,flexDirection: 'column' ,justifyContent:'center' , alignItems:'center'}}>
-        <div>
-          <input style = {{padding:'2% 2%'}} type = "text"  placeholder= "Enter User Name"  value ={users} 
-          onChange={(e) => setusers(e.target.value)} />
-         </div>
-        <div>
-          <h2> Showing All Users </h2>
-        </div>
+       <div style = {{margin:'%',display:'flex' ,flexDirection: 'column' ,justifyContent:'center' , alignItems:'center' , backgroundColor:'lightgrey' , padding:'3% 0%'}}>
 
-       <div style = {{ display:'flex' , flexDirection:'column' ,backgroundColor:'lightsalmon',margin:'3%',padding:'4%'}}>
-          <span style = {{paddingTop:'8%'}}> Ankit singh <button> Send Money </button> </span>
-          <span style = {{paddingTop:'8%'}}> Ankit singh <button> Send Money </button> </span>
-          <span style = {{paddingTop:'8%'}}> Ankit singh <button> Send Money </button> </span>
-       </div>
+        <span style = {{margin :'3%'}}>
+         <label> Enter Amount (in Rs.) </label>
+         <input style  = {{padding:'1%'}} type = "number"  placeholder='Enter Amount '  />
+        </span>
+
+        <div>
+         <button onClick={handlemoney} style = {{padding:'1%'}}> Send Money </button>
+        </div>
 
        </div>
       </>

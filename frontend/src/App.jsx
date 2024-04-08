@@ -6,6 +6,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import SendMoney from './components/SendMoney';
+import Users from './components/Users';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
         <Routes> 
           <Route  path='/dashboard'  element = {<Dashboard /> } />
           <Route  path='/profile'  element = {<UserProfile /> } />
+          <Route  path='/users'  element = {<Users /> } />
           <Route  path='/signup'  element = {<Signup /> } />
           <Route  path='/login'  element = {<Login /> } />
           <Route  path='/send'  element = {<SendMoney /> } />

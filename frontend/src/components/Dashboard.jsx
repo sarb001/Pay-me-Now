@@ -28,7 +28,7 @@ const Dashboard = () => {
 
         <div style = {{padding:'2%' , backgroundColor:'lightsalmon' , margin:'2%'}}>   
         <span> <FaCircleArrowRight /> </span>
-          <Link to = "/send" > Send Money  </Link> 
+          <Link to = "/users" > Send Money  </Link> 
         </div>
 
         <div style = {{padding:'2%' , backgroundColor:'lightsalmon' , margin:'2%'}}> 
