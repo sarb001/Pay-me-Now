@@ -1,12 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
+import axios from 'axios';
 
 const Dashboard = () => {
 
-  const balance = 10;
+     const token = localStorage.getItem('token');
+     const [balance,setbalance] = useState(0);
+
+      useEffect(() => {
+         const fetchBalance = async() => {
+            try { 
+               const checkbalance = await axios.get('/api/v1/account/balance' , {
+                  headers : {
+                    'Authorization': `Bearer ${token}`
+                  }
+                });
+                setbalance(checkbalance.data.balance.toFixed());
+            } catch (error) {
+                console.log('fetch balance error =',error);
+            }
+         }
+         fetchBalance();
+      },[])
 
   return (
     <>

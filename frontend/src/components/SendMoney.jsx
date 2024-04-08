@@ -1,5 +1,6 @@
+import axios from 'axios';
 import React, { useState } from 'react'
-import { Link, useSearchParams ,useLocation } from 'react-router-dom';
+import { Link, useSearchParams ,useLocation, useNavigate } from 'react-router-dom';
 
 const SendMoney = () => {
 
@@ -9,9 +10,27 @@ const SendMoney = () => {
   const name = searchparams.get("name");
   console.log('name is =',name);
 
+  const [amount,setamount] = useState(0);
+  const navigate = useNavigate();
 
-   const handlemoney = () => {
-       
+   const  token = localStorage.getItem('token');
+
+   const handlemoney = async(e) => {
+       e.preventDefault();
+       try {
+          const res = await axios.post('/api/v1/account/transfer',{
+              amount , 
+              to : id
+          },{
+            headers : {
+              'Authorization' : `Bearer ${token}`
+            }
+          })
+          console.log('res =',res);
+          navigate('/dashboard');
+       } catch (error) {
+        console.log('payment transfer errror =',error);
+       }
    }
 
   return (
@@ -21,12 +40,15 @@ const SendMoney = () => {
           <span style = {{margin :'3%'}}>
              <h2> Payment to = {name}  </h2>
           <label> Enter Amount (in Rs.) </label>
-          <input style  = {{padding:'1%'}} type = "number"  placeholder='Enter Amount '  />
+          <input style  = {{padding:'1%'}} type = "number" 
+           value = {amount}
+           onChange={(e) => setamount(e.target.value)}
+          placeholder='Enter Amount '  />
           </span>
 
-        <div>
-         <button onClick={handlemoney} style = {{padding:'1%'}}> Send Money </button>
-        </div>
+          <div>
+          <button onClick={handlemoney} style = {{padding:'1%'}}> Send Money </button>
+          </div>
 
        </div>
       </>
