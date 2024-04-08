@@ -131,7 +131,7 @@ export const  AllUsers = async(req,res) => {
         const allUsers = await User.find({});
         console.log('allusers =',allUsers);
 
-        const querydata = req.query.filter;
+        const querydata = req.query.filter || '';
         console.log('query =',querydata);
 
 
@@ -147,7 +147,7 @@ export const  AllUsers = async(req,res) => {
 
         res.status(200).json({
             message: " Get All Users",
-            FilteredData
+            user : FilteredData
         })
 
     } catch (error) {   

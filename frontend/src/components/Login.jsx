@@ -13,7 +13,11 @@ const Login = () => {
      e.preventDefault();
      const login = await axios.post('/api/v1/login',{
       username, password
-     })
+     });
+
+     const token  = login.data.token;
+     localStorage.setItem('token',token);
+
      alert('User Logged in ');
      setusername(' ');
      setpassword(' ');
