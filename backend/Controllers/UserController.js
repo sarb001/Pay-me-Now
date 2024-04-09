@@ -128,22 +128,33 @@ export const  UpdateProfile = async(req,res) => {
 
 export const  AllUsers = async(req,res) => {
     try {
-        const allUsers = await User.find({});
-        console.log('allusers =',allUsers);
+        
+        const loggedUserid = req?.userid;
+        console.log('logged userid=',loggedUserid);
+        
+        // const allusers = await User.find({ _id : {$ne : loggedUserid } });
+        // console.log('allusers ===',allusers);
 
         const querydata = req.query.filter || '';
         console.log('query =',querydata);
 
 
         // even 1 string matches in both
-        const FilteredData = await User.find({
+        // const FilteredData = await allusers?.find({
+            // {lastname  :{ "$regex" : querydata }}
+
+        const FilteredData = await User?.find({         /// 7 
             $or : [
-                {firstname :{ "$regex" : querydata }},
-                // {lastname  :{ "$regex" : querydata }}
-            ]
+                {
+                    firstname :{ "$regex" : querydata }
+                },
+            ],
+            _id : {
+                "$ne" : loggedUserid
+            }
         })
 
-        console.log('filterd data =',FilteredData);
+        console.log('filterd data = ',FilteredData);
 
         res.status(200).json({
             message: " Get All Users",
@@ -151,6 +162,6 @@ export const  AllUsers = async(req,res) => {
         })
 
     } catch (error) {   
-            console.log('error =',error);
+            console.log('Bulk Users error =',error);
     }
 }
