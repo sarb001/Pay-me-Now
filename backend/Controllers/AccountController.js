@@ -70,3 +70,13 @@ export const  transferMoney = async(req,res) => {
         console.log('transfer money error =',error);
     }
 }
+
+export const  AllTransaction = async(req,res) => {
+    try {
+        
+        
+
+    } catch (error) {
+            console.log('all trans error',error);
+    }
+}

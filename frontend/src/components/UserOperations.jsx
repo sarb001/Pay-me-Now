@@ -18,7 +18,7 @@ const UserOperations = () => {
             <div> 
                 <button  style = {{padding:'1%'}}> 
                 <span> <MdPayments /> </span>
-                <Link to = "/" >  All Transactions  </Link>  
+                <Link to = "/alltransaction" >  All Transactions  </Link>  
                 </button>
             </div>
 
