@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FaUserCircle } from "react-icons/fa";
 
 const Navbar = () => {
 
@@ -19,11 +20,8 @@ const Navbar = () => {
             </>
           : <>      
               <div style = {{display:'flex' ,flexDirection:'row',justifyContent:'space-evenly'}}>
-              <button  style = {{padding:'1% 4%'}}> 
-                <Link to = "/signup"> SignUp </Link>
-              </button>
-              <button  style = {{padding:'1% 4%'}}> 
-                  <Link to = "/login"> Login </Link>
+              <button  style = {{padding:'1%'}}> 
+                 <Link to = "/dashboard">   <FaUserCircle /> </Link>
               </button>
               </div>
               </>
