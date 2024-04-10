@@ -9,7 +9,7 @@ const Navbar = () => {
     <>
      <div style = {{display : 'grid' ,gridTemplateColumns:'1.2fr 1.8fr' , padding:'1%' , backgroundColor:'lightsalmon' , justifyContent:'space-between' }}>
          <div> 
-          <Link to = "/dashboard"> Payments App  </Link>
+          <Link to = "/dashboard"> Digi-Pay  </Link>
          </div>
           {isAuth ? 
             <>
