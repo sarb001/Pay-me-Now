@@ -26,10 +26,10 @@ const Login = () => {
 
   return (
     <>
-    <div style = {{padding:'2'}}>
-        <h2> Login Now </h2>
+    <div style = {{padding:'2%' ,display:'flex',flexDirection:'column',alignItems:'center'}}>
 
        <form onSubmit={Loginhandler}>
+        <h2> Login Now </h2>
 
             <div style = {{padding:'2%'}}>
             <label> Username </label>
@@ -43,13 +43,13 @@ const Login = () => {
             value = {password}  onChange={(e) => setpassword(e.target.value)}  />
             </div>
       
-            <div style = {{margin:'3%'}}>
-            <button  style = {{padding:'1% 2%'}} type = "submit"> Login Now </button>
-            <div style = {{paddingTop:'3%'}}>
-              <button style = {{padding:'1% 2%'}}>
-                <Link  to = "/signup" > Don't have an Account? Create Now </Link>
-              </button>
+            <div style = {{margin:'3%',display:'grid',gridTemplateRows : '1fr 1fr' , justifyContent:'space-around'}}>
+              <button style = {{padding:'1% 2%'}} type = "submit"> Login Now </button>
+              <br />
+              <button style = {{padding:'1% 2%'}} > Guest Credentials </button>
             </div>
+            <div style = {{paddingTop:'3%'}}>
+                <Link  to = "/signup" > Don't have an Account? Create Now </Link>
             </div>
        </form>
        

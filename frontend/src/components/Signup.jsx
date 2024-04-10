@@ -32,12 +32,11 @@ const Signup = () => {
 
   return (
     <>
-     <div className='signup' style ={{padding:'3%'}}>
-
-          <h2> Create An Account  </h2>
+     <div className='signup' style = {{padding:'2%' ,display:'flex',flexDirection:'column',alignItems:'center'}}>
 
         <form onSubmit={signuphandler}>
           
+          <h2> Create An Account  </h2>
               <div style = {{padding:'2%'}}>
                 <label> First Name </label>
                 <input type = "text"  placeholder='Enter First Name..'  
@@ -66,11 +65,9 @@ const Signup = () => {
               <button  style = {{padding:'1% 2%'}}  type = "submit"> 
                 Create an Account 
               </button>
-              
+
               <div style = {{padding:'3%'}}>
-                <button style = {{padding:'1% 2%'}}> 
                   <Link  to = "/login" > Login Now </Link> 
-                </button>   
               </div>
             </div>
           
