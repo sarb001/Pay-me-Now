@@ -63,9 +63,14 @@ const Signup = () => {
                 </div>
           
             <div style = {{margin:'3%' ,padding:'3%'}}>
-              <button type = "submit"> Create an Account </button>
+              <button  style = {{padding:'1% 2%'}}  type = "submit"> 
+                Create an Account 
+              </button>
+              
               <div style = {{padding:'3%'}}>
-               <Link  to = "/login" > Login Now </Link>
+                <button style = {{padding:'1% 2%'}}> 
+                  <Link  to = "/login" > Login Now </Link> 
+                </button>   
               </div>
             </div>
           

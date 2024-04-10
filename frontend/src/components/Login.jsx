@@ -31,24 +31,26 @@ const Login = () => {
 
        <form onSubmit={Loginhandler}>
 
-        <div style = {{padding:'2%'}}>
-         <label> Username </label>
-         <input type = "text"  placeholder='Enter User Name..'  
-         value = {username}  onChange={(e) => setusername(e.target.value)}  />
-         </div>
+            <div style = {{padding:'2%'}}>
+            <label> Username </label>
+            <input type = "text"  placeholder='Enter User Name..'  
+            value = {username}  onChange={(e) => setusername(e.target.value)}  />
+            </div>
 
-         <div style = {{padding:'2%'}}>
-         <label> Password </label>
-         <input type = "text"  placeholder='Enter Password...'  
-         value = {password}  onChange={(e) => setpassword(e.target.value)}  />
-         </div>
+            <div style = {{padding:'2%'}}>
+            <label> Password </label>
+            <input type = "text"  placeholder='Enter Password...'  
+            value = {password}  onChange={(e) => setpassword(e.target.value)}  />
+            </div>
       
-          <div>
-           <button  type = "submit"> Login Now </button>
-           <div style = {{paddingTop:'3%'}}>
-            <Link  to = "/signup" > Don't have an Account? Create Now </Link>
-           </div>
-          </div>
+            <div style = {{margin:'3%'}}>
+            <button  style = {{padding:'1% 2%'}} type = "submit"> Login Now </button>
+            <div style = {{paddingTop:'3%'}}>
+              <button style = {{padding:'1% 2%'}}>
+                <Link  to = "/signup" > Don't have an Account? Create Now </Link>
+              </button>
+            </div>
+            </div>
        </form>
        
       </div>
