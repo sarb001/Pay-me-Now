@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link  ,useNavigate,useSearchParams } from 'react-router-dom';
+import { Link  ,useNavigate } from 'react-router-dom';
 import axios from 'axios' ;
 
 const Users = () => {
@@ -9,12 +9,15 @@ const Users = () => {
    const token   = localStorage.getItem('token');
    console.log('token users ==',token);
 
+
    const navigate = useNavigate();
+
+  // working properly but re-rendering mutiple time find better solution 
 
    useEffect(() => {
       const fetchdata = async () => {
         try {
-          const allusers  = await axios.get('/api/v1/bulk',{
+          const allusers  = await axios.get(`/api/v1/bulk?filter=${searchuser}`, {
             headers : {
               'Authorization' : `Bearer ${token}`
             }
@@ -26,7 +29,7 @@ const Users = () => {
         } 
       }
      fetchdata();
-    },[])
+    },[searchuser])
 
 
   return (
@@ -34,7 +37,7 @@ const Users = () => {
       <div style = {{margin:'4%',display:'flex' ,flexDirection: 'column' ,justifyContent:'center' , alignItems:'center'}}>
 
           <div>
-            <input style = {{padding:'2% 2%'}} type = "text"  placeholder= "Enter User Name"  value ={searchuser} 
+            <input style = {{padding:'2% 2%'}} type = "text"  placeholder= "Enter User Name"  value = {searchuser} 
             onChange={(e) => setsearchuser(e.target.value)} />
           </div>
 

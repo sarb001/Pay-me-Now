@@ -131,19 +131,11 @@ export const  AllUsers = async(req,res) => {
         
         const loggedUserid = req?.userid;
         console.log('logged userid=',loggedUserid);
-        
-        // const allusers = await User.find({ _id : {$ne : loggedUserid } });
-        // console.log('allusers ===',allusers);
 
         const querydata = req.query.filter || '';
         console.log('query =',querydata);
 
-
-        // even 1 string matches in both
-        // const FilteredData = await allusers?.find({
-            // {lastname  :{ "$regex" : querydata }}
-
-        const FilteredData = await User?.find({         /// 7 
+        const FilteredData = await User?.find({   
             $or : [
                 {
                     firstname :{ "$regex" : querydata }
@@ -154,7 +146,6 @@ export const  AllUsers = async(req,res) => {
             }
         })
 
-        console.log('filterd data = ',FilteredData);
 
         res.status(200).json({
             message: " Get All Users",
