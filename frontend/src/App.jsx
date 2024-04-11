@@ -8,6 +8,8 @@ import Dashboard from './components/Dashboard';
 import SendMoney from './components/SendMoney';
 import Users from './components/Users';
 import AllTransactions from './components/AllTransactions';
+import { ToastContainer , toast  } from 'react-toastify' ;
+import 'react-toastify/dist/ReactToastify.css' ;
 
 function App() {
 
@@ -24,6 +26,7 @@ function App() {
           <Route  path='/login'  element = {<Login /> } />
           <Route  path='/send'  element = {<SendMoney /> } />
         </Routes>
+        <ToastContainer />
     </>
   )
 }

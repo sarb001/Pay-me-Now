@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios' ;
 import {  useDispatch } from 'react-redux' ;
 import { RegisterUser } from '../Slices/userSlice';
+import { toast } from 'react-toastify' ;
 
 const Signup = () => {
 
@@ -21,9 +22,15 @@ const Signup = () => {
        navigate('/login');
     }
 
+    const addtoast = () => {
+      toast.success(' WORKIGNG ' , { autoClose : 1000 });
+    }
+
   return (
     <>
      <div className='signup' style = {{padding:'2%' ,display:'flex',flexDirection:'column',alignItems:'center'}}>
+
+        <button onClick={addtoast}> Button </button>
 
         <form onSubmit={signuphandler}>
           
