@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import {  Link, useNavigate } from 'react-router-dom' ;
+import {  Link, useNavigate   } from 'react-router-dom' ;
+import { useDispatch } from 'react-redux';
+import { LoginUser } from '../Slices/userSlice';
 
 const Login = () => {
 
@@ -8,20 +10,14 @@ const Login = () => {
   const [password,setpassword]   = useState('');
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
    const Loginhandler = async(e) => {
      e.preventDefault();
-     const login = await axios.post('/api/v1/login',{
-      username, password
-     });
-
-     const token  = login.data.token;
-     localStorage.setItem('token',token);
-
-     alert('User Logged in ');
+     await dispatch(LoginUser({username,password}));
      setusername(' ');
      setpassword(' ');
-     navigate('/dashboard');
+      navigate('/dashboard');
    }
 
    const addCredentials = () => {

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios' ;
+import {  useDispatch } from 'react-redux' ;
+import { RegisterUser } from '../Slices/userSlice';
 
 const Signup = () => {
 
@@ -10,24 +12,13 @@ const Signup = () => {
   const [password,setpassword]   = useState('');
 
   const  navigate = useNavigate();
+  const dispatch = useDispatch();
 
    const signuphandler = async(e) => {
     console.log('inside signuphandler');
      e.preventDefault();
-
-     try {
-        const signup = await axios.post('/api/v1/signup' ,{
-        firstname,
-        lastname,
-        username,
-        password
-      })
-      alert('Account created ');
-      setfirstname(''); setlastname(''); setpassword(''); setusername('');
-      navigate('/login');
-     } catch (error) {
-        console.log('signuperror =',error);
-     }
+      await dispatch(RegisterUser({firstname,lastname,username,password}));
+       navigate('/login');
     }
 
   return (
