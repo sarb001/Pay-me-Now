@@ -7,29 +7,62 @@ import Modal from 'react-modal' ;
 const UserOperations = () => {
 
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalamount,setmodalamount] = useState(0);
 
-  function openModal() {
-    setIsOpen(true);
-  }
+    function openModal() {
+        setIsOpen(true);
+    }
 
-  function afterOpenModal() {
-    subtitle.style.color = '#f00';
-  }
+    function afterOpenModal() {
+        subtitle.style.color = '#f00';
+    }
 
-  function closeModal() {
-    setIsOpen(false);
-  }
-   let subtitle;
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+    let subtitle;
+
+    const customStyles = {
+        content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        },
+    };
+
+     const MoneyButtons = [
+        { amount : 10 ,id : 1 },
+        { amount : 100 ,id : 2 },
+        { amount : 500 ,id : 3 },
+        { amount : 1000 ,id : 4 },
+     ]
+
+     const showmamount = (e) => {
+         e.preventDefault();
+         const finalamount = e.target.textContent ;
+         console.log('finalamount ==',Number(finalamount));
+         console.log('modalamount ==',Number(modalamount));
+         setmodalamount(Number(finalamount) + Number(modalamount));
+     }  
+
+     const showaddition = (e) => {
+        e.preventDefault();
+        console.log('addition val ==',e);
+     }
+
+     const onchangeamount = (e) => {
+        const amountchanged = e.target.value;
+        console.log('event amount chg=',amountchanged);
+        setmodalamount(amountchanged);
+     }
+
+        // if modalinput = ' ' just add btn clicked amount 
+        // modalinput = 100
+        // modalinput = btn clicked amount + modalinput 
 
   return (
     <div>
@@ -51,6 +84,7 @@ const UserOperations = () => {
 
            
             <button onClick={openModal}> <MdPayments /> Add Money </button>
+
            <div>
             <Modal
                 isOpen={modalIsOpen}
@@ -59,18 +93,37 @@ const UserOperations = () => {
                 style={customStyles}
                 ariaHideApp ={false}
                 contentLabel="Example Modal">
-                <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-                <button onClick={closeModal}>close</button>
-                <div>I am a modal</div>
-                <form>
-                <input />
-                <button>tab navigation</button>
-                <button>stays</button>
-                <button>inside</button>
-                <button>the modal</button>
+                <h2 ref={(_subtitle) => (subtitle = _subtitle)}></h2>
+                <div style = {{display:'flex' ,justifyContent:'space-between'}}>
+                    <h2> Add Money </h2>
+                    <button onClick={closeModal}>close</button>
+                </div>
+                <form style = {{display:'flex' ,flexDirection:'column' , justifyContent:'space-evenly'}}>
+                    <div style = {{margin:'4% 2%'}}>
+                         <input  type = "number" placeholder='Enter Amount ' 
+                         style = {{padding:'2%'}}
+                         value = {modalamount}
+                         onChange={(e) => onchangeamount(e)}
+                         />
+                    </div>
+
+                     <div style = {{margin:'12% 2%'}}>
+                        <div style = {{display:'grid' ,gridTemplateColumns:'1fr 1fr' }} >
+                                {MoneyButtons?.map((item) =>
+                                    <div key = {item.id}>
+                                         <button onClick={(e) => showmamount(e)}  style = {{padding:'2% 1%'}}> {item.amount}  </button>
+                                    </div>
+                                    )}
+                        </div>
+                     </div>
+
+                     <div>
+                          <button onClick={(e) => showaddition(e)} style = {{padding:'3% 10%'}}> Add </button>
+                     </div>
+
                 </form>
             </Modal>
-    </div>
+          </div>
 
     </div>
  </div>
