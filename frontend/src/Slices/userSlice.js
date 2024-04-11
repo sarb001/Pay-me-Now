@@ -6,10 +6,10 @@ const initialState = {
     error : false
 }
 
-export const  RegisterUser = createAsyncThunk('/user/register' , async(userData , { rejectWithValue }) => {
+export const  RegisterUser = createAsyncThunk('/api/v1/register' , async(userData , { rejectWithValue }) => {
      try {
          console.log('register userData =',userData);
-         const  response = await axios.post('/user/register' ,userData);
+         const  response = await axios.post('/api/v1/register' ,userData);
          console.log('res =',response);
          return response.data;
      } catch (error) {  
@@ -17,13 +17,15 @@ export const  RegisterUser = createAsyncThunk('/user/register' , async(userData 
      }
 });
 
-export const  LoginUser = createAsyncThunk('/user/login' , async(userData , { rejectWithValue }) => {
+export const  LoginUser = createAsyncThunk('/api/v1/login' , async(userData , { rejectWithValue }) => {
     try {
         console.log('login userData =',userData);
-        const  response = await axios.post('/user/login' ,userData);
+        const  response = await axios.post('/api/v1/login' ,userData);
+        localStorage.setItem('token',response.data.token);
+        console.log(' login response =',response);
         return response.data;
     } catch (error) {  
-       console.log(' login error =',error);
+        return  console.log(' login error =',error);
     }
 });
 
