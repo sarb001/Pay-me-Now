@@ -73,8 +73,8 @@ export const  transferMoney = async(req,res) => {
 
 export const  AllTransaction = async(req,res) => {
     try {
-        
-        
+        // money paid to  user will show here
+
 
     } catch (error) {
             console.log('all trans error',error);

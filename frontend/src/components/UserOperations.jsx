@@ -11,7 +11,7 @@ const UserOperations = () => {
             <div>
                 <button style = {{padding:'1%'}}>
                     <span> <FaCircleArrowRight /> </span>
-                    <Link to = "/users" > Send Money  </Link> 
+                    <Link to = "/users" > Pay Money  </Link> 
                 </button>
             </div>
 

@@ -38,7 +38,7 @@ const AllTransactions = () => {
                         </div>
 
                         <div>
-                            <h2> {i.payment} </h2>
+                            <h2> Rs. {i.payment} </h2>
                         </div>
 
                     </div>
