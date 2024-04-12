@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserOperations from './UserOperations';
+import {  useSelector } from 'react-redux' ;
 
 const Dashboard = () => {
 
@@ -24,6 +25,10 @@ const Dashboard = () => {
          fetchBalance();
       },[])
 
+      const { userData }  =  useSelector(state => state?.users);
+      console.log('users ===',userData);
+
+
   return (
     <div style = {{display:'flex', flexDirection:'column',margin:'2% 12%'}}>
    
@@ -32,6 +37,10 @@ const Dashboard = () => {
             <div> 
               <Link to = "/logout"> Logout </Link>
             </div>
+        </div>
+
+        <div>
+           <h3> Username = {userData?.username} </h3>
         </div>
 
         <div style = {{fontSize:'26px' , backgroundColor:'lightgray',marginTop:'3%' ,padding:'2%'}}>

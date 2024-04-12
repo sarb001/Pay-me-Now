@@ -3,9 +3,15 @@ import axios from 'axios';
 import { toast } from 'react-toastify' ;
 
 const initialState = {
+    
+    usertoken : localStorage.getItem('token') || null,
     loading : false,
     error : false,
-    userData : null,
+    userData : null,        // for login
+
+    validateuser : false,
+    validateUserLoading : false,
+
 }
 
 export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData , { rejectWithValue }) => {
@@ -37,38 +43,74 @@ export const  LoginUser = createAsyncThunk('/api/v1/login' , async(userData , { 
     }
 });
 
+export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData , { rejectWithValue }) => {
+    try {
+            console.log('userdata =',userData);
+        const response = await axios.get('/api/v1/profile' , {
+             headers : { 'Authorization' : `Bearer ${userData.usertoken}` }
+        });
+        console.log('profile valid',response.data.user);
+        return response.data.user;
+    } catch (error) { 
+        console.log('error =',error);
+    }
+})
 
-export const userSlice = createSlice({
+
+ const userSlice = createSlice({
     name : 'user',
     initialState,
     reducers : {
 
     },
     extraReducers : (builder) =>  {
-        builder.addCase(RegisterUser.pending ,  (state,action) => {
+        builder
+        .addCase(RegisterUser.pending ,  (state,action) => {
                 state.loading = true;
         })
-        builder.addCase(RegisterUser.fulfilled , (state,action) => {
+        .addCase(RegisterUser.fulfilled , (state,action) => {
                 state.loading = false;
                 state.userData = action.payload;        // true when  creating 
         })
-        builder.addCase(RegisterUser.rejected , (state,action) => {
+        .addCase(RegisterUser.rejected , (state,action) => {
                 state.loading = false;
                 state.error   =  action.payload;
         })
 
+        .addCase(LoginUser.pending ,  (state,action) => {
+            state.loading = true;
+        })
+        .addCase(LoginUser.fulfilled , (state,action) => {
+            const { user ,token } = action.payload;
+                console.log('user before =',user);
+                console.log('tokken before =',token);
+                state.userData = user;        //  get token , user 
 
-        builder.addCase(LoginUser.pending ,  (state,action) => {
-                state.loading = true;
-        })
-        builder.addCase(LoginUser.fulfilled , (state,action) => {
-                const { user ,token } = action.payload
+                state.usertoken = token;
                 state.loading = false;
-                state.userData = user;        //  get token  
+                
         })
-        builder.addCase(LoginUser.rejected , (state,action) => {
+        .addCase(LoginUser.rejected , (state,action) => {
                 state.loading = false;
                 state.error   =  action.payload;
         })
-    }
+
+        .addCase(ValidateUser.pending ,  (state,action) => {
+                state.validateUserLoading = true;
+        })
+        .addCase(ValidateUser.fulfilled , (state,action) => {
+            console.log('action validate =',action.payload);
+                // state.usertoken
+                state.userData = action.payload;         // full user profile
+                state.validateuser = true
+                state.validateUserLoading = false;
+        })
+        .addCase(ValidateUser.rejected , (state,action) => {
+                state.validateUserLoading = false;
+                state.validateuser = false;
+                state.error  =  action.payload;
+        })
+}
 })
+
+export default userSlice.reducer;

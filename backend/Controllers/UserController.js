@@ -89,9 +89,11 @@ export const Profile = async(req,res) => {
         const getUser = await User.findById(req.userid).select("-password");
         console.log('getUser =',getUser);
 
+        const user = getUser;
+
         res.status(200).json({
             message : "Profile Found",
-            getUser
+            user
         })
 
     } catch (error) {
