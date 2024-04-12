@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserOperations from './UserOperations';
-import {  useSelector } from 'react-redux' ;
+import {  useSelector , useDispatch } from 'react-redux' ;
+import { logout } from '../Slices/userSlice';
+import {  useNavigate  } from 'react-router-dom' ;
 
 const Dashboard = () => {
 
@@ -28,6 +30,16 @@ const Dashboard = () => {
       const { userData }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
 
+      const dispatch = useDispatch();
+      const navigate = useNavigate();
+
+     const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        dispatch(logout());
+        navigate('/');
+     }
+
 
   return (
     <div style = {{display:'flex', flexDirection:'column',margin:'2% 12%'}}>
@@ -35,7 +47,9 @@ const Dashboard = () => {
         <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between'}}>
             <div style = {{fontSize:'25px'}}> Dashboard Section </div>
             <div> 
-              <Link to = "/logout"> Logout </Link>
+              <button onClick={handleLogout}>
+               <Link to = "/logout"> Logout </Link>
+              </button>
             </div>
         </div>
 

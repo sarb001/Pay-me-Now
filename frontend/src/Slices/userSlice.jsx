@@ -61,9 +61,13 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
     name : 'user',
     initialState,
     reducers : {
-
+        logout(state,action){
+            state.usertoken = null;
+            state.userData = null;
+        }
     },
     extraReducers : (builder) =>  {
+
         builder
         .addCase(RegisterUser.pending ,  (state,action) => {
                 state.loading = true;
@@ -95,6 +99,7 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
                 state.error   =  action.payload;
         })
 
+
         .addCase(ValidateUser.pending ,  (state,action) => {
                 state.validateUserLoading = true;
         })
@@ -112,5 +117,7 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
         })
 }
 })
+
+export const { logout } = userSlice.actions;
 
 export default userSlice.reducer;

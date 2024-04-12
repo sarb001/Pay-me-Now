@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css' ;
 import { useDispatch , useSelector } from 'react-redux' ;
 import { useEffect } from 'react';
 import { ValidateUser } from './Slices/userSlice';
+import ProtectedRoute from './utils/ProtectedRoute';
 
 function App() {
   
@@ -30,16 +31,20 @@ function App() {
   return (
     <>
        <Navbar />
-        <Routes> 
-          <Route  path='/'  element = {<Home /> } />
-          <Route  path='/dashboard'  element = {<Dashboard /> } />
-          <Route  path='/alltransaction'  element = {<AllTransactions /> } />
-          <Route  path='/profile'  element = {<UserProfile /> } />
-          <Route  path='/users'  element = {<Users /> } />
-          <Route  path='/signup'  element = {<Signup /> } />
-          <Route  path='/login'  element = {<Login /> } />
-          <Route  path='/send'  element = {<SendMoney /> } />
-        </Routes>
+          <Routes> 
+            <Route  path='/'  element = {<Home /> } />
+            <Route  path='/dashboard'  element = {
+              <ProtectedRoute>
+                  <Dashboard /> 
+              </ProtectedRoute>
+            } />
+            <Route  path='/alltransaction'  element = {<AllTransactions /> } />
+            <Route  path='/profile'  element = {<UserProfile /> } />
+            <Route  path='/users'  element = {<Users /> } />
+            <Route  path='/signup'  element = {<Signup /> } />
+            <Route  path='/login'  element = {<Login /> } />
+            <Route  path='/send'  element = {<SendMoney /> } />
+          </Routes>
         <ToastContainer />
     </>
   )

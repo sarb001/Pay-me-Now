@@ -1,7 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux' ;
 
 const Home = () => {
+  
+  const { userData  } = useSelector(state => state?.users);
+  console.log('userData home',userData);
+
+
   return (
     
       <div style = {{display:'grid' , margin:'5% 25%' ,gridTemplateRows :'1fr 1fr 1fr' }}>
@@ -15,14 +21,23 @@ const Home = () => {
 
            <div style = {{marginTop:'5%' ,display:'grid', gridTemplateRows : '1fr 1fr' ,backgroundColor:'lightslategray' }}>
              <div style = {{fontSize:'28px',padding:'3%'}}> Register or Login ,add Money to your account and start sending to your family </div>
-             <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between' ,margin:'5%'}}>
-              <button style={{width:'50%'}}>
-                 <Link to = "/signup"> Register </Link>
-              </button>
-              <button style={{width:'50%'}}>
-                  <Link to = "/login"> Login </Link>
-              </button>
-             </div>
+              {userData ? (
+              <>
+                <button style={{width:'50%'}}>
+                  <Link to = "/dashboard"> Dashboard </Link>
+                </button>
+              </>) : 
+              (<> 
+                <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between' ,margin:'5%'}}>
+                  <button style={{width:'50%'}}>
+                    <Link to = "/signup"> Register </Link>
+                  </button>
+                  <button style={{width:'50%'}}>
+                      <Link to = "/login"> Login </Link>
+                  </button>
+                </div>
+              </>)}
+
            </div>
 
            <div style = {{marginTop:'3%' ,padding:'7%',display:'grid', gridTemplateColumns : '1fr 1fr' ,backgroundColor: 'lightcoral' }}>

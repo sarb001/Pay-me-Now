@@ -82,6 +82,21 @@ export const LoginUser = async(req,res) => {
     }
 }
 
+export const Logout = async(req,res) => {
+    try {
+        const userid = req.userid;
+        
+        const user = await User.findById(userid).select("-password");
+        return res.status(200).json({
+            message : " User Logged Out ",
+            user : null
+        })
+
+    } catch (error) {
+            console.log('logout failed ',error);
+    }
+}
+
 export const Profile = async(req,res) => {
     try {
         console.log('requested user =',req.userid);
