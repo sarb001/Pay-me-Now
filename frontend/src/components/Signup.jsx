@@ -16,21 +16,15 @@ const Signup = () => {
   const dispatch = useDispatch();
 
    const signuphandler = async(e) => {
-    console.log('inside signuphandler');
-     e.preventDefault();
-      await dispatch(RegisterUser({firstname,lastname,username,password}));
+       console.log('inside signuphandler');
+       e.preventDefault();
+       await dispatch(RegisterUser({firstname,lastname,username,password}));
        navigate('/login');
-    }
-
-    const addtoast = () => {
-      toast.success(' WORKIGNG ' , { autoClose : 1000 });
     }
 
   return (
     <>
      <div className='signup' style = {{padding:'2%' ,display:'flex',flexDirection:'column',alignItems:'center'}}>
-
-        <button onClick={addtoast}> Button </button>
 
         <form onSubmit={signuphandler}>
           

@@ -4,16 +4,17 @@ import { toast } from 'react-toastify' ;
 
 const initialState = {
     loading : false,
-    error : false
+    error : false,
+    userData : null,
 }
 
-export const  RegisterUser = createAsyncThunk('/api/v1/register' , async(userData , { rejectWithValue }) => {
+export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData , { rejectWithValue }) => {
      try {
          console.log('register userData =',userData);
-         const  response = await axios.post('/api/v1/register' ,userData);
+         const  response = await axios.post('/api/v1/signup' ,userData);
          console.log('res =',response);
          toast.success(' User Registration Completed ');
-         return response.data;
+         return true;
      } catch (error) {  
          console.log(' registration error =',error);
          toast.error("Something went wrong");
@@ -44,6 +45,30 @@ export const userSlice = createSlice({
 
     },
     extraReducers : (builder) =>  {
-        builder.addCase()
+        builder.addCase(RegisterUser.pending ,  (state,action) => {
+                state.loading = true;
+        })
+        builder.addCase(RegisterUser.fulfilled , (state,action) => {
+                state.loading = false;
+                state.userData = action.payload;        // true when  creating 
+        })
+        builder.addCase(RegisterUser.rejected , (state,action) => {
+                state.loading = false;
+                state.error   =  action.payload;
+        })
+
+
+        builder.addCase(LoginUser.pending ,  (state,action) => {
+                state.loading = true;
+        })
+        builder.addCase(LoginUser.fulfilled , (state,action) => {
+                const { user ,token } = action.payload
+                state.loading = false;
+                state.userData = user;        //  get token  
+        })
+        builder.addCase(LoginUser.rejected , (state,action) => {
+                state.loading = false;
+                state.error   =  action.payload;
+        })
     }
 })

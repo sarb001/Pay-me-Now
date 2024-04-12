@@ -69,9 +69,12 @@ export const LoginUser = async(req,res) => {
 
         const token =  jwt.sign({userid : findUser._id},process.env.JWT_SECRET);
         console.log('token gen =',token);
-        
+
+        const user = findUser;
+
         return res.status(200).json({
             token,
+            user
         })
 
     } catch (error) {
