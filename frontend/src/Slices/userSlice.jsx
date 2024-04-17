@@ -12,6 +12,11 @@ const initialState = {
     validateuser : false,
     validateUserLoading : false,
 
+    balanceloading : false,
+
+    balance : 0,
+
+
 }
 
 export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData , { rejectWithValue }) => {
@@ -53,6 +58,21 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
         return response.data.user;
     } catch (error) { 
         console.log('error =',error);
+    }
+})
+
+
+export const ShowBalance = createAsyncThunk('/api/v1/account/balance' , async(userData , { rejectWithValue }) => {
+    try {
+        console.log('insde slice',userData);
+        const balance = await axios.get('/api/v1/account/balance' ,{
+            headers : { 'Authorization' : `Bearer ${userData.usertoken}` }
+        });
+        console.log('balance -==',balance);
+        return balance;
+
+    } catch (error) {
+            console.log(' balance error= ',error);
     }
 })
 
@@ -115,6 +135,20 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
                 state.validateuser = false;
                 state.error  =  action.payload;
         })
+
+
+        .addCase(ShowBalance.pending , (state,action) => {
+             state.balanceloading = false;
+            })
+        .addCase(ShowBalance.fulfilled , (state,action) => {
+                state.balanceloading = true;
+                state.validateuser = true
+                state.balance = action.payload;
+        })
+        .addCase(ShowBalance.rejected , (state,action) => {
+                state.error = action.payload
+        })
+
 }
 })
 

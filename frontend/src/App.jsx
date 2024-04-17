@@ -33,16 +33,22 @@ function App() {
        <Navbar />
           <Routes> 
             <Route  path='/'  element = {<Home /> } />
+            <Route  path='/signup'  element = {<Signup /> } />
+            <Route  path='/login'  element = {<Login /> } />
+
             <Route  path='/dashboard'  element = {
               <ProtectedRoute>
                   <Dashboard /> 
               </ProtectedRoute>
             } />
-            <Route  path='/alltransaction'  element = {<AllTransactions /> } />
+            <Route  path='/alltransaction'  element = {
+              <ProtectedRoute>
+                <AllTransactions /> 
+              </ProtectedRoute>
+            } />
             <Route  path='/profile'  element = {<UserProfile /> } />
             <Route  path='/users'  element = {<Users /> } />
-            <Route  path='/signup'  element = {<Signup /> } />
-            <Route  path='/login'  element = {<Login /> } />
+
             <Route  path='/send'  element = {<SendMoney /> } />
           </Routes>
         <ToastContainer />

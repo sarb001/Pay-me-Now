@@ -9,11 +9,12 @@ export const balance = async(req,res) => {
         const account = await Account.findOne({
             userid : req.userid
         });
-        console.log('account for bal=',account);
+        console.log('account  bal backend =',account);
 
         return res.status(200).json({
             balance : account.balance,
-            message : "Balance Left"
+            message : "Balance Left",
+            account
         })
 
     } catch (error) {

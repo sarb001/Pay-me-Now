@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
 import Modal from 'react-modal' ;
+import { useDispatch } from 'react-redux';
 
 const UserOperations = () => {
 
@@ -41,6 +42,8 @@ const UserOperations = () => {
         { amount : 1000 ,id : 4 },
      ]
 
+     const dispatch = useDispatch();
+
      const showmamount = (e) => {
          e.preventDefault();
          const finalamount = e.target.textContent ;
@@ -48,11 +51,6 @@ const UserOperations = () => {
          console.log('modalamount ==',Number(modalamount));
          setmodalamount(Number(finalamount) + Number(modalamount));
      }  
-
-     const showaddition = (e) => {
-        e.preventDefault();
-        console.log('addition val ==',e);
-     }
 
      const onchangeamount = (e) => {
         const amountchanged = e.target.value;
@@ -115,10 +113,6 @@ const UserOperations = () => {
                                     </div>
                                     )}
                         </div>
-                     </div>
-
-                     <div>
-                          <button onClick={(e) => showaddition(e)} style = {{padding:'3% 10%'}}> Add </button>
                      </div>
 
                 </form>

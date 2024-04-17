@@ -3,34 +3,22 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserOperations from './UserOperations';
 import {  useSelector , useDispatch } from 'react-redux' ;
-import { logout } from '../Slices/userSlice';
+import { ShowBalance, logout } from '../Slices/userSlice';
 import {  useNavigate  } from 'react-router-dom' ;
 
 const Dashboard = () => {
 
-     const token = localStorage.getItem('token');
-     const [balance,setbalance] = useState(0);
-
-      useEffect(() => {
-         const fetchBalance = async() => {
-            try { 
-               const checkbalance = await axios.get('/api/v1/account/balance' , {
-                  headers : {
-                    'Authorization': `Bearer ${token}`
-                  }
-                });
-                setbalance(checkbalance.data.balance.toFixed());
-            } catch (error) {
-                console.log('fetch balance error =',error);
-            }
-         }
-         fetchBalance();
-      },[])
-
+      const dispatch = useDispatch();
       const { userData }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
+      console.log('balance =',balance);
 
-      const dispatch = useDispatch();
+       useEffect(() => {
+         console.log('inside effect');
+          dispatch(ShowBalance({}));
+       },[])
+
+
       const navigate = useNavigate();
 
      const handleLogout = (e) => {
@@ -40,6 +28,9 @@ const Dashboard = () => {
         navigate('/');
      }
 
+      const showaddition = (e) => {
+
+      }
 
   return (
     <div style = {{display:'flex', flexDirection:'column',margin:'2% 12%'}}>
@@ -62,14 +53,16 @@ const Dashboard = () => {
 
                 <div>  <span> Current Balance </span> </div>
 
-                <div>  <span> Rs.  {balance}  </span></div>
+                <div>  <span> Rs.  { balance ? balance: 0}  </span></div>
 
         </div>
 
         <div>
             <UserOperations />
         </div>
-
+         <div>
+                          <button onClick={(e) => showaddition(e)} style = {{padding:'3% 10%'}}> Add </button>
+          </div>
     </div>
   )
 }
