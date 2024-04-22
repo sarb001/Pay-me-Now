@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-import Account from "../Schemas/BankSchema.js";
+// import Account from "../Schemas/BankSchema.js";
 import User from "../Schemas/UserSchemas.js";
 
 export const balance = async(req,res) => {

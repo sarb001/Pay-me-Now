@@ -11,7 +11,7 @@ const Dashboard = () => {
       const dispatch = useDispatch();
       const { userData }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
-      console.log('balance =',balance);
+      // console.log('balance =',balance);
 
        useEffect(() => {
          console.log('inside effect');
@@ -48,14 +48,13 @@ const Dashboard = () => {
            <h3> Username = {userData?.username} </h3>
         </div>
 
-        <div style = {{fontSize:'26px' , backgroundColor:'lightgray',marginTop:'3%' ,padding:'2%'}}>
+         <div style = {{fontSize:'26px' , backgroundColor:'lightgray',marginTop:'3%' ,padding:'2%'}}>
                 <div> <span> INR </span> </div>
 
                 <div>  <span> Current Balance </span> </div>
-
-                <div>  <span> Rs.  { balance ? balance: 0}  </span></div>
-
-        </div>
+                
+              </div> 
+              {/* <div>  <span> Rs.  { balance ? balance: 0}  </span></div> */}
 
         <div>
             <UserOperations />
