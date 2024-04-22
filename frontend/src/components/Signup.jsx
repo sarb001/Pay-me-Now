@@ -7,9 +7,9 @@ import { toast } from 'react-toastify' ;
 
 const Signup = () => {
 
-  const [firstname,setfirstname] = useState('');
-  const [lastname,setlastname]   = useState('');
+  const [fullname,setfullname] = useState('');
   const [username,setusername]   = useState('');
+  const [email,setemail] = useState('');
   const [password,setpassword]   = useState('');
 
   const  navigate = useNavigate();
@@ -18,9 +18,14 @@ const Signup = () => {
    const signuphandler = async(e) => {
        console.log('inside signuphandler');
        e.preventDefault();
-       await dispatch(RegisterUser({firstname,lastname,username,password}));
+       await dispatch(RegisterUser({fullname,username,email,password}));
        navigate('/login');
     }
+
+    // Full name
+    // username
+    // email
+    // password
 
   return (
     <>
@@ -30,21 +35,21 @@ const Signup = () => {
           
           <h2> Create An Account  </h2>
               <div style = {{padding:'2%'}}>
-                <label> First Name </label>
-                <input type = "text"  placeholder='Enter First Name..'  
-                value = {firstname}  onChange={(e) => setfirstname(e.target.value)}  />
+                <label> Full Name </label>
+                <input type = "text"  placeholder='Enter Full Name..'  
+                value = {fullname}  onChange={(e) => setfullname(e.target.value)}  />
               </div>
 
                 <div style = {{padding:'2%'}}>
-                <label> Last Name </label>
-                <input type = "text"  placeholder='Enter Last Name..'  
-                value = {lastname}  onChange={(e) => setlastname(e.target.value)}  />
+                <label> Username </label>
+                <input type = "text"  placeholder='Enter Your UserName..'  
+                value = {username}  onChange={(e) => setusername(e.target.value)}  />
                 </div>
               
                 <div style = {{padding:'2%'}}>
-                <label> Username </label>
-                <input type = "text"  placeholder='Enter User Name..'  
-                value = {username}  onChange={(e) => setusername(e.target.value)}  />
+                <label> Email </label>
+                <input type = "email"  placeholder='Enter Email..'  
+                value = {email}  onChange={(e) => setemail(e.target.value)}  />
                 </div>
 
                 <div style = {{padding:'2%'}}>

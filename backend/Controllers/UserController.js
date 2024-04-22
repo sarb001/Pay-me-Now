@@ -5,10 +5,10 @@ import jwt from 'jsonwebtoken' ;
 
 export const SignupUser = async(req,res) => {
     try {
-        const { username , firstname ,lastname , password } = req.body;
-        console.log('signup data =',username , firstname ,lastname , password);
+        const { username , fullname , email , password } = req.body;
+        console.log('signup data =',username , fullname , email , password);
 
-        if(!username || !firstname || !lastname || !password){
+        if(!username || !fullname || !email || !password){
              return res.status(404).json({
                  message : "Enter All Details"
              })
@@ -19,8 +19,8 @@ export const SignupUser = async(req,res) => {
         
         const  dbuser = await User.create({
             username,
-            firstname,
-            lastname,
+            fullname,
+            email,
             password : bcryptpass
         });
         
