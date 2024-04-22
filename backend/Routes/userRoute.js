@@ -16,7 +16,6 @@ router.route('/updateprofile').put(authMiddleware,UpdateProfile);
 
 router.route('/bulk').get(authMiddleware,AllUsers);
 
-// router.route('/bulk').get(authMiddleware,QueryFilter);
 
 
 

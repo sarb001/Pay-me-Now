@@ -19,6 +19,7 @@ function App() {
   
   const { userData , usertoken } = useSelector(state => state?.users);
   console.log('protected route app  =',userData);
+  console.log('protected route token  =',usertoken);
 
    const dispatch = useDispatch();
 

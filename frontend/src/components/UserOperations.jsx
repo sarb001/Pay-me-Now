@@ -69,7 +69,7 @@ const UserOperations = () => {
             <div>
                 <button style = {{padding:'1%'}}>
                     <span> <FaCircleArrowRight /> </span>
-                    <Link to = "/users" > Pay Money  </Link> 
+                    <Link to = "/users" > Pay /Request Money  </Link> 
                 </button>
             </div>
 
@@ -80,7 +80,14 @@ const UserOperations = () => {
                 </button>
             </div>
 
-           
+            <div>
+                <button className='py-2 px-4 '> Sent Requests </button>
+            </div>   
+
+            <div>
+                <button> Received Requests </button>
+            </div>   
+
             <button onClick={openModal}> <MdPayments /> Add Money </button>
 
            <div>

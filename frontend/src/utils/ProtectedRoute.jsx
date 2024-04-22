@@ -4,12 +4,12 @@ import { Navigate , useLocation } from 'react-router-dom' ;
  
 const ProtectedRoute = ({children}) => {
 
-    const { userData } = useSelector(state => state?.users);
-    console.log('protected route  =',userData);
+    const { usertoken } = useSelector(state => state?.users);
+    console.log('Main  Protected =',usertoken);
 
     const location = useLocation();
 
-    return  userData ? (
+    return  usertoken ? (
         children
     ) : (
         <Navigate  to = "/login"  state = {{ prevUrl : location.pathname }} replace />

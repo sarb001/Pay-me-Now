@@ -15,7 +15,7 @@ const Dashboard = () => {
 
        useEffect(() => {
          console.log('inside effect');
-          dispatch(ShowBalance({}));
+          // dispatch(ShowBalance({}));
        },[])
 
 
@@ -27,10 +27,6 @@ const Dashboard = () => {
         dispatch(logout());
         navigate('/');
      }
-
-      const showaddition = (e) => {
-
-      }
 
   return (
     <div style = {{display:'flex', flexDirection:'column',margin:'2% 12%'}}>
@@ -59,9 +55,7 @@ const Dashboard = () => {
         <div>
             <UserOperations />
         </div>
-         <div>
-                          <button onClick={(e) => showaddition(e)} style = {{padding:'3% 10%'}}> Add </button>
-          </div>
+       
     </div>
   )
 }

@@ -21,7 +21,8 @@ export const SignupUser = async(req,res) => {
             username,
             fullname,
             email,
-            password : bcryptpass
+            password : bcryptpass,
+            accountBalance : 0
         });
         
         const user = await dbuser.save();

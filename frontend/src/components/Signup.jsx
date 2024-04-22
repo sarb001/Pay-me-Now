@@ -34,11 +34,11 @@ const Signup = () => {
         <form onSubmit={signuphandler}>
           
           <h2> Create An Account  </h2>
-              <div style = {{padding:'2%'}}>
-                <label> Full Name </label>
-                <input type = "text"  placeholder='Enter Full Name..'  
-                value = {fullname}  onChange={(e) => setfullname(e.target.value)}  />
-              </div>
+                <div style = {{padding:'2%'}}>
+                  <label> Full Name </label>
+                  <input type = "text"  placeholder='Enter Full Name..'  
+                  value = {fullname}  onChange={(e) => setfullname(e.target.value)}  />
+                </div>
 
                 <div style = {{padding:'2%'}}>
                 <label> Username </label>
