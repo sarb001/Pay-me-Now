@@ -1,27 +1,11 @@
 
 import mongoose from "mongoose";
-// import Account from "../Schemas/BankSchema.js";
 import User from "../Schemas/UserSchemas.js";
 
-export const balance = async(req,res) => {
-    try {   
 
-        const account = await Account.findOne({
-            userid : req.userid
-        });
-        console.log('account  bal backend =',account);
+//  pay | request money 
 
-        return res.status(200).json({
-            balance : account.balance,
-            message : "Balance Left",
-            account
-        })
-
-    } catch (error) {
-        console.log('error balance =',error);
-    }
-}
-
+// pay-money / transfer money
 export const  transferMoney = async(req,res) => {
     try {
         const session = await mongoose.startSession();
@@ -72,6 +56,118 @@ export const  transferMoney = async(req,res) => {
     }
 }
 
+
+// request money 
+export const RequestMoney = async(req,res) => {
+        try {
+
+            // money amount entered = 1000,  loggeduser id 
+            
+            // user whom to sent ( sender whom requesting )
+
+            // update with schema 
+
+            const user = await User.findById(user._id);
+            console.log('main logged user =',user);
+
+                // in frontend 
+                // amount = amout from modal 
+                // username = selected user to pay amount 
+
+            const { amount , requestedusername } = req?.body;
+            console.log('amount =',amount);
+            console.log('requested user',requestedusername);
+
+            if(amount <= 1){
+                return res.status(400).json({
+                    message : "Amount should be greator than 1"
+                })
+             }
+
+             if(requestedusername == ''){
+                return res.status(400).json({
+                    message : "Enter a name to sent Request"
+                })
+             }
+
+
+            const mainuser = await User.findOneAndUpdate(
+            {
+                username : requestedusername
+            },
+            {
+                $push :{
+                    recievedRequest : {         // id of logged user (  who sent  it )
+                        _id : user?._id,
+                        username : user?.username,
+                        firstname : user?.firstname,
+                        amount : amount,
+                        status : "PENDING"       
+                    } 
+                }
+            },{ new : true })
+
+            console.log('main user ==',mainuser);
+
+            res.status(200).json({
+                 message: " Money Requested "
+            })
+
+        } catch (error) {
+            console.log('request money error= ',error);  
+        }
+}
+
+
+// sentrequest ==> show all  sent requests that are paid | rejected are made  ( username , amount )
+        // sentrequest => PaymentSchema 
+        //  PAID , PENDING , REJECTED
+
+export const sentRequest = async(req,res) => {
+            try {
+        
+            } catch (error) {
+                console.log('sent request error =',error);
+            }
+}
+
+
+//  In recieved  requests =>
+
+// pay / reject
+
+// pay => accept money
+// rejectmoney => in recieving end  reject  so reject the money 
+
+export const acceptmoney = async(req,res) => {
+    try {
+        
+    } catch (error) {
+        console.log('accept moneyerror =',error);
+    }
+}
+
+export const  rejectmoney = async(req,res) => {
+    try {
+        
+    } catch (error) {
+        console.log('rejected money error =',error);
+    }
+}
+
+
+
+
+// add money with modal and add it in  balance 
+export const addMoney = async(req,res) => {
+    try {
+        
+    } catch (error) {
+
+    }
+}
+
+ // all transactions 
 export const  AllTransaction = async(req,res) => {
     try {
         // money paid to  user will show here
@@ -82,26 +178,23 @@ export const  AllTransaction = async(req,res) => {
     }
 }
 
-export const RequestMoney = async(req,res) => {
-        try {
 
-            // money amount entered = 1000,  loggeduser id 
-            
-            // user whom to sent ( sender whom requesting )
+ // show balance 
+ export const balance = async(req,res) => {
+    try {   
 
-            // update with schema 
+        const account = await Account.findOne({
+            userid : req.userid
+        });
+        console.log('account  bal backend =',account);
 
-            const loggeduserid = req.userid;
-            const requested = req?.body;
-            console.log('request =',requested);
+        return res.status(200).json({
+            balance : account.balance,
+            message : "Balance Left",
+            account
+        })
 
-            console.log('logged request userid =',loggeduserid);
-
-            res.status(200).json({
-                 message: " Money Requested "
-            })
-
-        } catch (error) {
-            console.log('request money error= ',error);  
-        }
+    } catch (error) {
+        console.log('error balance =',error);
+    }
 }
