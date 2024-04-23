@@ -54,14 +54,24 @@ const Users = () => {
                   <div className='mx-4 my-1 font-bold'>
                     <div className='grid grid-cols-2 bg-slate-500 p-3'>
                       <div> {i.username} </div>
-                          <div> 
-                            <button className='bg-black text-white p-2 px-6'
-                            onClick={(e) =>{
-                              navigate("/send?id=" + i._id + "&name=" + i.username)
-                            }}> 
-                            <Link to = "/send"> Send Money </Link> 
-                            </button>
-                          </div>
+
+                        <div className='grid grid-cols-2 gap-2'>
+                            <div> 
+                              <button className='bg-black text-white p-2 px-6'
+                              onClick={(e) =>{
+                                navigate("/send?id=" + i._id + "&name=" + i.username)
+                              }}> 
+                              <Link to = "/send"> Pay </Link> 
+                              </button>
+                            </div>
+
+                            <div> 
+                              <button className='bg-black text-white p-2 px-6'> 
+                                <Link to = "/send"> Request Money </Link> 
+                              </button>
+                            </div>
+                      </div>
+
                     </div>
                   </div>
                   </div>

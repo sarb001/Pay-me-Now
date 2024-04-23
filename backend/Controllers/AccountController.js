@@ -81,3 +81,27 @@ export const  AllTransaction = async(req,res) => {
             console.log('all trans error',error);
     }
 }
+
+export const RequestMoney = async(req,res) => {
+        try {
+
+            // money amount entered = 1000,  loggeduser id 
+            
+            // user whom to sent ( sender whom requesting )
+
+            // update with schema 
+
+            const loggeduserid = req.userid;
+            const requested = req?.body;
+            console.log('request =',requested);
+
+            console.log('logged request userid =',loggeduserid);
+
+            res.status(200).json({
+                 message: " Money Requested "
+            })
+
+        } catch (error) {
+            console.log('request money error= ',error);  
+        }
+}
