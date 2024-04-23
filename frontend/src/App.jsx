@@ -15,6 +15,8 @@ import { useEffect } from 'react';
 import { ValidateUser } from './Slices/userSlice';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { initFlowbite } from 'flowbite' ;
+import SentRequest from './Services/SentRequest';
+import RecievedRequest from './Services/RecievedRequest';
 
 
 function App() {
@@ -50,11 +52,27 @@ function App() {
                 <AllTransactions /> 
               </ProtectedRoute>
             } />
-            <Route  path='/profile'  element = {<UserProfile /> } />
-            <Route  path='/users'  element = {<Users /> } />
+            <Route  path='/profile'  element = { <ProtectedRoute>  <UserProfile /> </ProtectedRoute> } />
 
-            <Route  path='/send'  element = {<SendMoney /> } />
+            <Route  path='/users'  element = {
+              <ProtectedRoute>
+                 <Users /> 
+              </ProtectedRoute>
+            } />
+
+            <Route  path = '/send'  element = { <ProtectedRoute> <SendMoney /> </ProtectedRoute> } />
+
+            <Route  path = '/sentrequests'  element = { 
+            <ProtectedRoute>
+               <SentRequest />
+            </ProtectedRoute> } />
+            <Route  path = '/recievedrequests'  element = { 
+            <ProtectedRoute> 
+              <RecievedRequest /> 
+            </ProtectedRoute> } />
+
           </Routes>
+
         <ToastContainer />
     </>
   )
