@@ -14,6 +14,8 @@ import { useDispatch , useSelector } from 'react-redux' ;
 import { useEffect } from 'react';
 import { ValidateUser } from './Slices/userSlice';
 import ProtectedRoute from './utils/ProtectedRoute';
+import { initFlowbite } from 'flowbite' ;
+
 
 function App() {
   
@@ -25,6 +27,7 @@ function App() {
 
    useEffect(() => {
       console.log('user vadiated -');
+      initFlowbite();
       dispatch(ValidateUser({usertoken}));
    },[dispatch])
 
