@@ -34,7 +34,7 @@ const Dashboard = () => {
         <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between'}}>
             <div style = {{fontSize:'25px'}}> Dashboard Section </div>
             <div> 
-              <button onClick={handleLogout}>
+              <button className='bg-black px-6 py-2 text-white' onClick={handleLogout}>
                <Link to = "/logout"> Logout </Link>
               </button>
             </div>

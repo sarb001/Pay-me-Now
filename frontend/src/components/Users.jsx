@@ -7,7 +7,7 @@ const Users = () => {
    const [searchuser,setsearchuser] = useState('');
    const [users,setusers] = useState('');
    const token   = localStorage.getItem('token');
-   console.log('token users ==',token);
+   console.log('token ==',token);
 
 
    const navigate = useNavigate();

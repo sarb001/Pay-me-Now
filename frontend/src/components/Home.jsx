@@ -23,16 +23,16 @@ const Home = () => {
              <div style = {{fontSize:'28px',padding:'3%'}}> Register or Login ,add Money to your account and start sending to your family </div>
               {userData ? (
               <>
-                <button style={{width:'50%'}}>
+                <button className='w-1/2 bg-slate-700 text-white p-4'>
                   <Link to = "/dashboard"> Dashboard </Link>
                 </button>
               </>) : 
               (<> 
                 <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between' ,margin:'5%'}}>
-                  <button style={{width:'50%'}}>
+                  <button className='w-1/2 bg-slate-700 text-white p-4'>
                     <Link to = "/signup"> Register </Link>
                   </button>
-                  <button style={{width:'50%'}}>
+                  <button className='w-1/2 bg-slate-700 text-white p-4'>
                       <Link to = "/login"> Login </Link>
                   </button>
                 </div>

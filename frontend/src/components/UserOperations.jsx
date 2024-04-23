@@ -64,7 +64,7 @@ const UserOperations = () => {
 
   return (
     <>
-         <div className='mt-5 bg-slate-300 grid grid-cols-2 text-center p-4 justify-between'>   
+         <div className='mt-5 bg-slate-300 grid grid-cols-2 text-center p-4 '>   
            
          <div>
 
@@ -74,31 +74,31 @@ const UserOperations = () => {
                 </button>
             </div>
 
-            <div className='m-4'> 
-                <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'>
-                <Link to = "/alltransaction" >  All Transactions  </Link>  
-                </button>
-            </div>
+            <div className='m-4'>
+                    <button className='bg-blue-400 p-2 px-8  font-bold border-2  border-black'> Received Requests </button>
+            </div> 
+         
 
         </div>
          
-            <div>
+        <div>
 
                 <div className='m-4'>
                     <button className=' font-bold bg-blue-400 p-2 px-8 border-2 border-black'> Sent Requests </button>
                 </div>   
 
-                <div className='m-4'>
-                    <button className='bg-blue-400 p-2 px-8  font-bold border-2  border-black'> Received Requests </button>
-                </div>   
-
-            </div>
-
-            <div>
+                <div>
                     <button className='bg-blue-400 p-2 px-8 font-bold border-2 border-black' onClick={openModal}>  Add Money </button>
-            </div>
+                 </div>
 
+        </div>
 
+        <div className='m-4 flex'> 
+                <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'>
+                <Link to = "/alltransaction" >  All Transactions  </Link>  
+                </button>
+        </div>
+           
             {/*  Add Money Modal  */}
 
            <div>

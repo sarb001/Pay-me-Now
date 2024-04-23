@@ -22,19 +22,14 @@ const Signup = () => {
        navigate('/login');
     }
 
-    // Full name
-    // username
-    // email
-    // password
-
   return (
     <>
-     <div className='signup' style = {{padding:'2%' ,display:'flex',flexDirection:'column',alignItems:'center'}}>
+     <div className='signup' style = {{padding:'2%' , display:'flex',flexDirection:'column',alignItems:'center'}}>
 
-        <form onSubmit={signuphandler}>
+        <form onSubmit={signuphandler} className ='bg-lime-300 p-4'>
           
           <h2> Create An Account  </h2>
-                <div style = {{padding:'2%'}}>
+                <div className='p-1'>
                   <label> Full Name </label>
                   <input type = "text"  placeholder='Enter Full Name..'  
                   value = {fullname}  onChange={(e) => setfullname(e.target.value)}  />
@@ -58,12 +53,13 @@ const Signup = () => {
                 value = {password}  onChange={(e) => setpassword(e.target.value)}  />
                 </div>
           
-            <div style = {{margin:'3%' ,padding:'3%'}}>
-              <button  style = {{padding:'1% 2%'}}  type = "submit"> 
-                Create an Account 
-              </button>
+            <div>
 
-              <div style = {{padding:'3%'}}>
+                <button className=' bg-black text-white p-2 m-2'  type = "submit"> 
+                  Create an Account 
+                </button>
+
+              <div className=' bg-black text-white p-2'>
                   <Link  to = "/login" > Login Now </Link> 
               </div>
             </div>
