@@ -63,32 +63,43 @@ const UserOperations = () => {
         // modalinput = btn clicked amount + modalinput 
 
   return (
-    <div>
-         <div style = {{padding:'2%' , display:'grid', gridTemplateColumns:'1fr 1fr 1fr' , backgroundColor:'lightsalmon' , margin:'2%'}}>   
+    <>
+         <div className='mt-5 bg-slate-300 grid grid-cols-2 text-center p-4 justify-between'>   
            
-            <div>
-                <button style = {{padding:'1%'}}>
-                    <span> <FaCircleArrowRight /> </span>
+         <div>
+
+            <div className='m-4'>
+                <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'> 
                     <Link to = "/users" > Pay /Request Money  </Link> 
                 </button>
             </div>
 
-            <div> 
-                <button  style = {{padding:'1%'}}> 
-                <span> <MdPayments /> </span>
+            <div className='m-4'> 
+                <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'>
                 <Link to = "/alltransaction" >  All Transactions  </Link>  
                 </button>
             </div>
 
+        </div>
+         
             <div>
-                <button className='py-2 px-4 '> Sent Requests </button>
-            </div>   
+
+                <div className='m-4'>
+                    <button className=' font-bold bg-blue-400 p-2 px-8 border-2 border-black'> Sent Requests </button>
+                </div>   
+
+                <div className='m-4'>
+                    <button className='bg-blue-400 p-2 px-8  font-bold border-2  border-black'> Received Requests </button>
+                </div>   
+
+            </div>
 
             <div>
-                <button> Received Requests </button>
-            </div>   
+                    <button className='bg-blue-400 p-2 px-8 font-bold border-2 border-black' onClick={openModal}>  Add Money </button>
+            </div>
 
-            <button onClick={openModal}> <MdPayments /> Add Money </button>
+
+            {/*  Add Money Modal  */}
 
            <div>
             <Modal
@@ -124,10 +135,10 @@ const UserOperations = () => {
 
                 </form>
             </Modal>
-          </div>
+           </div>
 
     </div>
- </div>
+ </>
        
   )
 }
