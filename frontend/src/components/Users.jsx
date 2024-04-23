@@ -42,7 +42,7 @@ const Users = () => {
           </div>
 
           <div>
-            <h2> Showing All Users </h2>
+            <div className='font-bold'> Showing All Users </div>
           </div>
 
           <div style = {{ display:'flex' , flexDirection:'column' ,backgroundColor:'lightsalmon',margin:'1%',padding:'2%'}}>
@@ -51,16 +51,18 @@ const Users = () => {
               {
                 return (
                   <div key = {i._id}>
-                  <div style = {{paddingTop:'2% 1%'}}>
-                      {i.username} 
-                      <span> 
-                        <button style = {{padding:'2%'}} 
-                        onClick={(e) =>{
-                          navigate("/send?id=" + i._id + "&name=" + i.username)
-                        }}> 
-                         <Link to = "/send"> Send Money </Link> 
-                        </button>
-                       </span>
+                  <div className='mx-4 my-1 font-bold'>
+                    <div className='grid grid-cols-2 bg-slate-500 p-3'>
+                      <div> {i.username} </div>
+                          <div> 
+                            <button className='bg-black text-white p-2 px-6'
+                            onClick={(e) =>{
+                              navigate("/send?id=" + i._id + "&name=" + i.username)
+                            }}> 
+                            <Link to = "/send"> Send Money </Link> 
+                            </button>
+                          </div>
+                    </div>
                   </div>
                   </div>
                 )

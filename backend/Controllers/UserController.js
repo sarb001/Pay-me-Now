@@ -154,7 +154,7 @@ export const  AllUsers = async(req,res) => {
         const FilteredData = await User?.find({   
             $or : [
                 {
-                    firstname :{ "$regex" : querydata }
+                    fullname :{ "$regex" : querydata }
                 },
             ],
             _id : {

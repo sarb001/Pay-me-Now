@@ -44,7 +44,7 @@ const Login = () => {
             </div>
       
             <div style = {{margin:'3%',display:'grid',gridTemplateRows : '1fr 1fr' , justifyContent:'space-around'}}>
-              <button style = {{padding:'1% 2%'}} type = "submit"> Login Now </button>
+              <button className='bg-black text-white px-5 py-2' type = "submit"> Login Now </button>
               <br />
               <button  onClick={addCredentials} style = {{padding:'1% 2%'}} > Guest Credentials </button>
             </div>
