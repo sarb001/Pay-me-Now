@@ -159,6 +159,7 @@ const Users = () => {
 
                         </div>
 
+                            <Button> Request </Button>
                     </form>
                 </div>
                 </Modal.Body>

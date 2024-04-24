@@ -19,11 +19,16 @@ export const  transferMoney = async(req,res) => {
             })
         }
 
-        const account  = await Account.findOne({ userid : req.userid }).session(session);
+     // use something else instead of Account ( not present )
+
+     console.log('req user id = ',req.userid);
+     const account  = await User.findOne({ _id : req.userid }).session(session);
+            
+        // const account  = await Account.findOne({ userid : req.userid }).session(session);
         console.log('sender acccount =',account);
 
         // checking constriants 
-        if(!account ||  account.balance < amount){
+        if(!account ||  account.accountBalance < amount){
             await session.abortTransaction();
             return res.status(400).json({
                 message : " Insufficient Balance "
@@ -31,7 +36,10 @@ export const  transferMoney = async(req,res) => {
         }
 
         console.log('to account =',to);
-        const toAccount = await Account.findOne({ userid : to }).session(session);
+
+        const toAccount = await User.findOne({ userid : to }).session(session);
+
+        // const toAccount = await Account.findOne({ userid : to }).session(session);
         console.log('to acccount =',toAccount);
 
         // check constraints 
@@ -42,13 +50,18 @@ export const  transferMoney = async(req,res) => {
             }) 
         }
 
-        await Account.updateOne({ userid : req.userid } , { $inc : { balance : -amount } }).session(session);
-        await Account.updateOne({ userid : to }, { $inc : { balance : amount } }).session(session);
+        await User.updateOne({ userid : req.userid } , { $inc : { balance : -amount } }).session(session);
+        await User.updateOne({ userid : to }, { $inc : { balance : amount } }).session(session);
+        
+
+        // await Account.updateOne({ userid : req.userid } , { $inc : { balance : -amount } }).session(session);
+        // await Account.updateOne({ userid : to }, { $inc : { balance : amount } }).session(session);
         
         await session.commitTransaction();
 
         res.status(200).json({
-            message : " Transfer Successful "
+            message : " Transfer Successful ",
+            User
         })
 
     } catch (error) {

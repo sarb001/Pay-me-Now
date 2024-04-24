@@ -15,7 +15,7 @@ const Dashboard = () => {
 
        useEffect(() => {
          console.log('inside effect');
-          // dispatch(ShowBalance({}));
+          dispatch(ShowBalance());
        },[])
 
 

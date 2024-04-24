@@ -2,6 +2,11 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Link, useSearchParams ,useLocation, useNavigate } from 'react-router-dom';
 
+import { Button, Modal } from "flowbite-react";
+import { useDispatch, useSelector } from 'react-redux';
+import { TransferMoney } from '../Slices/userSlice';
+
+
 const SendMoney = () => {
 
   const [searchparams] = useSearchParams();
@@ -12,25 +17,15 @@ const SendMoney = () => {
 
   const [amount,setamount] = useState(0);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-   const  token = localStorage.getItem('token');
+   const { usertoken } = useSelector(state => state?.users);
+   console.log('user token =',usertoken);
 
    const handlemoney = async(e) => {
        e.preventDefault();
-       try {
-          const res = await axios.post('/api/v1/account/transfer',{
-              amount , 
-              to : id
-          },{
-            headers : {
-              'Authorization' : `Bearer ${token}`
-            }
-          })
-          console.log('res =',res);
-          navigate('/dashboard');
-       } catch (error) {
-        console.log('payment transfer errror =',error);
-       }
+        dispatch(TransferMoney({usertoken,amount,id}));
+       navigate('/dashboard');
    }
 
   return (
@@ -47,7 +42,7 @@ const SendMoney = () => {
           </span>
 
           <div>
-          <button onClick={handlemoney} style = {{padding:'1%'}}> Send Money </button>
+          <Button onClick={handlemoney} style = {{padding:'1%'}}> Send Money </Button>
           </div>
 
        </div>
