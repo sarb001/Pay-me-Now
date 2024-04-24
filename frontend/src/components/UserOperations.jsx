@@ -87,39 +87,39 @@ const UserOperations = () => {
                 <Modal.Header />
                 <Modal.Body>
                 <div className="text-center">
-                <form class="space-y-4" >
+                    <form class="space-y-4" >
 
-                    <div>
-                                    <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                    Enter Amount     
-                                    </label>
-                                    <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
-                                    type = "number" placeholder='Enter Amount ' 
-                                    style = {{padding:'2%'}}
-                                    value = {modalamount}
-                                    onChange={(e) => onchangeamount(e)}
-                                    required
-                                    />
+                        <div>
+                                        <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Enter Amount     
+                                        </label>
+                                        <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                                        type = "number" placeholder='Enter Amount ' 
+                                        style = {{padding:'2%'}}
+                                        value = {modalamount}
+                                        onChange={(e) => onchangeamount(e)}
+                                        required
+                                        />
 
-                    </div>
+                        </div>
 
-                    <div style = {{margin:'12% 2%'}}>
+                        <div style = {{margin:'12% 2%'}}>
 
-                        {MoneyButtons?.map((item) =>
-                            
-                                <div className = 'grid grid-cols-2 m-2' key = {item.id}>
-                                    
-                                    <Button   color = "success"  type = "submit"
-                                    onClick={(e) => showmamount(e)}> 
-                                        {item.amount}  
-                                    </Button>
-                                </div>
-                            
-                        )}
+                            {MoneyButtons?.map((item) =>
+                                
+                                    <div className = 'grid grid-cols-2 m-2' key = {item.id}>
+                                        
+                                        <Button   color = "success"  type = "submit"
+                                        onClick={(e) => showmamount(e)}> 
+                                            {item.amount}  
+                                        </Button>
+                                    </div>
+                                
+                            )}
 
-                    </div>
+                        </div>
 
-                </form>
+                    </form>
                 </div>
                 </Modal.Body>
             </Modal>

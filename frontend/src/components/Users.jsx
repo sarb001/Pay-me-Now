@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link  ,useNavigate } from 'react-router-dom';
 import axios from 'axios' ;
 import { useDispatch } from 'react-redux';
+import { Button, Modal } from "flowbite-react";
 
 const Users = () => {
     
@@ -10,6 +11,7 @@ const Users = () => {
    const token   = localStorage.getItem('token');
    console.log('token ==',token);
 
+   const [openModal, setOpenModal] = useState(false);
 
    const [modalamount,setmodalamount] = useState(0);
 
@@ -91,12 +93,11 @@ const Users = () => {
                               </button>
                             </div>
 
-                       
-                              <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" >
-                                 Requested Money
-                              </button>
+                              <div>
+                              <Button onClick={() => setOpenModal(true)}> Requested Money </Button>
+                              </div>
 
-                      </div>
+                        </div>
                     </div>
                   </div>
                   </div>
@@ -107,9 +108,61 @@ const Users = () => {
 
               {/* Request Money Modal */}
 
-          <div>
-            
-          </div>
+            <div>
+              <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+                <Modal.Header />
+                <Modal.Body>
+                  <div className="text-center">
+                    <div className="flex justify-center gap-4">
+                      <Button color="orange" onClick={() => setOpenModal(false)}>
+                           Request 
+                      </Button>
+                    </div>
+                  </div>
+                </Modal.Body>
+              </Modal>
+            </div>
+
+            <Modal show={openModal} size="md" onClose={() => setOpenModal(false)} popup>
+                <Modal.Header />
+                <Modal.Body>
+                <div className="text-center">
+                    <form class="space-y-4" >
+
+                        <div>
+                                        <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                        Enter Amount     
+                                        </label>
+                                        <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                                        type = "number" placeholder='Enter Amount ' 
+                                        style = {{padding:'2%'}}
+                                        value = {modalamount}
+                                        onChange={(e) => onchangeamount(e)}
+                                        required
+                                        />
+
+                        </div>
+
+                        <div style = {{margin:'12% 2%'}}>
+
+                            {MoneyButtons?.map((item) =>
+                                
+                                    <div className = 'grid grid-cols-2 m-2' key = {item.id}>
+                                        
+                                        <Button   color = "success"  type = "submit"
+                                        onClick={(e) => showmamount(e)}> 
+                                            {item.amount}  
+                                        </Button>
+                                    </div>
+                                
+                            )}
+
+                        </div>
+
+                    </form>
+                </div>
+                </Modal.Body>
+            </Modal>
 
        </div>
     </>
@@ -117,40 +170,3 @@ const Users = () => {
 }
 
 export default Users
-
-
-{/* <div class="p-4 md:p-5"> */}
-{/* <form class="space-y-4" >
-
-    <div>
-        <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-        Enter Amount     
-        </label>
-        <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
-        type = "number" placeholder='Enter Amount ' 
-        style = {{padding:'2%'}}
-        value = {modalamount}
-        onChange={(e) => onchangeamount(e)}
-        required
-        />
-
-    </div>
-    
-    <div style = {{margin:'12% 2%'}}>
-
-        {MoneyButtons?.map((item) =>
-            
-                <div className = 'grid grid-cols-2 m-2' key = {item.id}>
-                    <button  
-                    type = "submit"
-                    onClick={(e) => showmamount(e)} class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"> 
-                        {item.amount}  
-                    </button>
-                </div>
-            
-        )}
-
-    </div>
-
-</form> */}
-{/* </div> */}
