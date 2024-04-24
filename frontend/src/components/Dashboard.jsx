@@ -9,13 +9,13 @@ import {  useNavigate  } from 'react-router-dom' ;
 const Dashboard = () => {
 
       const dispatch = useDispatch();
-      const { userData }  =  useSelector(state => state?.users);
+      const { userData , balance , usertoken }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
-      // console.log('balance =',balance);
+      console.log('balance --=',balance);
 
        useEffect(() => {
          console.log('inside effect');
-          dispatch(ShowBalance());
+          dispatch(ShowBalance({usertoken}));
        },[])
 
 
@@ -48,9 +48,9 @@ const Dashboard = () => {
                 <div> <span> INR </span> </div>
 
                 <div>  <span> Current Balance </span> </div>
+              <div>  <span> Rs.  { balance ? balance: 0}  </span></div>
                 
               </div> 
-              {/* <div>  <span> Rs.  { balance ? balance: 0}  </span></div> */}
 
         <div>
             <UserOperations />

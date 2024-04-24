@@ -196,13 +196,13 @@ export const  AllTransaction = async(req,res) => {
  export const balance = async(req,res) => {
     try {   
 
-        const account = await Account.findOne({
-            userid : req.userid
+        const account = await User.findOne({
+            _id : req.userid
         });
         console.log('account  bal backend =',account);
 
         return res.status(200).json({
-            balance : account.balance,
+            balance : account.accountBalance,
             message : "Balance Left",
             account
         })

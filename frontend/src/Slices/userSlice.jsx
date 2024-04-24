@@ -65,11 +65,12 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
 export const ShowBalance = createAsyncThunk('/api/v1/account/balance' , async(userData , { rejectWithValue }) => {
     try {
         console.log('balance userdata =',userData);
-        const balance = await axios.get('/api/v1/account/balance' ,{
+        const Userbalance = await axios.get('/api/v1/account/balance' ,{
             headers : { 'Authorization' : `Bearer ${userData.usertoken}` }
         });
-        console.log('balance -==',balance);
-        return balance;
+        const bal  = Userbalance.data.balance;
+        console.log('balance slice ==',Userbalance.data.balance);
+        return bal;
 
     } catch (error) {
             console.log(' balance error= ',error);
