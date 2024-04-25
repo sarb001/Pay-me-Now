@@ -14,9 +14,6 @@ const initialState = {
 
     balanceloading : false,
 
-    balance : 0,
-
-
 }
 
 export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData , { rejectWithValue }) => {
@@ -62,21 +59,6 @@ export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData 
 })
 
 
-export const ShowBalance = createAsyncThunk('/api/v1/account/balance' , async(userData , { rejectWithValue }) => {
-    try {
-        console.log('balance userdata =',userData);
-        const Userbalance = await axios.get('/api/v1/account/balance' ,{
-            headers : { 'Authorization' : `Bearer ${userData.usertoken}` }
-        });
-        const bal  = Userbalance.data.balance;
-        console.log('balance slice ==',Userbalance.data.balance);
-        return bal;
-
-    } catch (error) {
-            console.log(' balance error= ',error);
-    }
-})
-
 export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async(userData , { rejectWithValue }) => {
     try {
          console.log('transfer money userData =',userData);
@@ -86,18 +68,15 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
             amount , 
             to : id
         },{
-          headers : {
-            'Authorization' : `Bearer ${usertoken}`
-          }
+          headers : { 'Authorization' : `Bearer ${usertoken}` }
         });
 
-        console.log('res =',res);
-        return res;
+        console.log('res =',res.data);
+        return res.data.account;
     } catch (error) {
             console.log('handle money error ',error);
     }
 })
-
 
 
 
@@ -163,27 +142,16 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
         })
 
 
-        .addCase(ShowBalance.pending , (state,action) => {
-             state.balanceloading = false;
-            })
-        .addCase(ShowBalance.fulfilled , (state,action) => {
-                state.balanceloading = true;
-                state.validateuser = true
-                state.balance = action.payload;
-        })
-        .addCase(ShowBalance.rejected , (state,action) => {
-                state.error = action.payload
-        })
-
         .addCase(TransferMoney.pending , (state,action) => {
              state.balanceloading = false;
             })
         .addCase(TransferMoney.fulfilled , (state,action) => {
                 state.balanceloading = true;
                 state.validateuser = true
-
+                console.log('action 1',action.payload);
                 // correct it ( making transactions )
-                state.balance = action.payload;
+                state.userData  = action.payload;
+                console.log('action 2',action.payload);
         })
         .addCase(TransferMoney.rejected , (state,action) => {
                 state.error = action.payload

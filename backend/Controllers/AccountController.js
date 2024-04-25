@@ -37,7 +37,7 @@ export const  transferMoney = async(req,res) => {
 
         console.log('to account =',to);
 
-        const toAccount = await User.findOne({ userid : to }).session(session);
+        const toAccount = await User.findOne({ _id : to }).session(session);
 
         // const toAccount = await Account.findOne({ userid : to }).session(session);
         console.log('to acccount =',toAccount);
@@ -50,18 +50,16 @@ export const  transferMoney = async(req,res) => {
             }) 
         }
 
-        await User.updateOne({ userid : req.userid } , { $inc : { balance : -amount } }).session(session);
-        await User.updateOne({ userid : to }, { $inc : { balance : amount } }).session(session);
-        
-
-        // await Account.updateOne({ userid : req.userid } , { $inc : { balance : -amount } }).session(session);
-        // await Account.updateOne({ userid : to }, { $inc : { balance : amount } }).session(session);
+        await User.updateOne({ _id : req.userid } , { $inc : { accountBalance : -amount } }).session(session);
+        await User.updateOne({ _id : to }, { $inc : { accountBalance : amount } }).session(session);
         
         await session.commitTransaction();
 
+        console.log('account login =',account);
+
         res.status(200).json({
             message : " Transfer Successful ",
-            User
+            account
         })
 
     } catch (error) {
@@ -169,8 +167,6 @@ export const  rejectmoney = async(req,res) => {
 }
 
 
-
-
 // add money with modal and add it in  balance 
 export const addMoney = async(req,res) => {
     try {
@@ -188,26 +184,5 @@ export const  AllTransaction = async(req,res) => {
 
     } catch (error) {
             console.log('all trans error',error);
-    }
-}
-
-
- // show balance 
- export const balance = async(req,res) => {
-    try {   
-
-        const account = await User.findOne({
-            _id : req.userid
-        });
-        console.log('account  bal backend =',account);
-
-        return res.status(200).json({
-            balance : account.accountBalance,
-            message : "Balance Left",
-            account
-        })
-
-    } catch (error) {
-        console.log('error balance =',error);
     }
 }
