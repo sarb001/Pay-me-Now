@@ -8,7 +8,7 @@ import {  useNavigate  } from 'react-router-dom' ;
 const Dashboard = () => {
 
       const dispatch = useDispatch();
-      const { userData  , balance ,usertoken }  =  useSelector(state => state?.users);
+      const { userData   ,usertoken }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
 
       const navigate = useNavigate();
@@ -41,8 +41,9 @@ const Dashboard = () => {
 
                 <div>  <span> Current Balance </span> </div>
 
-              <div>  <span> Rs.  { userData ? userData : 0}  </span></div>
-                
+              <div>  
+                  Rs.{ userData?.accountBalance  ? userData?.accountBalance : 0 }
+              </div>  
               </div> 
 
         <div>

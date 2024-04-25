@@ -72,7 +72,7 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
         });
 
         console.log('res =',res.data);
-        return res.data.account;
+        return res.data.user;
     } catch (error) {
             console.log('handle money error ',error);
     }
@@ -148,10 +148,10 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
         .addCase(TransferMoney.fulfilled , (state,action) => {
                 state.balanceloading = true;
                 state.validateuser = true
-                console.log('action 1',action.payload);
+                console.log('action 11 ',action.payload);
                 // correct it ( making transactions )
                 state.userData  = action.payload;
-                console.log('action 2',action.payload);
+                console.log('action 22 ',action.payload);
         })
         .addCase(TransferMoney.rejected , (state,action) => {
                 state.error = action.payload
