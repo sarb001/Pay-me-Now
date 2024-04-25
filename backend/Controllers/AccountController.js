@@ -6,64 +6,95 @@ import User from "../Schemas/UserSchemas.js";
 //  pay | request money 
 
 // pay-money / transfer money
-export const  transferMoney = async(req,res) => {
-    try {
-        const session = await mongoose.startSession();
+// export const  transferMoney = async(req,res) => {
+//     try {
+//         const session = await mongoose.startSession();
 
-        session.startTransaction();
+//         session.startTransaction();
+//         const { amount , to } = req.body;
+
+//         if(isNaN(amount)){
+//             return res.status(400).json({
+//                 message : "Not a Number"
+//             })
+//         }
+
+//      // use something else instead of Account ( not present )
+
+//      console.log('req user id = ',req.userid);
+//      const account  = await User.findOne({ _id : req.userid }).session(session);
+            
+//         // const account  = await Account.findOne({ userid : req.userid }).session(session);
+//         console.log('sender acccount =',account);
+
+//         // checking constriants 
+//         if(!account ||  account.accountBalance < amount){
+//             await session.abortTransaction();
+//             return res.status(400).json({
+//                 message : " Insufficient Balance "
+//             })
+//         }
+
+//         console.log('to account =',to);
+
+//         const toAccount = await User.findOne({ _id : to }).session(session);
+
+//         // const toAccount = await Account.findOne({ userid : to }).session(session);
+//         console.log('to acccount =',toAccount);
+
+//         // check constraints 
+//         if(!toAccount){
+//             await session.abortTransaction();
+//             return res.status(400).json({
+//                 message : " Invalid Account "
+//             }) 
+//         }
+
+//         await User.updateOne({ _id : req.userid } , { $inc : { accountBalance : -amount } }).session(session);
+//         await User.updateOne({ _id : to }, { $inc : { accountBalance : amount } }).session(session);
+        
+//         await session.commitTransaction();
+
+//         console.log('account login =',account);
+
+//         res.status(200).json({
+//             message : " Transfer Successful ",
+//             account : account.accountBalance
+//         })
+
+//     } catch (error) {
+//         console.log('transfer money error =',error);
+//     }
+// }
+
+
+export const paymoney = async(req,res) => {
+    try {
+        
         const { amount , to } = req.body;
 
         if(isNaN(amount)){
-            return res.status(400).json({
-                message : "Not a Number"
-            })
+          return res.status(400).json({
+              message : "Not a Number"
+          })
         }
 
-     // use something else instead of Account ( not present )
+        const userid = req.userid;
+        console.log('userid= ',userid);
+        const loggeduser = await User.findById(userid);
+        console.log('logged user =',loggeduser);
 
-     console.log('req user id = ',req.userid);
-     const account  = await User.findOne({ _id : req.userid }).session(session);
-            
-        // const account  = await Account.findOne({ userid : req.userid }).session(session);
-        console.log('sender acccount =',account);
+         console.log('paytouser to=',to);
 
-        // checking constriants 
-        if(!account ||  account.accountBalance < amount){
-            await session.abortTransaction();
-            return res.status(400).json({
-                message : " Insufficient Balance "
-            })
-        }
-
-        console.log('to account =',to);
-
-        const toAccount = await User.findOne({ _id : to }).session(session);
-
-        // const toAccount = await Account.findOne({ userid : to }).session(session);
-        console.log('to acccount =',toAccount);
-
-        // check constraints 
-        if(!toAccount){
-            await session.abortTransaction();
-            return res.status(400).json({
-                message : " Invalid Account "
-            }) 
-        }
-
-        await User.updateOne({ _id : req.userid } , { $inc : { accountBalance : -amount } }).session(session);
-        await User.updateOne({ _id : to }, { $inc : { accountBalance : amount } }).session(session);
-        
-        await session.commitTransaction();
-
-        console.log('account login =',account);
+        const paytoUser = await User.findById(to);
+        console.log('paytouser=',paytoUser);
 
         res.status(200).json({
-            message : " Transfer Successful ",
-            account : account.accountBalance
+            message :  "fetchedd"
         })
 
     } catch (error) {
-        console.log('transfer money error =',error);
+        console.log('paymoney error =',error);
     }
 }
 

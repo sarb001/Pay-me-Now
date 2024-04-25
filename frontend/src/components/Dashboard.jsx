@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import UserOperations from './UserOperations';
 import {  useSelector , useDispatch } from 'react-redux' ;
 import { logout } from '../Slices/userSlice';
@@ -20,8 +19,6 @@ const Dashboard = () => {
         dispatch(logout());
         navigate('/');
      }
-
-
 
   return (
     <div style = {{display:'flex', flexDirection:'column',margin:'2% 12%'}}>
