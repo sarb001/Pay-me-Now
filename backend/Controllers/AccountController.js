@@ -190,6 +190,14 @@ export const  AllTransaction = async(req,res) => {
     try {
         // money paid to  user will show here
 
+        const user = await User.findById(req.userid);
+
+        const AllTransaction = await User.findById(req.userid).select('transactions');
+        console.log('allogged user transactions = ',AllTransaction);
+
+        res.status(200).json({
+            message :" All Transactions "
+        })
 
     } catch (error) {
             console.log('all trans error',error);
