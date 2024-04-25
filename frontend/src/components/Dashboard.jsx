@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import UserOperations from './UserOperations';
 import {  useSelector , useDispatch } from 'react-redux' ;
-import { ShowBalance, logout } from '../Slices/userSlice';
+import { logout } from '../Slices/userSlice';
 import {  useNavigate  } from 'react-router-dom' ;
 
 const Dashboard = () => {
@@ -11,12 +11,6 @@ const Dashboard = () => {
       const dispatch = useDispatch();
       const { userData  , balance ,usertoken }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
-
-      //  useEffect(() => {
-      //    console.log('inside effect');
-      //     dispatch(ShowBalance({usertoken}));
-      //  },[])
-
 
       const navigate = useNavigate();
 
@@ -50,7 +44,7 @@ const Dashboard = () => {
 
                 <div>  <span> Current Balance </span> </div>
 
-              <div>  <span> Rs.  { userData?.accountBalance ? userData?.accountBalance : 0}  </span></div>
+              <div>  <span> Rs.  { userData ? userData : 0}  </span></div>
                 
               </div> 
 

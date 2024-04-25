@@ -59,7 +59,7 @@ export const  transferMoney = async(req,res) => {
 
         res.status(200).json({
             message : " Transfer Successful ",
-            account
+            account : account.accountBalance
         })
 
     } catch (error) {
