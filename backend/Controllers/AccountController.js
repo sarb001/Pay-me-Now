@@ -83,20 +83,18 @@ export const RequestMoney = async(req,res) => {
 
             // money amount entered = 1000,  user id 
             
-            // user whom to sent ( sender whom requesting )
-
-            // update with schema 
-
-            const user = await User.findById(user._id);
+            const user = await User.findById(req.userid);
             console.log('main logged user =',user);
 
-                // in frontend 
-                // amount = amout from modal 
-                // username = selected user to pay amount 
+            const { amount , id } = req?.body;
 
-            const { amount , requestedusername } = req?.body;
-            console.log('amount =',amount);
-            console.log('requested user',requestedusername);
+            console.log('id 1=',id);
+            console.log('amount 2=',amount);
+
+            const recieveruser = await User.findById(id);
+            console.log('recieveruser =',recieveruser);
+            console.log('recieveruser name =',recieveruser.fullname);
+
 
             if(amount <= 1){
                 return res.status(400).json({
@@ -104,20 +102,19 @@ export const RequestMoney = async(req,res) => {
                 })
              }
 
-             if(requestedusername == ''){
+             if(recieveruser?.fullname == ' '){
                 return res.status(400).json({
                     message : "Enter a name to sent Request"
                 })
              }
 
-
-            const mainuser = await User.findOneAndUpdate(
+            const mainuserupdated = await User.findOneAndUpdate(
             {
-                username : requestedusername
+                _id : recieveruser?._id
             },
             {
                 $push :{
-                    recievedRequest : {         // id of logged user (  who sent  it )
+                    recievedRequest : {         // id of who sent  it logged user
                         _id : user?._id,
                         username : user?.username,
                         firstname : user?.firstname,
@@ -127,10 +124,16 @@ export const RequestMoney = async(req,res) => {
                 }
             },{ new : true })
 
-            console.log('main user ==',mainuser);
+            console.log('main user ==',mainuserupdated);
 
             res.status(200).json({
-                 message: " Money Requested "
+                 message: " Money Requestedss ",
+                 user : {
+                    fullname : mainuserupdated?.fullname,
+                    username : mainuserupdated?.username,
+                    amount : mainuserupdated?.amount,
+                    status :mainuserupdated?.status 
+                 }
             })
 
         } catch (error) {
@@ -192,11 +195,9 @@ export const  AllTransaction = async(req,res) => {
 
         const user = await User.findById(req.userid);
 
-        const AllTransaction = await User.findById(req.userid).select('transactions');
-        console.log('allogged user transactions = ',AllTransaction);
-
         res.status(200).json({
-            message :" All Transactions "
+            message :" All Transactions ",
+            transactions : user.transactions
         })
 
     } catch (error) {

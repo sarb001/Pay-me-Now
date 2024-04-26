@@ -12,6 +12,9 @@ const initialState = {
     validateuser : false,
     validateUserLoading : false,
 
+    allTransactionloading: false,
+    allTransactionerror : false,
+
     balanceloading : false,
 
 }
@@ -76,6 +79,23 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
     } catch (error) {
             console.log('handle money error ',error);
     }
+})
+
+export const AllTransaction = createAsyncThunk('/api/v1/account/alltransaction' , async(userData ,{ rejectWithValue }) => {
+    try {
+            console.log('userdata all trans =',userData);
+
+            const alltrans = await axios.get('/api/v1/account/alltransaction' ,{
+                headers : {
+                    'Authorization': `Bearer ${userData}`
+                }
+            })
+            console.log('alltrans= ',alltrans);
+            return alltrans;
+
+    } catch (error) {
+            console.log('AllTranaction error=',error);
+    }   
 })
 
 
@@ -154,7 +174,24 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
                 console.log('action 22 ',action.payload);
         })
         .addCase(TransferMoney.rejected , (state,action) => {
-                state.error = action.payload
+                  state.balanceloading = false;
+                  state.error = action.payload;
+        })
+
+        .addCase(AllTransaction.pending ,  (state,action) => {
+                state.allTransactionloading = true;
+        })
+        .addCase(AllTransaction.fulfilled , (state,action) => {
+               state.validateuser = true;
+               state.allTransactionloading = false;
+               console.log('payload - alltrans 1 =',action.payload);
+               state.userData = action.payload;
+               console.log('payload - alltrans 2  =',action.payload);
+        })
+        .addCase(AllTransaction.rejected ,  (state,action) => {
+                state.allTransactionloading = false;
+                state.validateuser = false;
+                state.allTransactionerror = action.payload
         })
 
 }

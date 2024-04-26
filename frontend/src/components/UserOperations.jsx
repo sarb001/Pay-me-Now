@@ -90,16 +90,16 @@ const UserOperations = () => {
                     <form class="space-y-4" >
 
                         <div>
-                                        <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                        Enter Amount     
-                                        </label>
-                                        <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
-                                        type = "number" placeholder='Enter Amount ' 
+                          <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                              Enter Amount     
+                          </label>
+                          <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                               type = "number" placeholder='Enter Amount ' 
                                         style = {{padding:'2%'}}
                                         value = {modalamount}
                                         onChange={(e) => onchangeamount(e)}
                                         required
-                                        />
+                            />
 
                         </div>
 

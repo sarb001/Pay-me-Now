@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import  { useDispatch, useSelector } from 'react-redux';
+import { AllTransaction } from '../Slices/userSlice';
 
 const AllTransactions = () => {
+
+    const { usertoken , userData } = useSelector(state => state?.users);
+    console.log('usertoken =',usertoken);
+
+    console.log('userDataall =',userData);
 
     const data = [{
         username: 'Amandeep',
@@ -19,6 +26,13 @@ const AllTransactions = () => {
         payment : '1600'
     }]
 
+    const dispatch = useDispatch();
+
+    useEffect(() => { 
+        dispatch(AllTransaction({usertoken}))
+    },[])
+
+
 
   return (
     <div style = {{display:'flex' , flexDirection:'column',margin:'2% 10%'}}>
@@ -26,19 +40,19 @@ const AllTransactions = () => {
 
          <div>
             
-            {data?.map((i) => 
-                <div key = {i.date}>
+            {userData?.transactions?.map((i) => 
+                <div key = {i?.amount}>
 
                     <div style = {{display:'grid',gridTemplateColumns:'2fr 1fr' ,justifyContent:'space-between',backgroundColor:'lightgrey',padding:'1%'}}>
 
                         <div>
-                            <h2> {i.username} </h2>
-                            <span> {i.firstname} </span>
-                            <div> {i.date} </div>
+                            <h2 className='font-bold'> {i?.username} </h2>
+                            <span> {i?.fullname} </span>
+                            <div> {i?.tag} </div>
                         </div>
 
                         <div>
-                            <h2> Rs. {i.payment} </h2>
+                            <h2 className='font-bold'> Rs. {i?.amount} </h2>
                         </div>
 
                     </div>
