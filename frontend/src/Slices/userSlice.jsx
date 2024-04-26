@@ -81,22 +81,22 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
     }
 })
 
-export const AllTransaction = createAsyncThunk('/api/v1/account/alltransaction' , async(userData ,{ rejectWithValue }) => {
-    try {
-            console.log('userdata all trans =',userData);
+// export const AllTransaction = createAsyncThunk('/api/v1/account/alltransaction' , async(userData ,{ rejectWithValue }) => {
+//     try {
+//             console.log('userdata all trans =',userData);
 
-            const alltrans = await axios.get('/api/v1/account/alltransaction' ,{
-                headers : {
-                    'Authorization': `Bearer ${userData.usertoken}`
-                }
-            })
-            console.log('alltrans= ',alltrans);
-            return alltrans?.data?.transactions;
+//             const alltrans = await axios.get('/api/v1/account/alltransaction' ,{
+//                 headers : {
+//                     'Authorization': `Bearer ${userData.usertoken}`
+//                 }
+//             })
+//             console.log('alltrans= ',alltrans);
+//             return alltrans?.data;
 
-    } catch (error) {
-            console.log('AllTranaction error=',error);
-    }   
-})
+//     } catch (error) {
+//             console.log('AllTranaction error=',error);
+//     }   
+// })
 
 
 
@@ -178,21 +178,21 @@ export const AllTransaction = createAsyncThunk('/api/v1/account/alltransaction' 
                   state.error = action.payload;
         })
 
-        .addCase(AllTransaction.pending ,  (state,action) => {
-                state.allTransactionloading = true;
-        })
-        .addCase(AllTransaction.fulfilled , (state,action) => {
-               state.validateuser = true;
-               state.allTransactionloading = false;
-               console.log('payload - alltrans 1 =',action.payload);
-               state.userData = action.payload;
-               console.log('payload - alltrans 2  =',action.payload);
-        })
-        .addCase(AllTransaction.rejected ,  (state,action) => {
-                state.allTransactionloading = false;
-                state.validateuser = false;
-                state.allTransactionerror = action.payload
-        })
+        // .addCase(AllTransaction.pending ,  (state,action) => {
+        //         state.allTransactionloading = true;
+        // })
+        // .addCase(AllTransaction.fulfilled , (state,action) => {
+        //        state.validateuser = true;
+        //        state.allTransactionloading = false;
+        //        console.log('payload - alltrans 1 =',action.payload);
+        //        state.userData = action.payload;
+        //        console.log('payload - alltrans 2  =',action.payload);
+        // })
+        // .addCase(AllTransaction.rejected ,  (state,action) => {
+        //         state.allTransactionloading = false;
+        //         state.validateuser = false;
+        //         state.allTransactionerror = action.payload
+        // })
 
 }
 })

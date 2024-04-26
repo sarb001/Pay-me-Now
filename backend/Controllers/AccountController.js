@@ -67,7 +67,10 @@ export const paymoney = async(req,res) => {
                 username : updateUser?.username,
                 fullname :updateUser?.fullname,
                 email : updateUser?.email,
-                accountBalance :updateUser?.accountBalance
+                accountBalance :updateUser?.accountBalance,
+                transactions :updateUser?.transactions,
+                sentRequest :updateUser?.sentRequest,
+                recievedRequest :updateUser?.recievedRequest,
             }
         })
 
@@ -197,7 +200,7 @@ export const  AllTransaction = async(req,res) => {
 
         res.status(200).json({
             message :" All Transactions ",
-            transactions : user.transactions
+            user : user.transactions
         })
 
     } catch (error) {

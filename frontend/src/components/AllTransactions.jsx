@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import  { useDispatch, useSelector } from 'react-redux';
-import { AllTransaction } from '../Slices/userSlice';
+// import { AllTransaction } from '../Slices/userSlice';
 
 const AllTransactions = () => {
 
@@ -11,23 +11,19 @@ const AllTransactions = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => { 
-        dispatch(AllTransaction({usertoken}))
-    },[])
-
+    // useEffect(() => { 
+    //     dispatch(AllTransaction({usertoken}))
+    // },[])
+    
 
 
   return (
     <div style = {{display:'flex' , flexDirection:'column',margin:'2% 10%'}}>
          <h1> Transactions </h1>
+            {userData?.transactions?.map((i) => 
+                <div key = {i?.amount}  style = {{display:'grid',gridTemplateColumns:'2fr 1fr' ,justifyContent:'space-between',backgroundColor:'lightgrey',padding:'1%'}}>
 
-         <div>
-            
-            {userData?.map((i) => 
-                <div key = {i?.amount}>
-
-                    <div style = {{display:'grid',gridTemplateColumns:'2fr 1fr' ,justifyContent:'space-between',backgroundColor:'lightgrey',padding:'1%'}}>
-
+                    <div className='bg-slate-400 p-2 flex flex-row justify-between'>
                         <div>
                             <h2 className='font-bold'> {i?.username} </h2>
                             <span> {i?.fullname} </span>
@@ -41,9 +37,8 @@ const AllTransactions = () => {
                     </div>
                 </div>
             )}
-
          </div>
-    </div>
+  
   )
 }
 
