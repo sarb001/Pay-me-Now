@@ -87,11 +87,11 @@ export const AllTransaction = createAsyncThunk('/api/v1/account/alltransaction' 
 
             const alltrans = await axios.get('/api/v1/account/alltransaction' ,{
                 headers : {
-                    'Authorization': `Bearer ${userData}`
+                    'Authorization': `Bearer ${userData.usertoken}`
                 }
             })
             console.log('alltrans= ',alltrans);
-            return alltrans;
+            return alltrans?.data?.transactions;
 
     } catch (error) {
             console.log('AllTranaction error=',error);
