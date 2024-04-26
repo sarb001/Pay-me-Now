@@ -149,6 +149,25 @@ export const RequestMoney = async(req,res) => {
         // sentrequest => PaymentSchema 
         //  PAID , PENDING , REJECTED
 
+
+ // all transactions 
+ export const  AllTransaction = async(req,res) => {
+    try {
+        // money paid to  user will show here
+
+        const user = await User.findById(req.userid);
+
+        res.status(200).json({
+            message :" All Transactions ",
+            user : user.transactions
+        })
+
+    } catch (error) {
+            console.log('all trans error',error);
+    }
+}
+
+
 export const sentRequest = async(req,res) => {
             try {
         
@@ -158,12 +177,6 @@ export const sentRequest = async(req,res) => {
 }
 
 
-//  In recieved  requests =>
-
-// pay / reject
-
-// pay => accept money
-// rejectmoney => in recieving end  reject  so reject the money 
 
 export const acceptmoney = async(req,res) => {
     try {
@@ -172,6 +185,14 @@ export const acceptmoney = async(req,res) => {
         console.log('accept moneyerror =',error);
     }
 }
+
+//  In recieved  requests =>
+
+// pay / reject
+
+// pay => accept money
+// rejectmoney => in recieving end  reject  so reject the money 
+
 
 export const  rejectmoney = async(req,res) => {
     try {
@@ -191,19 +212,3 @@ export const addMoney = async(req,res) => {
     }
 }
 
- // all transactions 
-export const  AllTransaction = async(req,res) => {
-    try {
-        // money paid to  user will show here
-
-        const user = await User.findById(req.userid);
-
-        res.status(200).json({
-            message :" All Transactions ",
-            user : user.transactions
-        })
-
-    } catch (error) {
-            console.log('all trans error',error);
-    }
-}

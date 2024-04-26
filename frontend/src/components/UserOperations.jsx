@@ -20,14 +20,22 @@ const UserOperations = () => {
      ]
 
      const dispatch = useDispatch();
-
+     
      const showmamount = (e) => {
          e.preventDefault();
          const finalamount = e.target.textContent ;
          console.log('finalamount ==',Number(finalamount));
-         console.log('modalamount ==',Number(modalamount));
-         setmodalamount(Number(finalamount) + Number(modalamount));
-     }  
+            if(modalamount == 0) 
+             {
+                 setmodalamount(finalamount);
+                 console.log('modal amount =',modalamount);
+             }
+             else {
+                 console.log('modalamount ==',Number(modalamount));
+                 setmodalamount(Number(finalamount) + Number(modalamount));
+             }
+      }  
+
 
      const onchangeamount = (e) => {
         const amountchanged = e.target.value;
@@ -38,6 +46,12 @@ const UserOperations = () => {
         // if modalinput = ' ' just add btn clicked amount 
         // modalinput = 100
         // modalinput = btn clicked amount + modalinput 
+
+     const Addmoney = () => {
+        console.log('modalamount final =',modalamount);
+     }
+
+
 
   return (
     <>
@@ -73,11 +87,11 @@ const UserOperations = () => {
 
                 </div>
 
-            <div className='m-4 flex'> 
-                    <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'>
-                    <Link to = "/alltransaction" >  All Transactions  </Link>  
-                    </button>
-            </div>
+                <div className='m-4 flex'> 
+                        <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'>
+                        <Link to = "/alltransaction" >  All Transactions  </Link>  
+                        </button>
+                </div>
            
          </div>
 
@@ -89,19 +103,19 @@ const UserOperations = () => {
                 <div className="text-center">
                     <form class="space-y-4" >
 
-                        <div>
-                          <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                              Enter Amount     
-                          </label>
-                          <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
-                               type = "number" placeholder='Enter Amount ' 
-                                        style = {{padding:'2%'}}
-                                        value = {modalamount}
-                                        onChange={(e) => onchangeamount(e)}
-                                        required
-                            />
+                            <div>
+                            <label for="amount" name = "amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                Enter Amount     
+                            </label>
+                            <input className = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 '
+                                type = "number" placeholder='Enter Amount ' 
+                                            style = {{padding:'2%'}}
+                                            value = {modalamount}
+                                            onChange={(e) => onchangeamount(e)}
+                                            required
+                                />
 
-                        </div>
+                            </div>
 
                         <div style = {{margin:'12% 2%'}}>
 
@@ -116,6 +130,8 @@ const UserOperations = () => {
                                     </div>
                                 
                             )}
+
+                            <Button color = 'success' onClick={Addmoney} > Add </Button>
 
                         </div>
 
