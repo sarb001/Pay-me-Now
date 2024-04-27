@@ -5,6 +5,7 @@ import { MdPayments } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 
 import { Button, Modal } from "flowbite-react";
+import { AddMoney } from '../Slices/userSlice';
 
 
 const UserOperations = () => {
@@ -49,6 +50,7 @@ const UserOperations = () => {
 
      const Addmoney = () => {
         console.log('modalamount final =',modalamount);
+        dispatch(AddMoney({modalamount}));
      }
 
 

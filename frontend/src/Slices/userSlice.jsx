@@ -81,23 +81,17 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
     }
 })
 
-// export const AllTransaction = createAsyncThunk('/api/v1/account/alltransaction' , async(userData ,{ rejectWithValue }) => {
-//     try {
-//             console.log('userdata all trans =',userData);
+export const AddMoney  =createAsyncThunk('/api/v1/account/addmoney' , async(userData , { rejectWithValue }) => {
+    try {
 
-//             const alltrans = await axios.get('/api/v1/account/alltransaction' ,{
-//                 headers : {
-//                     'Authorization': `Bearer ${userData.usertoken}`
-//                 }
-//             })
-//             console.log('alltrans= ',alltrans);
-//             return alltrans?.data;
+        const res= await axios.post('/api/v1/account/addmoney',{
+          
+        })
 
-//     } catch (error) {
-//             console.log('AllTranaction error=',error);
-//     }   
-// })
-
+    } catch (error) {
+            console.log('addmoney error=',error);
+    }
+})
 
 
  const userSlice = createSlice({
