@@ -120,7 +120,7 @@ export const RequestMoney = async(req,res) => {
                     recievedRequest : {         // id of who sent  it logged user
                         _id : user?._id,
                         username : user?.username,
-                        firstname : user?.firstname,
+                        fullname : user?.fullname,
                         amount : amount,
                         status : "PENDING"       
                     } 
@@ -209,19 +209,30 @@ export const addMoney = async(req,res) => {
 
         if(modalamount < 1 || modalamount == ' ') return res.json({            /// 10 < 1
             message : " Invalid Amount "
-        })
+        });
+                // 620 + 9900 = 
+             const  mybal = user?.accountBalance + Number(modalamount);
+
+             if(mybal != ''){
+                user.accountBalance = mybal;
+                console.log('mybal -',mybal);
+             }  
         
-        //  user?.accountBalance =  user?.accountBalance  + Number(modalamount);
-    
-        await user.save();
-        console.log('user mmoeuy',user);    
+            await user.save();
+            console.log('user mmoeuy',user);    
 
-
-       return res.status(200).json({
-         message : "Money added successfully",
-         user 
-       })
-
+            return res.status(200).json({
+                message : "Money added successfully",
+                user  :{
+                    accountBalance : mybal,
+                    username : user?.username,
+                    fullname :  user?.fullname,
+                    email : user?.email,
+                    transactions :user?.transactions,
+                    sentRequest :user?.sentRequest,
+                    recievedRequest :user?.recievedRequest,
+                }
+            })
 
     } catch (error) {
         console.log('add money error =',error);
