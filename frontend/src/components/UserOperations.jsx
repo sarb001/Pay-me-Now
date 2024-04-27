@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { MdPayments } from "react-icons/md";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Modal } from "flowbite-react";
 import { AddMoney } from '../Slices/userSlice';
@@ -12,6 +12,8 @@ const UserOperations = () => {
     const [openModal, setOpenModal] = useState(false);
     const [modalamount,setmodalamount] = useState(0);
 
+     const { userData   ,usertoken } = useSelector(state => state?.users);
+     console.log('useroktne-',usertoken);
  
      const MoneyButtons = [
         { amount : 10 ,id : 1 },
@@ -50,7 +52,7 @@ const UserOperations = () => {
 
      const Addmoney = () => {
         console.log('modalamount final =',modalamount);
-        dispatch(AddMoney({modalamount}));
+        dispatch(AddMoney({ usertoken,modalamount}));
      }
 
 
