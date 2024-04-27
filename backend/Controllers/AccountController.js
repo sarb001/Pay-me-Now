@@ -131,12 +131,7 @@ export const RequestMoney = async(req,res) => {
 
             res.status(200).json({
                  message: " Money Requestedss ",
-                 user : {
-                    fullname : mainuserupdated?.fullname,
-                    username : mainuserupdated?.username,
-                    amount : mainuserupdated?.amount,
-                    status :mainuserupdated?.status 
-                 }
+                 user : mainuserupdated
             })
 
         } catch (error) {
@@ -216,7 +211,7 @@ export const addMoney = async(req,res) => {
             message : " Invalid Amount "
         })
         
-         user?.accountBalance =  user?.accountBalance  + Number(modalamount);
+        //  user?.accountBalance =  user?.accountBalance  + Number(modalamount);
     
         await user.save();
         console.log('user mmoeuy',user);    
