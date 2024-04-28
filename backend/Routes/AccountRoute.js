@@ -1,5 +1,5 @@
 import express  from 'express';
-import { AllTransaction, RequestMoney, addMoney, paymoney  } from '../Controllers/AccountController.js';
+import { AllTransaction, RequestMoney, acceptmoney, addMoney, paymoney, rejectmoney  } from '../Controllers/AccountController.js';
 import { authMiddleware } from '../Middleware/AuthMiddleware.js';
 
 const router = express.Router();
@@ -11,5 +11,10 @@ router.route('/transfer').post(authMiddleware,paymoney);
 router.route('/alltransaction').get(authMiddleware,AllTransaction);
 
 router.route('/addmoney').post(authMiddleware,addMoney);
+
+
+router.route('/acceptmoney').post(authMiddleware,acceptmoney);
+
+router.route('/rejectmoney').delete(authMiddleware,rejectmoney);
 
 export default router;

@@ -174,6 +174,19 @@ export const sentRequest = async(req,res) => {
 export const acceptmoney = async(req,res) => {
     try {
         
+        const { amount , id } =    req?.body;
+        
+        if(amount < 1 || amount == 0){
+            return res.status(200).json({
+                message: " Invalid-Amount "
+            })
+        }
+
+
+
+
+
+
     } catch (error) {
         console.log('accept moneyerror =',error);
     }

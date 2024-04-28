@@ -11,7 +11,7 @@ const Users = () => {
    const [searchuser,setsearchuser] = useState('');
    const [users,setusers] = useState('');
 
-   const [openModal, setOpenModal] = useState(false);``
+   const [openModal, setOpenModal] = useState(false);
    const [modalamount,setmodalamount] = useState(0);
 
    const {  userData   ,usertoken  } = useSelector(state => state?.users);
