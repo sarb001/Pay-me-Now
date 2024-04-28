@@ -19,6 +19,8 @@ const initialState = {
     addmoneyloading: false,
     addmoneyerror : false,
 
+    requestmoneyloading :false,
+    requestmoneyerror : false,
 
     balanceloading : false,
 
@@ -86,7 +88,7 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
     }
 })
 
-export const AddMoney  =createAsyncThunk('/api/v1/account/addmoney' , async(userData , { rejectWithValue }) => {
+export const AddMoney  = createAsyncThunk('/api/v1/account/addmoney' , async(userData , { rejectWithValue }) => {
     try {
 
         console.log('userdata addmoney =',userData);
@@ -103,6 +105,25 @@ export const AddMoney  =createAsyncThunk('/api/v1/account/addmoney' , async(user
 
     } catch (error) {
             console.log('addmoney error=',error);
+    }
+})
+
+
+export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,async(userData, { rejectWithValue }) => {
+    try {
+        const { usertoken ,modalamount, id } = userData;
+        const res = await axios.post('/api/v1/account/requestmoney',{
+            modalamount , id
+        },{
+            headers:{
+                'Authorization' : `Bearer ${usertoken}`
+            }
+        });
+        console.log('res from requestmoney =',res);
+        return res?.data?.user;
+
+    } catch (error) {   
+            console.log(' request moeny error =',error);
     }
 })
 
@@ -199,6 +220,23 @@ export const AddMoney  =createAsyncThunk('/api/v1/account/addmoney' , async(user
                 state.addmoneyloading = false;
                 state.validateuser = false;
                 state.addmoneyerror = action.payload
+        })
+
+
+        .addCase(RequestMoney.pending ,  (state,action) => {
+                 state.requestmoneyloading = true;
+         })
+        .addCase(RequestMoney.fulfilled , (state,action) => {
+                state.validateuser = true;
+                state.requestmoneyloading = false;
+                console.log('payload - request money 1 =',action.payload);
+                state.userData = action.payload;
+                console.log('payload - request money 2  =',action.payload);
+        })
+        .addCase(RequestMoney.rejected ,  (state,action) => {
+                state.requestmoneyloading = false;
+                state.validateuser = false;
+                state.requestmoneyerror = action.payload
         })
 
 }

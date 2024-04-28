@@ -83,23 +83,21 @@ export const paymoney = async(req,res) => {
 // request money 
 export const RequestMoney = async(req,res) => {
         try {
-
-            // money amount entered = 1000,  user id 
             
             const user = await User.findById(req.userid);
             console.log('main logged user =',user);
 
-            const { amount , id } = req?.body;
+            const { modalamount , id } = req?.body;
 
             console.log('id 1=',id);
-            console.log('amount 2=',amount);
+            console.log('amount 2=',modalamount);
 
             const recieveruser = await User.findById(id);
             console.log('recieveruser =',recieveruser);
             console.log('recieveruser name =',recieveruser.fullname);
 
 
-            if(amount <= 1){
+            if(modalamount <= 1){
                 return res.status(400).json({
                     message : "Amount should be greator than 1"
                 })
@@ -121,7 +119,7 @@ export const RequestMoney = async(req,res) => {
                         _id : user?._id,
                         username : user?.username,
                         fullname : user?.fullname,
-                        amount : amount,
+                        amount : modalamount,
                         status : "PENDING"       
                     } 
                 }
