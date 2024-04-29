@@ -15,6 +15,6 @@ router.route('/addmoney').post(authMiddleware,addMoney);
 
 router.route('/acceptmoney').post(authMiddleware,acceptmoney);
 
-router.route('/rejectmoney').delete(authMiddleware,rejectmoney);
+router.route('/rejectmoney').put(authMiddleware,rejectmoney);
 
 export default router;
