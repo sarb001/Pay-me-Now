@@ -174,18 +174,72 @@ export const sentRequest = async(req,res) => {
 export const acceptmoney = async(req,res) => {
     try {
         
+        const user = await User.findById(req?.userid);
         const { amount , id } =    req?.body;
-        
+
         if(amount < 1 || amount == 0){
             return res.status(200).json({
                 message: " Invalid-Amount "
             })
         }
 
+        const payinguser = await User.findById(id);
+
+        if(amount > payinguser?.accountBalance){
+            return res.status(400).json({
+                message: " Balance is not enough "
+            })    
+        }
 
 
+         // amandeep (user who recieved request )
+        const payeruser = await User.findByIdAndUpdate({
+            _id : id
+        },{
+            $push : {
+                transactions :{
+                    _id : user?._id,
+                    username :  user?.username,
+                    fullname :  user?.fullname,
+                    amount,
+                    tag : "PAID"
+                },
+            },
+            $pull: { recievedRequest : { _id : user?._id }},
+            $inc : { accountBalance : -amount }
+        },{ new: true })  
 
+        console.log('payeruser= ',payeruser);
 
+        const moneyrequesteduser = await User.findByIdAndUpdate({
+            _id : user._id
+        },{
+             transactions : {
+                 $push : {
+                     fullname : payinguser?.fullname,
+                     username : payinguser?.username,
+                     amount,
+                     tag : "RECEIEVED",
+                    }
+                },
+                $set:  { sentRequest : { status  : "PAID",},},
+                $inc : { accountBalance : +amount }
+        },{ new :true })
+
+        console.log('moneyrequesteduser = ',moneyrequesteduser);
+
+        res.status(200).json({
+            message :"Paid",
+            user : {
+                fullname : payeruser?.fullname,
+                username : payeruser?.username,
+                email : payeruser?.email,
+                accountBalance: payeruser?.accountBalance,
+                transactions : payeruser?.transactions,
+                sentRequest : payeruser?.sentRequest,
+                recievedRequest : payeruser?.recievedRequest,
+            }
+        })
 
     } catch (error) {
         console.log('accept moneyerror =',error);

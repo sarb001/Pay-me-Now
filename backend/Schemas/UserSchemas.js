@@ -4,7 +4,7 @@ const TransactionSchema = new mongoose.Schema({
     username  : { type : String, required : true},
     fullname : { type :String,required : true},
     amount : { type : Number ,  required : true },
-    tag : { type : String , enum : ["PAID","RECIEVED"] , required : true },
+    tag : { type : String , enum : ["PAID","RECEIEVED"] , required : true },
 }, { timestamps : true })
 
 

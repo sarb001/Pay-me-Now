@@ -1,10 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux' ; 
-
 import { Button, Modal } from "flowbite-react";
 
 const RecievedRequest = () => {
-
 
   const { usertoken , userData } = useSelector(state => state?.users);
   console.log('userData =',userData);
@@ -13,8 +11,7 @@ const RecievedRequest = () => {
 
   const paynow = (id,amount) => {
      console.log('mainpayerid=',id);
-     console.log('mainpayer amount=',amount);
-    
+     console.log('mainpayer amount=',amount); 
   }
 
   return (
