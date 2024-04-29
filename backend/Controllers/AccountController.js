@@ -216,7 +216,7 @@ export const acceptmoney = async(req,res) => {
         }
 
       //logged user manveer
-      const moneyrequesteduser = await User.findByIdAndUpdate({
+        const loggeduser = await User.findByIdAndUpdate({
         _id : user?._id,
         "sentRequest._id" : id
     },
@@ -234,7 +234,7 @@ export const acceptmoney = async(req,res) => {
         $inc : { accountBalance : +amount },
          })
 
-        console.log('moneyrequesteduser = ',moneyrequesteduser);
+        console.log('loggeduser = ',loggeduser);
 
          // amandeep (user who recieved request )
 
@@ -272,6 +272,7 @@ export const acceptmoney = async(req,res) => {
         console.log('accept moneyerror =',error);
     }
 }
+
 
 export const  rejectmoney = async(req,res) => {
     try {

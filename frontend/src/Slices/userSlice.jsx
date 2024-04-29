@@ -127,6 +127,24 @@ export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,asy
     }
 })
 
+export const AcceptMoney = createAsyncThunk('/api/v1/account/acceptmoney' ,async(userData, { rejectWithValue }) => {
+    try {
+        
+    } catch (error) {
+        console.log('accept money errror =',error);
+    }
+})
+
+
+export const RejectMoney = createAsyncThunk('/api/v1/account/rejectmoney' ,async(userData, { rejectWithValue }) => {
+    try {
+        
+    } catch (error) {
+        console.log('reject money errror =',error);
+    }
+})
+
+
 
  const userSlice = createSlice({
     name : 'user',
@@ -238,6 +256,9 @@ export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,asy
                 state.validateuser = false;
                 state.requestmoneyerror = action.payload
         })
+
+
+
 
 }
 })

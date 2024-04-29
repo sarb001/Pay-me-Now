@@ -45,11 +45,7 @@ const UserOperations = () => {
         console.log('event amount chg=',amountchanged);
         setmodalamount(amountchanged);
      }
-
-        // if modalinput = ' ' just add btn clicked amount 
-        // modalinput = 100
-        // modalinput = btn clicked amount + modalinput 
-
+     
      const Addmoney = () => {
         console.log('modalamount final =',modalamount);
         dispatch(AddMoney({ usertoken,modalamount}));
