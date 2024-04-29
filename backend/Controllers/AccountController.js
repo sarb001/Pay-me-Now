@@ -166,12 +166,10 @@ export const RequestMoney = async(req,res) => {
 
 
             const mainuserupdated = await User.findOneAndUpdate(
-                {
-                    _id : id
-                },
+                {_id : user?._id },
                 {
                     $push :{
-                        sentRequest : {         // id of who sent  it logged user
+                        sentRequest : {       
                             _id : paymentid,
                             username : recieveduser?.username,
                             fullname : recieveduser?.fullname,
@@ -179,14 +177,14 @@ export const RequestMoney = async(req,res) => {
                             status : "PENDING"       
                         } 
                     }
-                },{ new : true })
+            },{ new : true })
     
-                console.log('main user ==',mainuserupdated);
+            console.log('main user ==',mainuserupdated);
 
-                res.status(200).json({
+            res.status(200).json({
                     message: " Money Requestedss ",
                     user : mainuserupdated
-                })
+            })
 
         } catch (error) {
             console.log('request money error= ',error);  
