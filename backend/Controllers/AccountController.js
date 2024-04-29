@@ -211,18 +211,26 @@ export const acceptmoney = async(req,res) => {
 
         console.log('payeruser= ',payeruser);
 
+            //logged user manveer
         const moneyrequesteduser = await User.findByIdAndUpdate({
             _id : user._id
         },{
-             transactions : {
-                 $push : {
+            $push  : {
+                transactions : {
+                     _id : payinguser?._id,
                      fullname : payinguser?.fullname,
                      username : payinguser?.username,
                      amount,
                      tag : "RECEIEVED",
                     }
-                },
-                $set:  { sentRequest : { status  : "PAID",},},
+            },
+            $set:  { sentRequest : { 
+                    _id : payinguser?._id,
+                    fullname : payinguser?.fullname,
+                    username : payinguser?.username,
+                    amount,
+                    status  : "PAID"
+            }},
                 $inc : { accountBalance : +amount }
         },{ new :true })
 
