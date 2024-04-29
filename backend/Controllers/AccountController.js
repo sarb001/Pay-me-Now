@@ -157,7 +157,7 @@ export const RequestMoney = async(req,res) => {
                     recievedRequest : {
                         _id : paymentid,
                         username :user?.username,
-                        amount :user?.amount,
+                        amount :modalamount,
                         fullname :user?.fullname,
                         status : "PENDING"
                     }
@@ -214,25 +214,25 @@ export const acceptmoney = async(req,res) => {
         }
 
       //logged user manveer
-        const loggeduser = await User.findByIdAndUpdate({
+        const loggeduser = await User.updateOne({
         _id : user?._id,
         "sentRequest._id" : id
-    },
-    {
-        $set : { "sentRequest.$.status" : "PAID" },
-        $push  : {
-                transactions : {
-                    _id : payinguser?._id,
-                    fullname : payinguser?.fullname,
-                    username : payinguser?.username,
-                    amount,
-                    tag : "RECEIEVED",
-                }
-         },
-        $inc : { accountBalance : +amount },
-         })
+        },
+        {
+            $set : { "sentRequest.$.status" : "PAID" },
+            $push  : {
+                    transactions : {
+                        _id : payinguser?._id,
+                        fullname : payinguser?.fullname,
+                        username : payinguser?.username,
+                        amount,
+                        tag : "RECEIEVED",
+                    }
+            },
+            $inc : { accountBalance : +amount },
+            })
 
-        console.log('loggeduser = ',loggeduser);
+        console.log('loggeduser accept money = ',loggeduser);
 
          // amandeep (user who recieved request )
 
