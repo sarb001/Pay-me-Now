@@ -1,8 +1,8 @@
 
 import mongoose from "mongoose";
 import User from "../Schemas/UserSchemas.js";
-import { nanoid } from   'nanoid';
 
+import { v4 as uuidv4 } from 'uuid' ;
 
 export const  AllTransaction = async(req,res) => {
     try {
@@ -147,7 +147,8 @@ export const RequestMoney = async(req,res) => {
                 })
              }
 
-             const  paymentid = nanoid();
+            const paymentid = uuidv4();
+            console.log('payment id=',paymentid);
 
                 // amandeep 
             const recieveduser = await User.findByIdAndUpdate({
@@ -197,7 +198,25 @@ export const acceptmoney = async(req,res) => {
         
         const user = await User.findById(req?.userid);
         // id is modal-specific id
-        const { amount , id } =    req?.body;
+        const { amount , _id } =    req?.body;
+        console.log('id is =',_id);
+        console.log('id type is =',typeof(_id));
+
+        if(mongoose.Types.ObjectId.isValid(_id)){
+            console.log('validatedddd');
+        }else{
+            console.log(' NBOBBOOO validatedddd');
+        }
+
+        const convertoObj = new mongoose.Types.ObjectId(_id);
+        console.log('convert obj =',convertoObj);
+
+        const payinguser = await User.findById(_id);
+        console.log('paying user _id =',payinguser);
+
+        return res.status(200).json({
+            message : " done"
+        })
 
         if(amount < 1 || amount == 0){
             return res.status(200).json({
@@ -205,7 +224,7 @@ export const acceptmoney = async(req,res) => {
             })
         }
 
-        const payinguser = await User.findById(id);
+        // const payinguser = await User.findById(payerId);
 
         if(amount > payinguser?.accountBalance){
             return res.status(400).json({
@@ -228,9 +247,8 @@ export const acceptmoney = async(req,res) => {
                         amount,
                         tag : "RECEIEVED",
                     }
-            },
-            $inc : { accountBalance : +amount },
-            })
+            }, $inc : { accountBalance : +amount },}
+            )
 
         console.log('loggeduser accept money = ',loggeduser);
 
