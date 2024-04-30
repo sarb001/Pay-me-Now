@@ -139,7 +139,7 @@ export const RequestMoney = async(req,res) => {
             const user = await User.findById(req.userid);
             console.log('main logged user =',user);
 
-            const { modalamount , fullname } = req?.body;
+            const { modalamount , id , fullname } = req?.body;
 
             if(modalamount <= 1){
                 return res.status(400).json({
@@ -199,8 +199,10 @@ export const acceptmoney = async(req,res) => {
         const user = await User.findById(req?.userid);
         // id is modal-specific id
 
-        const { amount , fullname } =    req?.body;
+        const { amount , fullname , id } =    req?.body;
         console.log('fullname is =',fullname);
+        console.log('id is =',id);
+        console.log('amount is =',amount);
 
         const payinguser = await User.findOne({fullname});
         console.log('paying fullname =',payinguser);
@@ -218,13 +220,13 @@ export const acceptmoney = async(req,res) => {
             })    
         }
 
-      //logged user manveer
+      // sender user
         const loggeduser = await User.updateOne({
-        _id : user?._id,
-        "sentRequest._id" :  fullname,
+            _id : user?._id,
+            "sentRequest._id" :  id,
         },
         {
-            $set : { "sentRequest.$.status" : "PAID" },
+            $set   : { "sentRequest.$.status" : "PAID" },
             $push  : {
                     transactions : {
                         _id : payinguser?._id,
@@ -233,22 +235,22 @@ export const acceptmoney = async(req,res) => {
                         amount,
                         tag : "RECEIEVED",
                     }
-            }, $inc : { accountBalance : +amount },}
-            )
+            }, $inc : { accountBalance : +amount },
+            },{ new : true }
+            ) 
 
         console.log('loggeduser accept money = ',loggeduser);
 
-         // amandeep (user who recieved request )
-
-         const payeruser = await User.findByIdAndUpdate({
-            _id : id,
-        },{
+         //  main receiver 
+         const payeruser = await User.findByIdAndUpdate(
+         payinguser._id
+        ,{
             $push : {
                 transactions :{
                     _id : user?._id,
                     username :  user?.username,
                     fullname :  user?.fullname,
-                    amount,
+                    amount : amount,
                     tag : "PAID"
                 },
             },
@@ -279,7 +281,7 @@ export const acceptmoney = async(req,res) => {
 export const  rejectmoney = async(req,res) => {
     try {
          
-        const { amount , id } = req?.body;
+        const { amount , id  , fullname } = req?.body;
         const loggeduser = await User.findByIdAndUpdate({
             _id : req?.userid,
             "sentRequest?._id" : id

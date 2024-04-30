@@ -1,21 +1,28 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux' ; 
 import { Button, Modal } from "flowbite-react";
-import { AcceptMoney } from '../Slices/userSlice';
+import { AcceptMoney, RejectMoney } from '../Slices/userSlice';
 
 const RecievedRequest = () => {
 
   const { usertoken , userData } = useSelector(state => state?.users);
   console.log('userData =',userData);
+  console.log('usertoken recieved =',usertoken);
   
   const dispatch = useDispatch();
 
-  const rejectnow = () => {}
+  const rejectnow = (id,amount,fullname) => {
+    console.log('main id =',id);
+    console.log('amount is',amount); 
+    console.log('fullname is =',fullname); 
+    dispatch(RejectMoney({ id, amount, fullname ,usertoken}));
+  }
 
-  const paynow = (id,amount) => {
-     console.log('mainpayerid=',id);
-     console.log('mainpayer amount=',amount); 
-     dispatch(AcceptMoney({}));
+  const paynow = (id,amount,fullname) => {
+     console.log('main id =',id);
+     console.log('amount is',amount); 
+     console.log('fullname is =',fullname); 
+     dispatch(AcceptMoney({id,amount,fullname , usertoken}));
   }
 
   return (
@@ -32,8 +39,10 @@ const RecievedRequest = () => {
                 </div>
                 <div className='grid grid-cols-2 justify-between m-2'> 
                   <Button color='green' className='w-1/2'  onClick={() => paynow
-                  (item?._id,item?.amount)}> Pay </Button>
-                  <Button  className='w-1/2'onClick={rejectnow}> Reject </Button>
+                  (item?._id,item?.amount,item?.fullname)}> Pay </Button>
+                  
+                  <Button  className='w-1/2'  onClick = {() => rejectnow
+                  (item?._id,item?.amount,item?.fullname)}> Reject </Button>
                 </div>
               </div>
 

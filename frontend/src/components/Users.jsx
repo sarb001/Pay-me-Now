@@ -69,10 +69,11 @@ const Users = () => {
      fetchdata();
     },[searchuser])
 
-    const requestmoney = (id) => {
-          console.log('id is == ',id);
-          console.log('modalrequst=',modalamount);
-          dispatch(RequestMoney({usertoken,modalamount,id}))
+    const requestmoney = (id ,fullname) => {
+          console.log(' id is == ',id);
+          console.log(' fullname is == ',fullname);
+          console.log(' modalrequst=',modalamount);
+          dispatch(RequestMoney({usertoken,modalamount,id ,fullname}))
     }
 
 
@@ -156,7 +157,7 @@ const Users = () => {
 
                             </div>
 
-                                <Button onClick={()  => requestmoney(i?._id)}> Request Now </Button>
+                                <Button onClick={()  => requestmoney(i?._id,i?.fullname)}> Request Now </Button>
                         </form>
                     </div>
                     </Modal.Body>

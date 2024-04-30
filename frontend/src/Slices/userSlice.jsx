@@ -24,6 +24,12 @@ const initialState = {
 
     balanceloading : false,
 
+    acceptmoneyloading : false,
+    acceptmoneyerror : false,
+
+    rejectmoneyloading : false,
+    rejectmoneyerror : false
+
 }
 
 export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData , { rejectWithValue }) => {
@@ -111,9 +117,9 @@ export const AddMoney  = createAsyncThunk('/api/v1/account/addmoney' , async(use
 
 export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,async(userData, { rejectWithValue }) => {
     try {
-        const { usertoken ,modalamount, id } = userData;
+        const { usertoken ,modalamount, id  ,fullname } = userData;
         const res = await axios.post('/api/v1/account/requestmoney',{
-            modalamount , id
+            modalamount , id , fullname
         },{
             headers:{
                 'Authorization' : `Bearer ${usertoken}`
@@ -130,6 +136,19 @@ export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,asy
 export const AcceptMoney = createAsyncThunk('/api/v1/account/acceptmoney' ,async(userData, { rejectWithValue }) => {
     try {
         
+        const { id,amount,fullname ,usertoken  } = userData;
+        console.log('in slice all =',id,amount,fullname);
+        const res = await axios.post('/api/v1/account/acceptmoney',{
+            id ,amount ,fullname
+        },{
+            headers:{
+                'Authorization' : `Bearer ${usertoken}`
+            }
+        });
+        console.log('res from accept money =',res);
+        alert(' Money Paid Done');
+        return res?.data?.user;
+
     } catch (error) {
         console.log('accept money errror =',error);
     }
@@ -138,7 +157,18 @@ export const AcceptMoney = createAsyncThunk('/api/v1/account/acceptmoney' ,async
 
 export const RejectMoney = createAsyncThunk('/api/v1/account/rejectmoney' ,async(userData, { rejectWithValue }) => {
     try {
-        
+           
+        const { id,amount,fullname ,usertoken  } = userData;
+        console.log('in slice all =',id,amount,fullname);
+        const res = await axios.put('/api/v1/account/rejectmoney',{
+            id ,amount ,fullname
+        },{
+            headers:{
+                'Authorization' : `Bearer ${usertoken}`
+            }
+        });
+        console.log('res from reject money =',res);
+        return res?.data?.user;
     } catch (error) {
         console.log('reject money errror =',error);
     }
@@ -259,6 +289,39 @@ export const RejectMoney = createAsyncThunk('/api/v1/account/rejectmoney' ,async
 
 
 
+        .addCase(AcceptMoney.pending , (state,action)  => {
+             state.acceptmoneyloading = true;
+        }) 
+        .addCase(AcceptMoney.fulfilled , (state,action) => {
+            state.validateuser = true;
+            state.acceptmoneyloading = false;
+            console.log('payload - accept money 1 =',action.payload);
+            state.userData = action.payload;
+            console.log('payload - accept money 2  =',action.payload);
+        })
+        .addCase(AcceptMoney.rejected ,  (state,action) => {
+                state.acceptmoneyloading = false;
+                state.validateuser = false;
+                state.acceptmoneyerror = action.payload
+        })
+
+
+
+        .addCase(RejectMoney.pending , (state,action)  => {
+             state.rejectmoneyloading = true;
+        }) 
+        .addCase(RejectMoney.fulfilled , (state,action) => {
+            state.validateuser = true;
+            state.rejectmoneyloading = false;
+            console.log('payload - reject money 1 =',action.payload);
+            state.userData = action.payload;
+            console.log('payload - reject money 2  =',action.payload);
+        })
+        .addCase(RejectMoney.rejected ,  (state,action) => {
+                state.rejectmoneyloading = false;
+                state.validateuser = false;
+                state.rejectmoneyerror = action.payload
+        })
 
 }
 })
