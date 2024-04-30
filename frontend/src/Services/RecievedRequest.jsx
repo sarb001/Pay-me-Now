@@ -1,17 +1,21 @@
 import React from 'react'
-import { useSelector } from 'react-redux' ; 
+import { useDispatch, useSelector } from 'react-redux' ; 
 import { Button, Modal } from "flowbite-react";
+import { AcceptMoney } from '../Slices/userSlice';
 
 const RecievedRequest = () => {
 
   const { usertoken , userData } = useSelector(state => state?.users);
   console.log('userData =',userData);
   
+  const dispatch = useDispatch();
+
   const rejectnow = () => {}
 
   const paynow = (id,amount) => {
      console.log('mainpayerid=',id);
      console.log('mainpayer amount=',amount); 
+     dispatch(AcceptMoney({}));
   }
 
   return (

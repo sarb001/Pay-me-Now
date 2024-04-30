@@ -139,7 +139,7 @@ export const RequestMoney = async(req,res) => {
             const user = await User.findById(req.userid);
             console.log('main logged user =',user);
 
-            const { modalamount , id } = req?.body;
+            const { modalamount , fullname } = req?.body;
 
             if(modalamount <= 1){
                 return res.status(400).json({
@@ -151,8 +151,8 @@ export const RequestMoney = async(req,res) => {
             console.log('payment id=',paymentid);
 
                 // amandeep 
-            const recieveduser = await User.findByIdAndUpdate({
-                _id : id
+            const recieveduser = await User.findOneAndUpdate({
+                fullname : fullname
             }, {
                 $push : {
                     recievedRequest : {
@@ -198,33 +198,19 @@ export const acceptmoney = async(req,res) => {
         
         const user = await User.findById(req?.userid);
         // id is modal-specific id
-        const { amount , _id } =    req?.body;
-        console.log('id is =',_id);
-        console.log('id type is =',typeof(_id));
 
-        if(mongoose.Types.ObjectId.isValid(_id)){
-            console.log('validatedddd');
-        }else{
-            console.log(' NBOBBOOO validatedddd');
-        }
+        const { amount , fullname } =    req?.body;
+        console.log('fullname is =',fullname);
 
-        const convertoObj = new mongoose.Types.ObjectId(_id);
-        console.log('convert obj =',convertoObj);
+        const payinguser = await User.findOne({fullname});
+        console.log('paying fullname =',payinguser);
 
-        const payinguser = await User.findById(_id);
-        console.log('paying user _id =',payinguser);
-
-        return res.status(200).json({
-            message : " done"
-        })
 
         if(amount < 1 || amount == 0){
             return res.status(200).json({
                 message: " Invalid-Amount "
             })
         }
-
-        // const payinguser = await User.findById(payerId);
 
         if(amount > payinguser?.accountBalance){
             return res.status(400).json({
@@ -235,7 +221,7 @@ export const acceptmoney = async(req,res) => {
       //logged user manveer
         const loggeduser = await User.updateOne({
         _id : user?._id,
-        "sentRequest._id" : id
+        "sentRequest._id" :  fullname,
         },
         {
             $set : { "sentRequest.$.status" : "PAID" },
