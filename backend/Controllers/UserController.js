@@ -98,7 +98,7 @@ export const Profile = async(req,res) => {
         console.log('requested user =',req.userid);
 
         const getUser = await User.findById(req.userid).select("-password");
-        console.log('getUser =',getUser);
+        // console.log('getUser =',getUser);
 
         const user = getUser;
 

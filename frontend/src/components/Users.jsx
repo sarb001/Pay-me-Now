@@ -14,8 +14,11 @@ const Users = () => {
    const [openModal, setOpenModal] = useState(false);
    const [modalamount,setmodalamount] = useState(0);
 
+   const [selecteduser,setselecteduser] = useState(null);
+
    const {  userData   ,usertoken  } = useSelector(state => state?.users);
    console.log('usertoken =',usertoken);
+   console.log('userdata users  =',userData);
 
  
    const MoneyButtons = [
@@ -73,6 +76,7 @@ const Users = () => {
           console.log(' id is == ',id);
           console.log(' fullname is == ',fullname);
           console.log(' modalrequst=',modalamount);
+          console.log('selecteduser' ,selecteduser);
           dispatch(RequestMoney({usertoken,modalamount,id ,fullname}))
     }
 
@@ -111,7 +115,11 @@ const Users = () => {
                             </div>
 
                               <div>
-                              <Button onClick={() => setOpenModal(true)}> Requested Money </Button>
+                              <Button onClick = {() => {
+                                setOpenModal(true)
+                                setselecteduser({ id : i?._id , fullname : i?.fullname })
+                                }
+                                }> Requested Money </Button>
                               </div>
 
                         </div>
@@ -157,7 +165,7 @@ const Users = () => {
 
                             </div>
 
-                                <Button onClick={()  => requestmoney(i?._id,i?.fullname)}> Request Now </Button>
+                                <Button onClick={()  => requestmoney(selecteduser?._id,selecteduser?.fullname)}> Request Now </Button>
                         </form>
                     </div>
                     </Modal.Body>

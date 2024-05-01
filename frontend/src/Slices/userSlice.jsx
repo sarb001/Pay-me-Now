@@ -127,7 +127,7 @@ export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,asy
             }
         });
         console.log('res from requestmoney =',res);
-        alert(`Request Sent ${modalamount}`);
+        alert(`Request Sent ${modalamount} to ${fullname}` );
         return res?.data?.user;
 
     } catch (error) {   
