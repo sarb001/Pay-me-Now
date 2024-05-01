@@ -220,8 +220,8 @@ export const acceptmoney = async(req,res) => {
             })    
         }
 
-      // sender user
-        const loggeduser = await User.updateOne({
+        //  money  requested user ( amandeep asked for money )
+         const loggeduser = await User.updateOne({
             _id : user?._id,
             "sentRequest._id" :  id,
         },
@@ -229,28 +229,30 @@ export const acceptmoney = async(req,res) => {
             $set   : { "sentRequest.$.status" : "PAID" },
             $push  : {
                     transactions : {
-                        _id : payinguser?._id,
+                        _id : payinguser?._id,              /// by manveer money is sent 
                         fullname : payinguser?.fullname,
                         username : payinguser?.username,
                         amount,
                         tag : "RECEIEVED",
                     }
-            }, $inc : { accountBalance : +amount },
+            }, 
+            $inc : { accountBalance : +amount },
             },{ new : true }
             ) 
 
         console.log('loggeduser accept money = ',loggeduser);
 
-         //  main receiver 
+        // manveer pay the amount
+
          const payeruser = await User.findByIdAndUpdate(
          payinguser._id
         ,{
             $push : {
-                transactions :{
-                    _id : user?._id,
-                    username :  user?.username,
-                    fullname :  user?.fullname,
-                    amount : amount,
+                transactions :{             // paid money to amandeep 
+                    _id : loggeduser?._id,
+                    username :  loggeduser?.username,
+                    fullname :  loggeduser?.fullname,
+                    amount : loggeduser?.amount,
                     tag : "PAID"
                 },
             },
@@ -262,13 +264,13 @@ export const acceptmoney = async(req,res) => {
         res.status(200).json({
             message :"Paid",
             user : {
-                fullname : payeruser?.fullname,
-                username : payeruser?.username,
-                email : payeruser?.email,
-                accountBalance: payeruser?.accountBalance,
-                transactions : payeruser?.transactions,
-                sentRequest : payeruser?.sentRequest,
-                recievedRequest : payeruser?.recievedRequest,
+                fullname : loggeduser?.fullname,
+                username : loggeduser?.username,
+                email : loggeduser?.email,
+                accountBalance: loggeduser?.accountBalance,
+                transactions : loggeduser?.transactions,
+                sentRequest : loggeduser?.sentRequest,
+                recievedRequest : loggeduser?.recievedRequest,
             }
         })
 
