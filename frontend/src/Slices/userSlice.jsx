@@ -107,6 +107,7 @@ export const AddMoney  = createAsyncThunk('/api/v1/account/addmoney' , async(use
             }
         });
         console.log('res for addmoney=',res.data.user);
+        alert(' Money Added Successfully ');
         return res?.data?.user;
 
     } catch (error) {
