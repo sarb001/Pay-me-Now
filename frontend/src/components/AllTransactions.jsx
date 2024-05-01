@@ -20,7 +20,7 @@ const AllTransactions = () => {
   return (
     <div style = {{display:'flex' , flexDirection:'column',margin:'2% 10%'}}>
          <h1> Transactions </h1>
-            {userData?.transactions?.map((i) => 
+            {userData?.transactions.length  > 0 ? userData?.transactions?.map((i) => 
                 <div key = {i?.amount}  style = {{display:'grid',gridTemplateColumns:'2fr 1fr' ,justifyContent:'space-between',backgroundColor:'lightgrey',padding:'1%'}}>
 
                     <div className='bg-slate-400 p-2 flex flex-row justify-between'>
@@ -36,7 +36,7 @@ const AllTransactions = () => {
 
                     </div>
                 </div>
-            )}
+            ): " No Transaction History "}
          </div>
   
   )

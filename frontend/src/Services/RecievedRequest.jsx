@@ -28,7 +28,7 @@ const RecievedRequest = () => {
   return (
     <>
      
-     {userData?.recievedRequest?.map((item) => 
+     {userData?.recievedRequest?.length > 0  ? userData?.recievedRequest?.map((item) => 
           <div className='grid m-4'>
 
               <div className='bg-slate-400  p-3 m-1 font-bold w-1/3'>
@@ -40,14 +40,14 @@ const RecievedRequest = () => {
                 <div className='grid grid-cols-2 justify-between m-2'> 
                   <Button color='green' className='w-1/2'  onClick={() => paynow
                   (item?._id,item?.amount,item?.fullname)}> Pay </Button>
-                  
+
                   <Button  className='w-1/2'  onClick = {() => rejectnow
                   (item?._id,item?.amount,item?.fullname)}> Reject </Button>
                 </div>
               </div>
 
           </div>
-     )}
+     ) : "No Requests Available"}
     </>
   )
 }
