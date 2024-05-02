@@ -200,11 +200,11 @@ export const acceptmoney = async(req,res) => {
         console.log('acc fullname is | id is | amount is =',fullname,id,amount);
 
         const user = await User.findById(req?.userid);
-        console.log('user logged =',user);
+        console.log('user logged =',user);      // manveer logged in 
 
         const payinguser = await User.findOne({fullname});
         console.log(' acc paying fullname =',payinguser);
-        // manveer
+        // amandeep
 
         if(amount < 1 || amount == 0){
             return res.status(200).json({
@@ -218,8 +218,11 @@ export const acceptmoney = async(req,res) => {
             })    
         }
 
+        // manveer loggedin 
+
+        // then it is amandeep
          await User.updateOne({
-            _id : user?._id,            // amandeep id
+            _id : payinguser?._id,            // amandeep id
             "sentRequest._id" :  id,    // modal id pay
         },
         {
@@ -233,17 +236,18 @@ export const acceptmoney = async(req,res) => {
                         date : new Date(Date.now()),
                     },
             }, 
-         $inc : { accountBalance : amount },
+         $inc : { accountBalance : +amount },
         }) 
 
+            // logged user manveer
          const updateduser  = await User.findByIdAndUpdate(
-         payinguser?._id
+            user?._id
         ,{
             $push : {
                 transactions :{           
-                    username :  user?.username,
-                    fullname :  user?.fullname,
-                    amount : amount,
+                    username :  payinguser?.username,
+                    fullname :  payinguser?.fullname,
+                    amount : payinguser?.amount,
                     tag : "PAID",
                     date : new Date(Date.now()),
                 },
@@ -257,13 +261,13 @@ export const acceptmoney = async(req,res) => {
         res.status(200).json({
             message :"Paid",
             user : {
-                fullname : user?.fullname,
-                username : user?.username,
-                email : user?.email,
-                accountBalance: user?.accountBalance,
-                transactions : user?.transactions,
-                sentRequest : user?.sentRequest,
-                recievedRequest : user?.recievedRequest,
+                fullname : updateduser?.fullname,
+                username : updateduser?.username,
+                email : updateduser?.email,
+                accountBalance: updateduser?.accountBalance,
+                transactions : updateduser?.transactions,
+                sentRequest : updateduser?.sentRequest,
+                recievedRequest : updateduser?.recievedRequest,
             }
         })
 
