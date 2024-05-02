@@ -196,30 +196,27 @@ export const RequestMoney = async(req,res) => {
 export const acceptmoney = async(req,res) => {
     try {
         
-        // if(amount < 1 || amount == 0){
-        //     return res.status(200).json({
-        //         message: " Invalid-Amount "
-        //     })
-        // }
-
-        // if(amount > payinguser?.accountBalance){
-        //     return res.status(400).json({
-        //         message: " Balance is not enough "
-        //     })    
-        // }
-
-
         const { amount , fullname , id } =    req?.body;
         console.log('acc fullname is | id is | amount is =',fullname,id,amount);
 
         const user = await User.findById(req?.userid);
-        // manveer
+        console.log('user logged =',user);
 
         const payinguser = await User.findOne({fullname});
         console.log(' acc paying fullname =',payinguser);
-        // amandeep
+        // manveer
 
-         // money receiever  pay|reject option hai 
+        if(amount < 1 || amount == 0){
+            return res.status(200).json({
+                message: " Invalid-Amount "
+            })
+        }
+
+        if(amount > payinguser?.accountBalance){
+            return res.status(400).json({
+                message: " Balance is not enough "
+            })    
+        }
 
          await User.updateOne({
             _id : user?._id,            // amandeep id
@@ -229,18 +226,16 @@ export const acceptmoney = async(req,res) => {
             $set   : { "sentRequest.$.status" : "PAID" },
             $push  : {
                     transactions : {          
-                        fullname : user?.fullname,
-                        username : user?.username,
-                        amount,
+                        fullname : payinguser?.fullname,
+                        username : payinguser?.username,
+                        amount : payinguser?.amount,
                         tag : "RECEIEVED",
                         date : new Date(Date.now()),
                     },
             }, 
-         $inc : { accountBalance : +amount },
+         $inc : { accountBalance : amount },
         }) 
 
-       
-            // money paying user amandeep
          const updateduser  = await User.findByIdAndUpdate(
          payinguser?._id
         ,{
@@ -248,12 +243,12 @@ export const acceptmoney = async(req,res) => {
                 transactions :{           
                     username :  user?.username,
                     fullname :  user?.fullname,
-                    amount : user?.amount,
+                    amount : amount,
                     tag : "PAID",
                     date : new Date(Date.now()),
                 },
             },
-            $pull: { recievedRequest : { _id : user?._id }},
+            $pull: { recievedRequest : { _id : id }},
             $inc : { accountBalance : -amount }
         },{ new: true })  
 
@@ -262,13 +257,13 @@ export const acceptmoney = async(req,res) => {
         res.status(200).json({
             message :"Paid",
             user : {
-                fullname : updateduser?.fullname,
-                username : updateduser?.username,
-                email : updateduser?.email,
-                accountBalance: updateduser?.accountBalance,
-                transactions : updateduser?.transactions,
-                sentRequest : updateduser?.sentRequest,
-                recievedRequest : updateduser?.recievedRequest,
+                fullname : user?.fullname,
+                username : user?.username,
+                email : user?.email,
+                accountBalance: user?.accountBalance,
+                transactions : user?.transactions,
+                sentRequest : user?.sentRequest,
+                recievedRequest : user?.recievedRequest,
             }
         })
 
