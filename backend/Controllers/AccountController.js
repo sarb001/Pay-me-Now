@@ -218,9 +218,9 @@ export const acceptmoney = async(req,res) => {
             })    
         }
 
-        // manveer loggedin 
+        // if manveer loggedin 
 
-        // then it is amandeep
+        // then it is amandeep ( modal user )
          await User.updateOne({
             _id : payinguser?._id,            // amandeep id
             "sentRequest._id" :  id,    // modal id pay
@@ -247,7 +247,7 @@ export const acceptmoney = async(req,res) => {
                 transactions :{           
                     username :  payinguser?.username,
                     fullname :  payinguser?.fullname,
-                    amount : payinguser?.amount,
+                    amount,
                     tag : "PAID",
                     date : new Date(Date.now()),
                 },
