@@ -27,34 +27,53 @@ const Login = () => {
 
   return (
     <>
-    <div style = {{padding:'2%' ,display:'flex',flexDirection:'column',alignItems:'center'}}>
+       <div className = 'flex justify-center items-center' >
 
        <form onSubmit={Loginhandler}>
-        <h2> Login Now </h2>
-
-            <div style = {{padding:'2%'}}>
-            <label> Username </label>
-            <input type = "text"  placeholder='Enter User Name..'  
-            value = {username}  onChange={(e) => setusername(e.target.value)}  />
-            </div>
-
-            <div style = {{padding:'2%'}}>
-            <label> Password </label>
-            <input type = "text"  placeholder='Enter Password...'  
-            value = {password}  onChange={(e) => setpassword(e.target.value)}  />
-            </div>
-      
-            <div style = {{margin:'3%',display:'grid',gridTemplateRows : '1fr 1fr' , justifyContent:'space-around'}}>
-              <button className='bg-black text-white px-5 py-2' type = "submit"> Login Now </button>
-              <br />
-              <button className='bg-black text-white px-5 py-2'  onClick={addCredentials} style = {{padding:'1% 2%'}} > Guest Credentials </button>
-            </div>
-            <div style = {{paddingTop:'3%'}}>
-                <Link  to = "/signup" > Don't have an Account? Create Now </Link>
-            </div>
-       </form>
        
-      </div>
+         <div className='text-2xl font-bold flex justify-center'> Login  </div>
+
+          <div className='py-4 px-8 bg-zinc-400 flex flex-col gap-4 '>
+
+                <div>
+                  <label className='flex flex-col'> 
+                    <div className='font-semibold'> Username </div>
+                    <div>
+                      <input className='p-0 w-full' type = "text"  placeholder='Enter User Name..'  
+                      value = {username}  onChange={(e) => setusername(e.target.value)}  />
+                    </div>
+                </label>
+                </div>
+
+                <div>
+                  <label className='flex flex-col' >
+                    <div className='font-semibold'> Password </div>
+                    <div>
+                      <input className='p-0 w-full' type = "text"  placeholder='Enter Password...'  
+                      value = {password}  onChange={(e) => setpassword(e.target.value)}  />
+                    </div>
+                  </label>
+                </div>
+          
+                <div className='flex flex-col justify-center gap-4'>
+
+                  <div>
+                    <button className='bg-black  w-full text-white px-5 py-2' type = "submit"> Login Now </button>
+                </div>
+
+                  <div>
+                    <button className='bg-black w-full text-white px-5 py-2'  onClick={addCredentials} > Guest Credentials </button>
+                  </div>
+                  </div>
+
+                <div>
+                    <Link className='font-semibold text-amber-50 ' to = "/signup" > Don't have an Account? Create Now </Link>
+                </div>
+
+          </div>
+
+       </form>
+       </div>
     </>
   )
 }

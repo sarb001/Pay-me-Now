@@ -10,12 +10,13 @@ const Navbar = () => {
 
   return (
     <>
-     <div style = {{display : 'grid' ,gridTemplateColumns:'1.2fr 1.8fr' , padding:'1%' , backgroundColor:'lightsalmon' , justifyContent:'space-between' }}>
+     <div className='grid  grid-cols-2 px-4 py-4 justify-between items-center w-full bg-black text-white md:px-12'>
 
          <div className='text-2xl px-4 font-bold'> 
           <Link to = "/"> Digi-Pay  </Link>
          </div>
 
+        <div>
 
           {isAuth ? 
             <>
@@ -31,6 +32,9 @@ const Navbar = () => {
               </div>
               </>
           }
+
+        </div>
+
      </div>
     </>
   )

@@ -9,7 +9,11 @@ export default {
     flowbite.content(),
   ],
   theme: {
-    extend: {},
+    extend: {
+       screens :  {
+         'tab' : '650px'
+       }
+    },
   },
   plugins: [
     flowbite.plugin(),
