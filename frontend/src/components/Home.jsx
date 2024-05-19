@@ -7,43 +7,45 @@ const Home = () => {
   const { userData  } = useSelector(state => state?.users);
   console.log('userData home',userData);
 
-
   return (
     
-      <div style = {{display:'grid' , margin:'5% 25%' ,gridTemplateRows :'1fr 1fr 1fr' }}>
+      <div className='grid grid-rows-2 gap-6 my-4 mx-2'>
           
-           <div style = {{display:'grid', gridTemplateColumns:'1fr 1fr' ,backgroundColor:'lightgray' , padding:'3%'}}>  
-             <span style = {{width:'90%' ,height:'100%'}}>
-               <img style = {{width:'100%', height:'100%'}} src  = "/public/main--user-img.jpg"   alt = "user-image" />
-             </span>
-             <span style = {{fontSize:'28px'}}> Pay or  Request Money  anytime ,anywhere </span>
+           <div>  
+
+              <div>
+                <img  src  = "/main--user-img.jpg"   alt = "user-image" />
+              </div>
+
+              <div> Pay or  Request Money  anytime ,anywhere </div>
+
            </div>
 
-           <div style = {{marginTop:'5%' ,display:'grid', gridTemplateRows : '1fr 1fr' ,backgroundColor:'lightslategray' }}>
-             <div style = {{fontSize:'28px',padding:'3%'}}> Register or Login ,add Money to your account and start sending to your family </div>
-              {userData ? (
-              <>
-                <button className='w-1/2 bg-slate-700 text-white p-4'>
-                  <Link to = "/dashboard"> Dashboard </Link>
-                </button>
-              </>) : 
-              (<> 
-                <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between' ,margin:'5%'}}>
+           <div>
+
+              <div> Register or Login ,add Money to your account and start sending to your family 
+              </div>
+
+                {userData ? (
+                <>
                   <button className='w-1/2 bg-slate-700 text-white p-4'>
-                    <Link to = "/signup"> Register </Link>
+                    <Link to = "/dashboard"> Dashboard </Link>
                   </button>
-                  <button className='w-1/2 bg-slate-700 text-white p-4'>
-                      <Link to = "/login"> Login </Link>
-                  </button>
-                </div>
-              </>)}
+                </>) :
+                
+                (<> 
+                  <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between' ,margin:'5%'}}>
+                    <button className='w-1/2 bg-slate-700 text-white p-4'>
+                      <Link to = "/signup"> Register </Link>
+                    </button>
+                    <button className='w-1/2 bg-slate-700 text-white p-4'>
+                        <Link to = "/login"> Login </Link>
+                    </button>
+                  </div>
+                </>)}
 
            </div>
 
-           <div style = {{marginTop:'3%' ,padding:'7%',display:'grid', gridTemplateColumns : '1fr 1fr' ,backgroundColor: 'lightcoral' }}>
-             <span> Qr Code  </span>
-             <span style = {{fontSize:'26px'}}> A personal QR Code for your profile to accept payments. </span>
-           </div>
       </div>
     
   )
