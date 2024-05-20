@@ -51,8 +51,6 @@ const UserOperations = () => {
         dispatch(AddMoney({ usertoken,modalamount}));
      }
 
-
-
   return (
     <>
          <div className='mt-5 bg-[#e9e7e7] grid grid-cols-2 gap-5 text-center p-4 '>   

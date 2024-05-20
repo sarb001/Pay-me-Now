@@ -65,7 +65,7 @@ export const paymoney = async(req,res) => {
                         username : user?.username,
                         fullname : user?.fullname,
                         amount : amount,
-                        tag : "RECIEVED",
+                        tag : "RECEIEVED",
                         date: new Date(Date.now()),
                     }
                 },
@@ -147,8 +147,8 @@ export const RequestMoney = async(req,res) => {
                 })
              }
 
-            const paymentid = uuidv4();
-            console.log('payment id=',paymentid);
+            const paymentid = new mongoose.Types.ObjectId(); 
+            console.log('payment id new =',paymentid);
 
                 // amandeep 
             const recieveduser = await User.findOneAndUpdate({
@@ -280,40 +280,50 @@ export const acceptmoney = async(req,res) => {
 export const  rejectmoney = async(req,res) => {
     try {
          
+        console.log('req id =',req?.userid);
+        const _id = req?.userid;        //logged user
+        console.log('type _id is -',typeof(_id));
+
         const { amount , id  , fullname } = req?.body;
-        const loggeduser = await User.findByIdAndUpdate({
-            _id : req?.userid,
-            "sentRequest?._id" : id
-        },{
-            $set  : { 
-                "sentRequest.$.status" : "REJECT"
-            },
-        })
+        console.log('reject moeny=',{ amount , id  , fullname });
+        
+        console.log('type id is -',typeof(id));
+
+        const loggeduser = await User.updateOne(        
+        {
+            fullname : fullname,
+            "sentRequest._id" : id
+        },{ $set  : { "sentRequest.$.status" : "REJECT" },}
+        )
         
         console.log('loggedduser =',loggeduser);
         
-        const moneyreciever = await User.findByIdAndUpdate({
-            _id : id
-        },{
+        const moneyreciever = await User.findByIdAndUpdate(
+            _id
+        ,{
             $pull  : { recievedRequest : {  _id : id }}
         },{ new : true })
         
         console.log('moneyreceiver =',moneyreciever);
 
-        res.status(200).json({
+        if(moneyreciever == null || !moneyreciever){
+            return res.status(400).json({
+                message : "Money Rejection Error"
+            })
+        }
+
+            return  res.status(200).json({
             message  : "Rejected",
             user : {
-                fullname : loggeduser?.fullname,
-                username : loggeduser?.username,
-                email : loggeduser?.email,
-                accountBalance: loggeduser?.accountBalance,
-                transactions : loggeduser?.transactions,
-                sentRequest : loggeduser?.sentRequest,
-                recievedRequest : loggeduser?.recievedRequest,
+                fullname : moneyreciever?.fullname,
+                username : moneyreciever?.username,
+                email : moneyreciever?.email,
+                accountBalance: moneyreciever?.accountBalance,
+                transactions : moneyreciever?.transactions,
+                sentRequest : moneyreciever?.sentRequest,
+                recievedRequest : moneyreciever?.recievedRequest,
             }
         })
-
-
 
     } catch (error) {
         console.log('rejected money error =',error);
