@@ -55,28 +55,28 @@ const UserOperations = () => {
 
   return (
     <>
-         <div className='mt-5 bg-slate-300 grid grid-cols-2 text-center p-4 '>   
+         <div className='mt-5 bg-[#e9e7e7] grid grid-cols-2 gap-5 text-center p-4 '>   
            
-                <div>
+                <div className='grid gap-4 justify-between'>
 
-                    <div className='m-4'>
-                        <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'> 
+                    <div>
+                        <button className='bg-blue-400 px-2 w-full  py-2  font-bold border-2 border-black'> 
                             <Link to = "/users" > Pay /Request Money  </Link> 
                         </button>
                     </div>
 
-                    <div className='m-4'>
-                            <button className='bg-blue-400 p-2 px-8  font-bold border-2  border-black'>
+                    <div>
+                            <button className='bg-blue-400 w-full py-2 px-2  font-bold border-2  border-black'>
                             <Link to = "/recievedrequests" > Received Requests  </Link>
                              </button>
                     </div> 
                 
                 </div>
             
-                <div>
+                <div className='grid gap-4 justify-between'>
 
-                        <div className='m-4'>
-                            <button className=' font-bold bg-blue-400 p-2 px-8 border-2 border-black'> 
+                        <div>
+                            <button className=' font-bold bg-blue-400 py-2 px-2 border-2 border-black'> 
                             <Link to = "/sentrequests" >  Sent Requests   </Link>
                             </button>
                         </div>   
@@ -87,13 +87,15 @@ const UserOperations = () => {
 
                 </div>
 
-                <div className='m-4 flex'> 
-                        <button className='bg-blue-400 p-2 px-8  font-bold border-2 border-black'>
+        </div>
+
+                <div className='m-4 bg-[#e9e7e7]'> 
+                        <button className='bg-blue-400 w-full p-2 px-2 font-bold border-2 border-black'>
                         <Link to = "/alltransaction" >  All Transactions  </Link>  
                         </button>
                 </div>
            
-         </div>
+        
 
             {/*  Add Money Modal  */}
 

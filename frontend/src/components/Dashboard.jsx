@@ -21,30 +21,29 @@ const Dashboard = () => {
      }
 
   return (
-    <div style = {{display:'flex', flexDirection:'column',margin:'2% 12%'}}>
+    <div  className='flex flex-col max-w-[700px] py-6 m-auto ' >
    
         <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between'}}>
-            <div style = {{fontSize:'25px'}}> Dashboard Section </div>
-            <div> 
+            <div className='text-3xl font-bold'> Dashboard </div>
+
+            <div className='flex justify-end'> 
               <button className='bg-black px-6 py-2 text-white' onClick={handleLogout}>
                <Link to = "/logout"> Logout </Link>
               </button>
             </div>
         </div>
 
-        <div>
-           <h3> Username = {userData?.username} </h3>
-        </div>
 
          <div style = {{fontSize:'26px' , backgroundColor:'lightgray',marginTop:'3%' ,padding:'2%'}}>
-                <div> <span> INR </span> </div>
-
-                <div>  <span> Current Balance </span> </div>
+                <div>
+                  <span className='text-2xl font-medium' > Username = {userData?.username} </span> 
+                </div>
 
               <div>  
-                  Rs.{ userData?.accountBalance  ? userData?.accountBalance : 0 }
+                <span>  Balance  </span>
+              ₹{ userData?.accountBalance  ? userData?.accountBalance : 0 }
               </div>  
-              </div> 
+          </div> 
 
         <div>
             <UserOperations />

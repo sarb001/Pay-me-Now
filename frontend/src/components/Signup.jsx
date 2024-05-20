@@ -29,7 +29,7 @@ const Signup = () => {
 
             <div className='text-2xl font-bold flex justify-center'> Create an Account  </div>
 
-            <div className='py-4 px-8 bg-zinc-400 flex flex-col gap-4 '>
+            <div className='py-4 px-16 bg-zinc-400 flex flex-col gap-4 '>
 
                   <div>
                     <label className='flex flex-col'> 
