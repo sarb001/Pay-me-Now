@@ -23,7 +23,7 @@ const SentRequest = () => {
               <Tabs.Item active title="Pending">
                    <span className="font-bold text-gray-800 dark:text-white">
                     {userData?.sentRequest?.map((item) => 
-                        <div key = {item?._id} className='bg-lime-200 p-2 m-2'>
+                        <div key = {item?._id} className='bg-lime-100 p-2 m-2'>
                             <div> amount = {item?.amount} </div>
                             <div> username = {item?.username} </div>
                             <div> status = {item?.status} </div>
