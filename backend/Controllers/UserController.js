@@ -1,14 +1,14 @@
 import User from "../Schemas/UserSchemas.js"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken' ;
-import Account from "../Schemas/BankSchema.js";
+
 
 export const SignupUser = async(req,res) => {
     try {
-        const { username , firstname ,lastname , password } = req.body;
-        console.log('signup data =',username , firstname ,lastname , password);
+        const { username , fullname , email , password } = req.body;
+        console.log('signup data =',username , fullname , email , password);
 
-        if(!username || !firstname || !lastname || !password){
+        if(!username || !fullname || !email || !password){
              return res.status(404).json({
                  message : "Enter All Details"
              })
@@ -19,16 +19,12 @@ export const SignupUser = async(req,res) => {
         
         const  dbuser = await User.create({
             username,
-            firstname,
-            lastname,
-            password : bcryptpass
+            fullname,
+            email,
+            password : bcryptpass,
+            accountBalance : 0
         });
         
-        await Account.create({
-            userid : dbuser?._id,
-            balance : 1 + Math.random() * 10000 
-        })
-
         const user = await dbuser.save();
 
         return res.status(201).json({
@@ -69,13 +65,31 @@ export const LoginUser = async(req,res) => {
 
         const token =  jwt.sign({userid : findUser._id},process.env.JWT_SECRET);
         console.log('token gen =',token);
-        
+
+        const user = findUser;
+
         return res.status(200).json({
             token,
+            user
         })
 
     } catch (error) {
         console.log('error =',error);
+    }
+}
+
+export const Logout = async(req,res) => {
+    try {
+        const userid = req.userid;
+        
+        const user = await User.findById(userid).select("-password");
+        return res.status(200).json({
+            message : " User Logged Out ",
+            user : null
+        })
+
+    } catch (error) {
+            console.log('logout failed ',error);
     }
 }
 
@@ -84,11 +98,13 @@ export const Profile = async(req,res) => {
         console.log('requested user =',req.userid);
 
         const getUser = await User.findById(req.userid).select("-password");
-        console.log('getUser =',getUser);
+        // console.log('getUser =',getUser);
+
+        const user = getUser;
 
         res.status(200).json({
             message : "Profile Found",
-            getUser
+            user
         })
 
     } catch (error) {
@@ -138,7 +154,7 @@ export const  AllUsers = async(req,res) => {
         const FilteredData = await User?.find({   
             $or : [
                 {
-                    firstname :{ "$regex" : querydata }
+                    fullname :{ "$regex" : querydata }
                 },
             ],
             _id : {
