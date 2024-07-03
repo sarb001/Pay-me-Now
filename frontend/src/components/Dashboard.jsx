@@ -1,66 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
-import { FaCircleArrowRight } from "react-icons/fa6";
-import { MdPayments } from "react-icons/md";
-import { FaUserCircle } from "react-icons/fa";
-import axios from 'axios';
+import UserOperations from './UserOperations';
+import {  useSelector , useDispatch } from 'react-redux' ;
+import { logout } from '../Slices/userSlice';
+import {  useNavigate  } from 'react-router-dom' ;
 
 const Dashboard = () => {
 
-     const token = localStorage.getItem('token');
-     const [balance,setbalance] = useState(0);
+      const dispatch = useDispatch();
+      const { userData   ,usertoken }  =  useSelector(state => state?.users);
+      console.log('users ===',userData);
 
-      useEffect(() => {
-         const fetchBalance = async() => {
-            try { 
-               const checkbalance = await axios.get('/api/v1/account/balance' , {
-                  headers : {
-                    'Authorization': `Bearer ${token}`
-                  }
-                });
-                setbalance(checkbalance.data.balance.toFixed());
-            } catch (error) {
-                console.log('fetch balance error =',error);
-            }
-         }
-         fetchBalance();
-      },[])
+      const navigate = useNavigate();
+
+     const handleLogout = (e) => {
+        e.preventDefault();
+        localStorage.removeItem('token');
+        dispatch(logout());
+        navigate('/');
+     }
 
   return (
-    <>
-     <div style = {{display:'flex',textAlign:'center'}}>
-        <span style = {{fontSize:'25px'}}> Dashboard Section </span>
+    <div  className='flex flex-col max-w-[700px] py-6 m-auto ' >
+   
+        <div style = {{display:'grid',gridTemplateColumns:'1fr 1fr' ,justifyContent:'space-between'}}>
+            <div className='text-3xl font-bold'> Dashboard </div>
 
-        <div style = {{fontSize:'26px' , backgroundColor:'lightgray',marginTop:'3%' ,padding:'2%'}}>
-            <div> <span> INR </span> </div>
-
-            <div>  <span> Current Balance </span> </div>
-
-            <div>  <span> Rs.  {balance}  </span></div>
-
-        </div>
-     </div>
-
-     <div style = {{display:'flex' ,alignItems:'center'}}>
-       <h2> Services  </h2>
-
-        <div style = {{padding:'2%' , backgroundColor:'lightsalmon' , margin:'2%'}}>   
-        <span> <FaCircleArrowRight /> </span>
-          <Link to = "/users" > Send Money  </Link> 
+            <div className='flex justify-end'> 
+              <button className='bg-black px-6 py-2 text-white' onClick={handleLogout}>
+               <Link to = "/logout"> Logout </Link>
+              </button>
+            </div>
         </div>
 
-        <div style = {{padding:'2%' , backgroundColor:'lightsalmon' , margin:'2%'}}> 
-        <span> <MdPayments /> </span>
-          <Link to = "/" >  All Transactions  </Link>  
-        </div>
 
-        <div style = {{padding:'2%' , backgroundColor:'lightsalmon' , margin:'2%'}}> 
-          <span> <FaUserCircle />  </span>
-          <Link to = "/profile" >  Profile  </Link>  
+         <div style = {{fontSize:'26px' , backgroundColor:'lightgray',marginTop:'3%' ,padding:'2%'}}>
+                <div>
+                  <span className='text-2xl font-medium' > Username = {userData?.username} </span> 
+                </div>
+
+              <div>  
+                <span>  Balance  </span>
+              ₹{ userData?.accountBalance  ? userData?.accountBalance : 0 }
+              </div>  
+          </div> 
+
+        <div>
+            <UserOperations />
         </div>
        
-     </div>
-    </>
+    </div>
   )
 }
 

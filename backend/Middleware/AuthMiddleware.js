@@ -22,6 +22,6 @@ export const authMiddleware = async(req,res,next) => {
         next();
 
     } catch (error) {   
-        console.log('error =',error);
+        return  console.log('middleware error =',error);
     }
 }
