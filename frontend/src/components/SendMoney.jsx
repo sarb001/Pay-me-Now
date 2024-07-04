@@ -1,8 +1,8 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import { Link, useSearchParams ,useLocation, useNavigate } from 'react-router-dom';
 
-import { Button, Modal } from "flowbite-react";
+import React, { useState } from 'react'
+import { useSearchParams , useNavigate } from 'react-router-dom';
+
+import { Button, } from "flowbite-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { TransferMoney } from '../Slices/userSlice';
 

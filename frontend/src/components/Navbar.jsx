@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { FaUserCircle } from "react-icons/fa";
 import { LuClipboardCopy } from "react-icons/lu";
 import { MdDashboard } from "react-icons/md";
 

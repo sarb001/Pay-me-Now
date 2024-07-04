@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios' ;
 import {  useDispatch } from 'react-redux' ;
 import { RegisterUser } from '../Slices/userSlice';
-import { toast } from 'react-toastify' ;
 
 const Signup = () => {
 

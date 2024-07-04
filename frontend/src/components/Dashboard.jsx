@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import UserOperations from './UserOperations';
 import {  useSelector , useDispatch } from 'react-redux' ;
@@ -8,7 +8,7 @@ import {  useNavigate  } from 'react-router-dom' ;
 const Dashboard = () => {
 
       const dispatch = useDispatch();
-      const { userData   ,usertoken }  =  useSelector(state => state?.users);
+      const { userData  }  =  useSelector(state => state?.users);
       console.log('users ===',userData);
 
       const navigate = useNavigate();

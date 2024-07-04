@@ -8,7 +8,7 @@ import Dashboard from './components/Dashboard';
 import SendMoney from './components/SendMoney';
 import Users from './components/Users';
 import AllTransactions from './components/AllTransactions';
-import { ToastContainer , toast  } from 'react-toastify' ;
+import { ToastContainer   } from 'react-toastify' ;
 import 'react-toastify/dist/ReactToastify.css' ;
 import { useDispatch , useSelector } from 'react-redux' ;
 import { useEffect } from 'react';

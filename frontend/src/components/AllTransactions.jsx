@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import  { useDispatch, useSelector } from 'react-redux';
-// import { AllTransaction } from '../Slices/userSlice';
+
 
 const AllTransactions = () => {
 

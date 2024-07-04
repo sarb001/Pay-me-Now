@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux' ; 
-import { Button, Modal } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { AcceptMoney, RejectMoney } from '../Slices/userSlice';
 
 const RecievedRequest = () => {

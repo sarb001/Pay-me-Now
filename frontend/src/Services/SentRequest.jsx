@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
   
 const SentRequest = () => {
   
-  const { usertoken , userData } = useSelector(state => state?.users);
+  const { userData } = useSelector(state => state?.users);
   console.log('userData =',userData);
   
   const tabsRef = useRef(null);
