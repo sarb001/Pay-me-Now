@@ -24,9 +24,9 @@ const Login = () => {
    }
 
    const addCredentials = async() => {
-      setusername('amandeep@22');
-      setpassword('amandeep@22');
-      await dispatch(LoginUser({username,password}));
+    const username = 'amandeep@22';
+    const password = 'amandeep@22'
+    await dispatch(LoginUser({username,password}));
    }
 
   return (
