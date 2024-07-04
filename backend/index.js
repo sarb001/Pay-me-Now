@@ -15,7 +15,7 @@ db();
 
 app.use(cors({
     credentials :true,
-    // origin : ,
+    origin : process.env.FRONTEND_URL
 }))
 
 app.use('/api/v1' , user);

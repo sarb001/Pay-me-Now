@@ -35,7 +35,7 @@ const initialState = {
 export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData , { rejectWithValue }) => {
      try {
          console.log('register userData =',userData);
-         const  response = await axios.post('/api/v1/signup' ,userData);
+         const  response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/signup` ,userData);
          console.log('res =',response);
          toast.success(' User Registration Completed ');
          return true;
@@ -49,7 +49,7 @@ export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData 
 export const  LoginUser = createAsyncThunk('/api/v1/login' , async(userData , { rejectWithValue }) => {
     try {
         console.log('login userData =',userData);
-        const  response = await axios.post('/api/v1/login' ,userData);
+        const  response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/login` ,userData);
         localStorage.setItem('token',response.data.token);
         console.log(' login response =',response);
         toast.success(' Logged In Successfully ');
@@ -64,7 +64,7 @@ export const  LoginUser = createAsyncThunk('/api/v1/login' , async(userData , { 
 export const ValidateUser = createAsyncThunk('/api/v1/profile' , async(userData , { rejectWithValue }) => {
     try {
             console.log('userdata =',userData);
-        const response = await axios.get('/api/v1/profile' , {
+        const response = await axios.get(`${import.meta.env.VITE_BACKENDURL}/api/v1/profile` , {
              headers : { 'Authorization' : `Bearer ${userData.usertoken}` }
         });
         console.log('profile valid',response.data.user);
@@ -80,7 +80,7 @@ export const TransferMoney = createAsyncThunk('/api/v1/account/transfer' , async
          console.log('transfer money userData =',userData);
 
          const { amount , id ,usertoken } = userData;
-        const res = await axios.post('/api/v1/account/transfer',{
+        const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/account/transfer`,{
             amount , 
             to : id
         },{
@@ -99,7 +99,7 @@ export const AddMoney  = createAsyncThunk('/api/v1/account/addmoney' , async(use
 
         console.log('userdata addmoney =',userData);
         const { usertoken ,modalamount } = userData;
-        const res = await axios.post('/api/v1/account/addmoney',{
+        const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/account/addmoney`,{
             modalamount
         },{
             headers:{
@@ -119,7 +119,7 @@ export const AddMoney  = createAsyncThunk('/api/v1/account/addmoney' , async(use
 export const RequestMoney = createAsyncThunk('/api/v1/account/requestmoney' ,async(userData, { rejectWithValue }) => {
     try {
         const { usertoken ,modalamount, id  ,fullname } = userData;
-        const res = await axios.post('/api/v1/account/requestmoney',{
+        const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/account/requestmoney`,{
             modalamount , id , fullname
         },{
             headers:{
@@ -140,7 +140,7 @@ export const AcceptMoney = createAsyncThunk('/api/v1/account/acceptmoney' ,async
         
         const { id,amount,fullname ,usertoken  } = userData;
         console.log('in slice all =',id,amount,fullname);
-        const res = await axios.post('/api/v1/account/acceptmoney',{
+        const res = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/account/acceptmoney`,{
             id ,amount ,fullname
         },{
             headers:{
@@ -162,7 +162,7 @@ export const RejectMoney = createAsyncThunk('/api/v1/account/rejectmoney' ,async
            
         const { id,amount,fullname ,usertoken  } = userData;
         console.log('in slice all =',id,amount,fullname);
-        const res = await axios.put('/api/v1/account/rejectmoney',{
+        const res = await axios.put(`${import.meta.env.VITE_BACKENDURL}/api/v1/account/rejectmoney`,{
             id ,amount ,fullname
         },{
             headers:{
@@ -175,7 +175,6 @@ export const RejectMoney = createAsyncThunk('/api/v1/account/rejectmoney' ,async
         console.log('reject money errror =',error);
     }
 })
-
 
 
  const userSlice = createSlice({
