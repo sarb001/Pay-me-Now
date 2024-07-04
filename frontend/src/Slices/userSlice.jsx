@@ -52,10 +52,9 @@ export const  LoginUser = createAsyncThunk('/api/v1/login' , async(userData , { 
         const  response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/login` ,userData);
         localStorage.setItem('token',response.data.token);
         console.log(' login response =',response);
-        toast.success(response.data.message);
+        toast.success("Logged In");
         return response.data;
     } catch (error) {  
-        console.log(' login error =',error);
         toast.error("Something went wrong");
         return rejectWithValue(error.response.data.message || "Something went wrong")
     }

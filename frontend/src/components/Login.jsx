@@ -10,8 +10,6 @@ const Login = () => {
   const [password,setpassword]   = useState('');
   const [loading,setloading] = useState(false);
 
-  const [guestloading,setguestloading] = useState(false);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -28,12 +26,6 @@ const Login = () => {
    const addCredentials = async() => {
       setusername('amandeep@22');
       setpassword('amandeep@22');
-      setguestloading(true);
-      await dispatch(LoginUser({username,password}));
-      setguestloading(false);
-      setusername(' ');
-      setpassword(' ');
-       navigate('/dashboard');
    }
 
   return (
@@ -76,7 +68,8 @@ const Login = () => {
                 </div>
 
                   <div>
-                    <button className='bg-black w-full text-white px-5 py-2'  onClick={addCredentials} >  {guestloading ? "Logging In.." : " Login Now " }  Guest Credentials </button>
+                    <button className='bg-black w-full text-white px-5 py-2'  
+                    onClick={addCredentials} > Guest Credentials </button>
                   </div>
                   </div>
 
