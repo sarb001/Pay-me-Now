@@ -47,7 +47,7 @@ export const LoginUser = async(req,res) => {
             })
         }
 
-        const findUser = await User.findOne({username}).select("-password");
+        const findUser = await User.findOne({username});
 
         if(!findUser){
             return res.status(404).json({
@@ -64,6 +64,11 @@ export const LoginUser = async(req,res) => {
         }
 
         const token =  jwt.sign({userid : findUser._id},process.env.JWT_SECRET);
+        if(!token){
+            return res.status(400).json({
+                message : "Token not Present"
+            })
+        }
         const user = findUser;
 
         return res.status(200).json({
