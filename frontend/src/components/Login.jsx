@@ -27,6 +27,7 @@ const Login = () => {
     const username = 'amandeep@22';
     const password = 'amandeep@22'
     await dispatch(LoginUser({username,password}));
+    navigate('/dashboard');
    }
 
   return (
