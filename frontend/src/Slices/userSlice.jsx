@@ -37,7 +37,7 @@ export const  RegisterUser = createAsyncThunk('/api/v1/signup' , async(userData 
          console.log('register userData =',userData);
          const  response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/signup` ,userData);
          console.log('res =',response);
-         toast.success(' User Registration Completed ');
+         toast.success(response?.data?.message);
          return true;
      } catch (error) {  
          console.log(' registration error =',error);
@@ -52,7 +52,7 @@ export const  LoginUser = createAsyncThunk('/api/v1/login' , async(userData , { 
         const  response = await axios.post(`${import.meta.env.VITE_BACKENDURL}/api/v1/login` ,userData);
         localStorage.setItem('token',response.data.token);
         console.log(' login response =',response);
-        toast.success(' Logged In Successfully ');
+        toast.success(response.data.message);
         return response.data;
     } catch (error) {  
         console.log(' login error =',error);

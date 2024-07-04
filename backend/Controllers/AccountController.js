@@ -14,7 +14,9 @@ export const  AllTransaction = async(req,res) => {
         })
 
     } catch (error) {
-            console.log('all trans error',error);
+        return res.json({
+            message : "Transaction Error"
+        })
     }
 }
 
@@ -27,15 +29,11 @@ export const paymoney = async(req,res) => {
         if(isNaN(amount)){  return res.status(400).json({ message : "Not a Number" })}
 
         const userid = req.userid;
-        console.log('userid= ',userid);
 
         const user = await User.findById(userid);
-        console.log('logged user =',user);
 
-        console.log('paytouser to=',to);
 
         const paytoUser = await User.findById(to);
-        console.log('paytouser=',paytoUser);
 
         
             // + add in accountbalance paytouser
@@ -87,7 +85,9 @@ export const paymoney = async(req,res) => {
         })
 
     } catch (error) {
-        console.log('paymoney error =',error);
+        return res.json({
+            message : "Money not Paid"
+        })
     }
 }
 
@@ -95,10 +95,8 @@ export const paymoney = async(req,res) => {
 export const addMoney = async(req,res) => {
     try {
         const { modalamount  } = req.body;
-        console.log('modal amount =',modalamount);
 
         const user = await User.findById(req.userid);
-        console.log('main user=',user);
 
         if(modalamount < 1 || modalamount == ' ') return res.json({         
             message : " Invalid Amount "
@@ -108,11 +106,9 @@ export const addMoney = async(req,res) => {
 
              if(mybal != ''){
                 user.accountBalance = mybal;
-                console.log('mybal -',mybal);
              }  
         
-            await user.save();
-            console.log('user mmoeuy',user);    
+            await user.save();  
 
             return res.status(200).json({
                 message : "Money added successfully",
@@ -128,7 +124,9 @@ export const addMoney = async(req,res) => {
             })
 
     } catch (error) {
-        console.log('add money error =',error);
+        return res.json({
+            message : "Money not Added"
+        })
     }
 }
 
@@ -137,7 +135,6 @@ export const RequestMoney = async(req,res) => {
         try {
             
             const user = await User.findById(req.userid);
-            console.log('main logged user =',user);
 
             const { modalamount , id , fullname } = req?.body;
 
@@ -148,7 +145,6 @@ export const RequestMoney = async(req,res) => {
              }
 
             const paymentid = new mongoose.Types.ObjectId(); 
-            console.log('payment id new =',paymentid);
 
                 // amandeep 
             const recieveduser = await User.findOneAndUpdate({
@@ -180,7 +176,6 @@ export const RequestMoney = async(req,res) => {
                     }
             },{ new : true })
     
-            console.log('main user ==',mainuserupdated);
 
             res.status(200).json({
                     message: " Money Requestedss ",
@@ -188,7 +183,9 @@ export const RequestMoney = async(req,res) => {
             })
 
         } catch (error) {
-            console.log('request money error= ',error);  
+            return res.json({
+                message : "Money Request Failed"
+            })
         }
 }
 
@@ -197,13 +194,10 @@ export const acceptmoney = async(req,res) => {
     try {
         
         const { amount , fullname , id } =    req?.body;
-        console.log('acc fullname is | id is | amount is =',fullname,id,amount);
 
         const user = await User.findById(req?.userid);
-        console.log('user logged =',user);      // manveer logged in 
 
         const payinguser = await User.findOne({fullname});
-        console.log(' acc paying fullname =',payinguser);
         // amandeep
 
         if(amount < 1 || amount == 0){
@@ -256,7 +250,6 @@ export const acceptmoney = async(req,res) => {
             $inc : { accountBalance : -amount }
         },{ new: true })  
 
-        console.log('updated user=',updateduser);
       
         res.status(200).json({
             message :"Paid",
@@ -272,7 +265,9 @@ export const acceptmoney = async(req,res) => {
         })
 
     } catch (error) {
-        console.log('accept moneyerror =',error);
+        return res.json({
+            message : "Money Not Accepted"
+        })
     }
 }
 
@@ -280,14 +275,9 @@ export const acceptmoney = async(req,res) => {
 export const  rejectmoney = async(req,res) => {
     try {
          
-        console.log('req id =',req?.userid);
         const _id = req?.userid;        //logged user
-        console.log('type _id is -',typeof(_id));
 
         const { amount , id  , fullname } = req?.body;
-        console.log('reject moeny=',{ amount , id  , fullname });
-        
-        console.log('type id is -',typeof(id));
 
         const loggeduser = await User.updateOne(        
         {
@@ -296,15 +286,12 @@ export const  rejectmoney = async(req,res) => {
         },{ $set  : { "sentRequest.$.status" : "REJECT" },}
         )
         
-        console.log('loggedduser =',loggeduser);
-        
         const moneyreciever = await User.findByIdAndUpdate(
             _id
         ,{
             $pull  : { recievedRequest : {  _id : id }}
         },{ new : true })
         
-        console.log('moneyreceiver =',moneyreciever);
 
         if(moneyreciever == null || !moneyreciever){
             return res.status(400).json({
@@ -326,7 +313,9 @@ export const  rejectmoney = async(req,res) => {
         })
 
     } catch (error) {
-        console.log('rejected money error =',error);
+        return res.json({
+            message : "Money not Rejection"
+        });
     }
 }
  

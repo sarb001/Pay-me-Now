@@ -8,21 +8,32 @@ const Login = () => {
 
   const [username,setusername]   = useState('');
   const [password,setpassword]   = useState('');
+  const [loading,setloading] = useState(false);
+
+  const [guestloading,setguestloading] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
    const Loginhandler = async(e) => {
      e.preventDefault();
+     setloading(true);
      await dispatch(LoginUser({username,password}));
+     setloading(false);
      setusername(' ');
      setpassword(' ');
       navigate('/dashboard');
    }
 
-   const addCredentials = () => {
+   const addCredentials = async() => {
       setusername('amandeep@22');
-      setpassword('amandeep@22')
+      setpassword('amandeep@22');
+      setguestloading(true);
+      await dispatch(LoginUser({username,password}));
+      setguestloading(false);
+      setusername(' ');
+      setpassword(' ');
+       navigate('/dashboard');
    }
 
   return (
@@ -57,12 +68,15 @@ const Login = () => {
           
                 <div className='flex flex-col justify-center gap-4'>
 
+
                   <div>
-                    <button className='bg-black  w-full text-white px-5 py-2' type = "submit"> Login Now </button>
+                    <button className='bg-black  w-full text-white px-5 py-2' type = "submit">
+                      {loading ? "Logging In.." : " Login Now " } 
+                    </button>
                 </div>
 
                   <div>
-                    <button className='bg-black w-full text-white px-5 py-2'  onClick={addCredentials} > Guest Credentials </button>
+                    <button className='bg-black w-full text-white px-5 py-2'  onClick={addCredentials} >  {guestloading ? "Logging In.." : " Login Now " }  Guest Credentials </button>
                   </div>
                   </div>
 

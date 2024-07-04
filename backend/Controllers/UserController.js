@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken' ;
 export const SignupUser = async(req,res) => {
     try {
         const { username , fullname , email , password } = req.body;
-        console.log('signup data =',username , fullname , email , password);
 
         if(!username || !fullname || !email || !password){
              return res.status(404).json({
@@ -28,12 +27,14 @@ export const SignupUser = async(req,res) => {
         const user = await dbuser.save();
 
         return res.status(201).json({
-               message : "User created Successfully",
+               message : "User Created Successfully",
                user
         })
 
     } catch (error) {
-        return console.log('error =',error);
+        return res.json({
+            message : "Unable to Create User"
+        })
     }
 }
 
@@ -46,7 +47,7 @@ export const LoginUser = async(req,res) => {
             })
         }
 
-        const findUser = await User.findOne({username});
+        const findUser = await User.findOne({username}).select("-password");
 
         if(!findUser){
             return res.status(404).json({
@@ -55,7 +56,6 @@ export const LoginUser = async(req,res) => {
         }
 
         const decryptpass = await bcrypt.compare(password ,findUser.password);
-        console.log('decrypt pass =',decryptpass);
 
         if(!decryptpass){   
             return res.status(404).json({
@@ -64,17 +64,18 @@ export const LoginUser = async(req,res) => {
         }
 
         const token =  jwt.sign({userid : findUser._id},process.env.JWT_SECRET);
-        console.log('token gen =',token);
-
         const user = findUser;
 
         return res.status(200).json({
+            message : "Logged In Successfully",
             token,
             user
         })
 
     } catch (error) {
-        console.log('error =',error);
+        return res.json({
+            message : "Login Failed"
+        })
     }
 }
 
@@ -89,16 +90,16 @@ export const Logout = async(req,res) => {
         })
 
     } catch (error) {
-            console.log('logout failed ',error);
+        return res.json({
+            message : "Logout Failed"
+        })
     }
 }
 
 export const Profile = async(req,res) => {
     try {
-        console.log('requested user =',req.userid);
 
         const getUser = await User.findById(req.userid).select("-password");
-        // console.log('getUser =',getUser);
 
         const user = getUser;
 
@@ -108,7 +109,9 @@ export const Profile = async(req,res) => {
         })
 
     } catch (error) {
-        console.log('error =',error);
+        return res.json({
+            message : "Profile not Created"
+        })
     }   
 }
 
@@ -116,7 +119,6 @@ export const  UpdateProfile = async(req,res) => {
     try {
 
         const getUser = await User.findById(req.userid);
-        console.log('getUser =',getUser);
 
         const { firstname , lastname ,password } = req.body;
 
@@ -138,7 +140,9 @@ export const  UpdateProfile = async(req,res) => {
         })
 
     } catch (error) {   
-     console.log('error =',error);        
+        return res.json({
+            message : "Profile not Updated"
+        })   
     }   
 }
 
@@ -146,10 +150,8 @@ export const  AllUsers = async(req,res) => {
     try {
         
         const loggedUserid = req?.userid;
-        console.log('logged userid=',loggedUserid);
 
         const querydata = req.query.filter || '';
-        console.log('query =',querydata);
 
         const FilteredData = await User?.find({   
             $or : [
@@ -169,6 +171,8 @@ export const  AllUsers = async(req,res) => {
         })
 
     } catch (error) {   
-            console.log('Bulk Users error =',error);
+        return res.json({
+            message : "Users not Fetched"
+        })
     }
 }
